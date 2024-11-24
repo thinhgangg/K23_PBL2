@@ -445,9 +445,35 @@ void Menu::accountSettingsMenu(const string& username) {
             case 2: 
                 manager.changePassword("tk_khachhang.txt", username);
                 break;
-            case 3:
-                manager.deleteAccount(username);
+            case 3: {
+                while (true) {
+                    char confirmChoice;
+                    system("cls");
+                    cout << "\t\t\t\t\t\t################################################################" << endl;
+                    cout << "\t\t\t\t\t\t##                       DELETE ACCOUNT                       ##" << endl;
+                    cout << "\t\t\t\t\t\t################################################################" << endl;
+                    cout << "\t\t\t\t\t\t##       ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?        ##" << endl;
+                    cout << "\t\t\t\t\t\t##                  THIS CANNOT BE UNDONE!!!                  ##" << endl;
+                    cout << "\t\t\t\t\t\t################################################################" << endl;
+                    cout << "\t\t\t\t\t\t##                           1. YES                           ##" << endl;
+                    cout << "\t\t\t\t\t\t##                           2. NO                            ##" << endl;
+                    cout << "\t\t\t\t\t\t################################################################" << endl;
+                    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+                    cin >> confirmChoice;
+
+                    if (confirmChoice == '1') {
+                        manager.deleteAccount(username);
+                        displayGoodbye();
+                        exit(0);
+                    } else if (confirmChoice == '2') {
+                        system("cls");
+                        break;
+                    } else {
+                        displayError();
+                    }
+                }
                 break;
+            }
             case 0:
                 system("cls");
                 return;
