@@ -61,6 +61,15 @@ void Menu::displayResetPass() {
     cout << "\t\t\t\t\t\t\t################################################" << endl;
 }
 
+void Menu::displayChangePass() {
+    system("cls");
+    cout << "\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t##              CHANGE PASSWORD               ##" << endl;
+    cout << "\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t##       CURRENT PASSWORD:                    ##" << endl;
+    cout << "\t\t\t\t\t\t\t################################################" << endl;
+}
+
 void Menu::displayChangePhone() {
     system("cls");
     cout << "\t\t\t\t\t\t\t################################################" << endl;
@@ -430,12 +439,11 @@ void Menu::accountSettingsMenu(const string& username) {
         cin >> choice;
 
         switch (choice) {
-            case 1: {
+            case 1: 
                 manager.changePhoneNumber("tk_khachhang.txt", username);
                 break;
-            }
-            case 2:
-                manager.resetPassword("tk_khachhang.txt");
+            case 2: 
+                manager.changePassword("tk_khachhang.txt", username);
                 break;
             case 3:
                 manager.deleteAccount(username);

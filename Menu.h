@@ -30,6 +30,7 @@ public:
     void displaySignIn();
     void displaySignUp();
     void displayResetPass();
+    void displayChangePass();
     void displayChangePhone();
     void displayError();
     void displayBookingForm();

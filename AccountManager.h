@@ -26,5 +26,5 @@ public:
     void viewCustomerList();
 
     void changePhoneNumber(const string& filename, const string& username);
-    void changePassword(const string& filename);
+    void changePassword(const string& filename, const string& username);
 };

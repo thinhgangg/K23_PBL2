@@ -130,12 +130,12 @@ void AccountManager::resetPassword(const string& filename) {
 
     UserManager userManager;
     FileManager fileManager;
+    Menu menu;
     resetPass:;
 
     while (true) {
         string username, phone, newPassword, confirmPassword;
 
-        Menu menu;
         menu.displayResetPass();
 
         cout << "\033[4;76H";
@@ -171,7 +171,7 @@ void AccountManager::resetPassword(const string& filename) {
                         menu.printRETURN();
                         cin.ignore();
                         cin.get();
-                        system("cls");
+                        // system("cls");
                         goto resetPass;
                     } else {
                         cout << "\n";
@@ -187,7 +187,7 @@ void AccountManager::resetPassword(const string& filename) {
                             menu.printRETURN();
                             cin.ignore();
                             cin.get();
-                            system("cls");
+                            // system("cls");
                             goto resetPass;
                         } else {
                             stringstream newLine;
@@ -209,11 +209,103 @@ void AccountManager::resetPassword(const string& filename) {
             menu.printRETURN();
             cin.ignore();
             cin.get();
-            system("cls");
+            // system("cls");
             return;
         } else {
             system("cls");
             cout << "\t\t\t\t\t\t\t          THE ACCOUNT DOES NOT EXIST!           " << endl;
+            menu.printRETURN();
+            cin.ignore();
+            cin.get();
+            // system("cls");
+            return;
+        }
+    }
+}
+
+// doi mat khau
+void AccountManager::changePassword(const string& filename, const string& username) {
+    system("cls");
+
+    UserManager userManager;
+    FileManager fileManager;
+    Menu menu;
+    changePass:;
+
+    while (true) {
+        string currentPassword, newPassword, confirmPassword;
+
+        menu.displayChangePass();
+        cout << "\033[4;84H";
+        currentPassword = userManager.inputPassword();
+
+        Vector lines = fileManager.readAllLines(filename);
+        bool accountFound = false;
+
+        for (size_t i = 0; i < lines.get_size(); i++) {
+            stringstream ss(lines[i]);
+            string u, p, name, phoneNum;
+            getline(ss, u, ',');
+            getline(ss, p, ',');
+            getline(ss, name, ',');
+            getline(ss, phoneNum, ',');
+
+            if (u == username && p == currentPassword) {
+                while (true) {
+                    cout << "\033[6;00H";
+                    cout << "\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
+                    cout << "\t\t\t\t\t\t\t################################################" << endl;
+                    cout << "\033[6;80H";
+                    newPassword = userManager.inputPassword();
+
+                    if (!userManager.isValidPassword(newPassword)) {
+                        system("cls");
+                        cout << "\t\t\t\t\t\t\t  PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!  " << endl;
+                        menu.printRETURN();
+                        cin.ignore();
+                        cin.get();
+                        // system("cls");
+                        goto changePass;
+                    } else {
+                        cout << "\n";
+                        cout << "\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
+                        cout << "\t\t\t\t\t\t\t################################################" << endl;
+                        cout << "\033[8;88H";
+                        confirmPassword = userManager.inputPassword();
+
+                        // confirm password
+                        if (newPassword != confirmPassword) {
+                            system("cls");
+                            cout << "\t\t\t\t\t\t\t            PASSWORDS DO NOT MATCH!             " << endl;
+                            menu.printRETURN();
+                            cin.ignore();
+                            cin.get();
+                            // system("cls");
+                            goto changePass;
+                        } else {
+                            stringstream newLine;
+                            newLine << u << "," << newPassword << "," << name << "," << phoneNum;
+                            lines[i] = newLine.str();
+                            accountFound = true;
+                            break;
+                        }
+                    }
+                }
+                if (accountFound) break;
+            }
+        }
+        if (accountFound) {
+            fileManager.writeAllLines(filename, lines);
+            system("cls");
+            cout << "\t\t\t\t\t\t\t         PASSWORD UPDATED SUCCESSFULLY!         " << endl;
+            menu.printRETURN();
+            cin.ignore();
+            cin.get();
+            system("cls");
+            return;
+        } else {
+            system("cls");
+            cout << "\t\t\t\t\t\t\t       CURRENT PASSWORD IS INCORRECT!            " << endl;
             menu.printRETURN();
             cin.ignore();
             cin.get();
@@ -222,6 +314,7 @@ void AccountManager::resetPassword(const string& filename) {
         }
     }
 }
+
 
 // kiem tra xoa tai khoan thanh cong
 bool AccountManager::isdeleteAccount(const string& filename, const string& username) {
