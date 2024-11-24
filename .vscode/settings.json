@@ -1,0 +1,45 @@
+{
+    "files.associations": {
+        "stdio.h": "c",
+        "iostream": "cpp",
+        "ostream": "cpp"
+    },
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "vue-html": "html",
+        "typescript": "typescriptreact"
+    },
+    "emmet.triggerExpansionOnTab": true,
+    "editor.fontLigatures": true,
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "editor.inlineSuggest.enabled": true,
+    "editor.formatOnSave": true,
+    "html.format.wrapLineLength": 70,
+    "scss.lint.unknownAtRules": "ignore",
+    "css.lint.unknownAtRules": "ignore",
+    "css.lint.unknownProperties": "ignore",
+    "scss.lint.unknownProperties": "ignore",
+    "editor.inlayHints.enabled": "on",
+    "editor.quickSuggestions": {
+        "strings": true
+    },
+    "editor.wordWrap": "bounded",
+    "editor.guides.bracketPairs": "active",
+    "tailwindCSS.experimental.classRegex": ["cn\\(([\")]*)\\)", "clsx\\(([\")]*)\\)"],
+    "tailwindCSS.classAttributes": ["class", "className", "ngClass", ".*Class", ".*ClassName"],
+    "editor.renderWhitespace": "boundary",
+    "workbench.tree.indent": 15,
+    "explorer.compactFolders": false,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "editor.snippetSuggestions": "inline",
+    "editor.wordWrapColumn": 150,
+    "workbench.editor.wrapTabs": true,
+    "editor.semanticHighlighting.enabled": true,
+    "editor.cursorBlinking": "expand",
+    "[cpp]": {
+        "editor.formatOnSave": false
+    }
+}

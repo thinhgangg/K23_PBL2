@@ -1,0 +1,7 @@
+FIELD: San_B
+STATUS: Booked
+USERNAME: nhatpham
+CUSTOMER: Pham Van Minh Nhat
+PHONE NUMBER: 0123456789
+PAYMENT DETAILS: not paid
+NOTE: no
