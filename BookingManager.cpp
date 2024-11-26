@@ -135,14 +135,6 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
     }
 
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
-    // if (!isFieldBookedByUser(filePath, username)) {
-    //     system("cls");
-    //     cout << "\t\t\t\t\t                YOU DO NOT HAVE PERMISSION TO CANCEL THIS FIELD!              " << endl;
-    //     menu.printRETURN();
-    //     cin.ignore();
-    //     cin.get();
-    //     return false;
-    // }
 
     ofstream file(filePath, ios::trunc);
     if (file.is_open()) {
@@ -170,8 +162,8 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
 void BookingManager::viewBookingHistory(const string& username) {
     Menu menu;
     FileManager fileManager;
-    Vector timeSlots = fileManager.loadFields("timeslots.txt");
-    Vector fields = fileManager.loadFields("fields.txt");
+    Vector timeSlots = fileManager.loadData("timeslots.txt");
+    Vector fields = fileManager.loadData("fields.txt");
 
     bool hasHistory = false;
 
@@ -252,7 +244,7 @@ bool BookingManager::displayFieldsForTimeSlot(const string& timeSlot) {
     }
     file.close();
     
-    Vector fields = fileManager.loadFields("fields.txt");
+    Vector fields = fileManager.loadData("fields.txt");
     bool hasAvailable = false;
 
     for (size_t i = 0; i < fields.get_size(); ++i) {

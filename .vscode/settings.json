@@ -4,7 +4,8 @@
         "iostream": "cpp",
         "ostream": "cpp",
         "*.tcc": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "fstream": "cpp"
     },
     "emmet.includeLanguages": {
         "javascript": "javascriptreact",

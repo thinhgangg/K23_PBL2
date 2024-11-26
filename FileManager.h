@@ -7,7 +7,7 @@
 
 class FileManager {
 public:
-    Vector loadFields(const string& filePath);
+    Vector loadData(const string& filePath);
     Vector readAllLines(const string& filename);
     void writeAllLines(const string& filename, const Vector& lines);
 };

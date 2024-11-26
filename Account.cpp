@@ -38,6 +38,7 @@ bool Account::getUserInfo(const string &filename, const string &user, const stri
     return false;
 }
 
+// kiem tra co phai tai khoan admin
 bool Account::isAdminUser(const string& username, const string& filename) {
     ifstream file(filename);
     string u, pass, name, phone;

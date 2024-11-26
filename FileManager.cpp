@@ -1,9 +1,9 @@
 #include "FileManager.h"
 
 // Them san vao file
-Vector FileManager::loadFields(const string& filePath) {
+Vector FileManager::loadData(const string& filePath) {
     Menu menu;
-    Vector fields;
+    Vector data;
     ifstream file(filePath);
 
     if (!file.is_open()) {
@@ -12,16 +12,16 @@ Vector FileManager::loadFields(const string& filePath) {
         menu.printRETURN();
         cin.ignore();
         cin.get();
-        return fields;
+        return data;
     }
 
     string field;
     while (getline(file, field)) {
-        fields.push_back(field);
+        data.push_back(field);
     }
 
     file.close();
-    return fields;
+    return data;
 }
 
 // Doc tat ca cac dong tu file vao vector

@@ -16,8 +16,8 @@ private:
 public:
     FieldManager();
 
-    void loadTimeSlotsFromFile(const string& filename);
-    void loadFieldsFromFile(const string& filename);
+    void loadTimeSlots(const string& filename);
+    void loadFields(const string& filename);
 
     void displayTimeSlots();
     void displayFields();

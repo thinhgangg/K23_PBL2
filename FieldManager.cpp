@@ -5,12 +5,12 @@
 using namespace std;
 
 FieldManager::FieldManager() {
-    loadTimeSlotsFromFile("timeslots.txt");
+    loadTimeSlots("timeslots.txt");
 
-    loadFieldsFromFile("fields.txt");
+    loadFields("fields.txt");
 }
 
-void FieldManager::loadTimeSlotsFromFile(const string& filename) {
+void FieldManager::loadTimeSlots(const string& filename) {
     ifstream file(filename);
     string timeSlot;
 
@@ -24,7 +24,7 @@ void FieldManager::loadTimeSlotsFromFile(const string& filename) {
     }
 }
 
-void FieldManager::loadFieldsFromFile(const string& filename) {
+void FieldManager::loadFields(const string& filename) {
     ifstream file(filename);
     string field;
 
