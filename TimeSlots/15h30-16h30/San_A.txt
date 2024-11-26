@@ -1,7 +1,2 @@
 FIELD: San_A
-STATUS: Booked
-USERNAME: phucthinh
-CUSTOMER: Phuc Thinh
-PHONE NUMBER: 0123456789
-PAYMENT DETAILS: paid
-NOTE: no
+STATUS: Available

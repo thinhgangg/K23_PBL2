@@ -27,6 +27,7 @@ public:
     // Static methods
     static bool accountExists(const string& filename, const string& user);
     bool getUserInfo(const string &filename, const string &user, const string &pass, string &name);
+    bool isAdminUser(const string& username, const string& filename);
 
     // Virtual method
     virtual void saveAccount(const string& filename) const;

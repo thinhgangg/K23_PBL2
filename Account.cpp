@@ -38,3 +38,16 @@ bool Account::getUserInfo(const string &filename, const string &user, const stri
     return false;
 }
 
+bool Account::isAdminUser(const string& username, const string& filename) {
+    ifstream file(filename);
+    string u, pass, name, phone;
+
+    while (getline(file, u, ',') && getline(file, pass, ',') && getline(file, name, ',') && getline(file, phone)) {
+        if (u == username) {
+            return true;
+        }
+    }
+
+    return false;
+}
+

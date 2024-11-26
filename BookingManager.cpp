@@ -112,6 +112,9 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
 // kiem tra huy san thanh cong
 bool BookingManager::isCancelBookField(const string& timeSlot, const string& field, const string& username) {
     Menu menu;
+    Account account;
+
+    bool isAdmin = account.isAdminUser(username, "tk_quanly.txt");
 
     if (isFieldAvailable(timeSlot, field)) {
         system("cls");
@@ -122,8 +125,7 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
         return false;
     }
 
-    string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
-    if (!isFieldBookedByUser(filePath, username)) {
+    if (!isAdmin && !isFieldBookedByUser("TimeSlots/" + timeSlot + "/" + field + ".txt", username)) {
         system("cls");
         cout << "\t\t\t\t\t                YOU DO NOT HAVE PERMISSION TO CANCEL THIS FIELD!              " << endl;
         menu.printRETURN();
@@ -131,6 +133,16 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
         cin.get();
         return false;
     }
+
+    string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
+    // if (!isFieldBookedByUser(filePath, username)) {
+    //     system("cls");
+    //     cout << "\t\t\t\t\t                YOU DO NOT HAVE PERMISSION TO CANCEL THIS FIELD!              " << endl;
+    //     menu.printRETURN();
+    //     cin.ignore();
+    //     cin.get();
+    //     return false;
+    // }
 
     ofstream file(filePath, ios::trunc);
     if (file.is_open()) {
