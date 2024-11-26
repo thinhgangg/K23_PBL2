@@ -25,7 +25,7 @@ public:
     string selectTimeSlot();
     string selectField(const string& timeSlot);
 
-    void bookField(const string& username);
+    void bookField(const string& username, const string& customerName);
     void cancelBookField(const string& username);
     void viewAvailableFields();
 };

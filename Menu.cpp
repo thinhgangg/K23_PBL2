@@ -165,7 +165,7 @@ void Menu::managerMenu(const string& username, const string& name) {
                 resetPassMenu();
                 break;
             case 3:
-                fieldManager.bookField(username);
+                fieldManager.bookField(username, name);
                 break;
             case 4:
                 fieldManager.cancelBookField(username);
@@ -211,7 +211,7 @@ void Menu::customerMenu(const string& username, const string& name) {
 
         switch (choice) {
             case 1:
-                fieldManager.bookField(username);
+                fieldManager.bookField(username, name);
                 break;
             case 2:
                 fieldManager.cancelBookField(username);
@@ -322,10 +322,10 @@ void Menu::displayBookingForm() {
     cout << "\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
     cout << "\t\t\t\t\t|                               BOOKING DETAILS                                |" << endl;
     cout << "\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t|   ENTER NAME:                                                                |" << endl;
-    cout << "\t\t\t\t\t|   ENTER PHONE NUMBER:                                                        |" << endl;
-    cout << "\t\t\t\t\t|   ENTER PAYMENT DETAILS (PAID/NOT PAID):                                     |" << endl;
-    cout << "\t\t\t\t\t|   ENTER NOTE (IF ANY):                                                       |" << endl;
+    cout << "\t\t\t\t\t|       NAME:                                                                  |" << endl;
+    cout << "\t\t\t\t\t|       PHONE NUMBER:                                                          |" << endl;
+    cout << "\t\t\t\t\t|       PAYMENT DETAILS (PAID/NOT PAID):                                       |" << endl;
+    cout << "\t\t\t\t\t|       NOTE (IF ANY):                                                         |" << endl;
     cout << "\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
 }
 

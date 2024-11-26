@@ -11,7 +11,7 @@ public:
     bool isFieldAvailable(const string& timeSlot, const string& field);
     bool isFieldBookedByUser(const string& filePath, const string& username);
 
-    bool isBookField(const string& timeSlot, const string& field, const string& username);
+    bool isBookField(const string& timeSlot, const string& field, const string& username, const string& customerName);
     bool isCancelBookField(const string& timeSlot, const string& field, const string& username);
 
     void viewBookingHistory(const string& username);

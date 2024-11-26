@@ -98,7 +98,7 @@ string FieldManager::selectField(const string& timeSlot) {
     }
 }
 
-void FieldManager::bookField(const string& username) {
+void FieldManager::bookField(const string& username, const string& customerName) {
     Menu menu;
     BookingManager booking;
 
@@ -115,7 +115,7 @@ void FieldManager::bookField(const string& username) {
             string field = selectField(timeSlot);
             if (field.empty()) break;
 
-            if (booking.isBookField(timeSlot, field, username)) {
+            if (booking.isBookField(timeSlot, field, username, customerName)) {
                 system("cls");
                 return;
             }

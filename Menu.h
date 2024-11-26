@@ -10,8 +10,8 @@ using namespace std;
 class Menu {
 public:
     void homeMenu();
-    void managerMenu(const string& username, const string& name);
-    void customerMenu(const string& username, const string& name);
+    void managerMenu(const string& username, const string& customerName);
+    void customerMenu(const string& username, const string& customerName);
 
     void resetPassMenu();
     void registrationMenu();

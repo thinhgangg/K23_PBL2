@@ -53,7 +53,7 @@ bool BookingManager::isFieldBookedByUser(const string& filePath, const string& u
 }
 
 // kiem tra dat san thanh cong
-bool BookingManager::isBookField(const string& timeSlot, const string& field, const string& username) {
+bool BookingManager::isBookField(const string& timeSlot, const string& field, const string& username, const string& customerName) {
     Menu menu;
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
 
@@ -68,25 +68,25 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
 
     menu.displayBookingForm();
 
-    string customerName, phone, paymentStatus, note;
+    string phone, paymentStatus, note;
 
-    cout << "\033[4;57H";
+    cout << "\033[4;55H" << customerName;
     cin.ignore();
-    getline(cin, customerName);
     
-    cout << "\033[5;65H";
+    cout << "\033[5;63H";
     getline(cin, phone);
     
-    cout << "\033[6;84H";
+    cout << "\033[6;82H";
     getline(cin, paymentStatus);
     
-    cout << "\033[7;66H";
+    cout << "\033[7;64H";
     getline(cin, note);
 
     ofstream file(filePath, ios::trunc);
     if (file.is_open()) {
         file << "FIELD: " << field << endl;
         file << "STATUS: Booked" << endl;
+        file << "PRICE: " << endl;
         file << "USERNAME: " << username << endl;
         file << "CUSTOMER: " << customerName << endl;
         file << "PHONE NUMBER: " << phone << endl;
@@ -125,7 +125,7 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
     if (!isFieldBookedByUser(filePath, username)) {
         system("cls");
-        cout << "\t\t\t\t\t               YOU DO NOT HAVE PERMISSION TO CANCEL THIS FIELD!               " << endl;
+        cout << "\t\t\t\t\t                YOU DO NOT HAVE PERMISSION TO CANCEL THIS FIELD!              " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
