@@ -134,12 +134,12 @@ void Menu::homeMenu() {
 }
 
 void Menu::managerMenu(const string& username, const string& name) {
-    system("cls"); 
     AccountManager manager;
     FieldManager fieldManager;
     int choice;
 
     while (true) {
+        system("cls"); 
         cout << "\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t                      WELCOME, "<< name << "!                   " << endl;
         cout << "\t\t\t\t\t\t################################################################" << endl;
@@ -188,12 +188,12 @@ void Menu::managerMenu(const string& username, const string& name) {
 }
 
 void Menu::customerMenu(const string& username, const string& name) {
-    system("cls"); 
     int choice;
     FieldManager fieldManager;
     BookingManager booking;
 
     while (true) {
+        system("cls"); 
         cout << "\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t                      WELCOME, "<< name << "!                   " << endl;
         cout << "\t\t\t\t\t\t################################################################" << endl;
@@ -291,52 +291,6 @@ void Menu::resetPassMenu() {
         default:
             displayError();
     }
-}
-
-void Menu::displayTimeSlots() {
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                     AVAILABLE TIME SLOTS                     |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        1. 15h30-16h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        2. 16h30-17h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        3. 17h30-18h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        4. 18h30-19h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        5. 19h30-20h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        6. 20h30-21h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        7. 21h30-22h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        8. 22h30-23h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        9. 23h30-00h30                        |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                        0. GO BACK                            |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-}
-
-void Menu::displayFieldList() {
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                          FIELD LIST                          |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                           1. SAN A                           |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                           2. SAN B                           |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                           3. SAN C                           |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                           4. SAN D                           |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                           5. SAN E                           |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                           0. GO BACK                         |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
 }
 
 void Menu::printDATSAN() {

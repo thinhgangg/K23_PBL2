@@ -1,55 +1,103 @@
 #include "FieldManager.h"
 #include "BookingManager.h"
+#include <iostream>
 
 using namespace std;
 
-// chon gio
+FieldManager::FieldManager() {
+    loadTimeSlotsFromFile("timeslots.txt");
+
+    loadFieldsFromFile("fields.txt");
+}
+
+void FieldManager::loadTimeSlotsFromFile(const string& filename) {
+    ifstream file(filename);
+    string timeSlot;
+
+    if (file.is_open()) {
+        while (getline(file, timeSlot)) {
+            availableTimeSlots.push_back(timeSlot); 
+        }
+        file.close();
+    } else {
+        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filename << endl;
+    }
+}
+
+void FieldManager::loadFieldsFromFile(const string& filename) {
+    ifstream file(filename);
+    string field;
+
+    if (file.is_open()) {
+        while (getline(file, field)) {
+            availableFields.push_back(field);
+        }
+        file.close();
+    } else {
+        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filename << endl;
+    }
+}
+
+void FieldManager::displayTimeSlots() {
+    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t|                     AVAILABLE TIME SLOTS                     |" << endl;
+    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+
+    for (size_t i = 0; i < availableTimeSlots.get_size(); ++i) {
+        cout << "\t\t\t\t\t\t|                        " << i + 1 << ". " << availableTimeSlots[i] << "                        |" << endl;
+        cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    }
+    cout << "\t\t\t\t\t\t|                        0. GO BACK                            |" << endl;
+    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+}
+
+void FieldManager::displayFields() {
+    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t|                       AVAILABLE FIELDS                       |" << endl;
+    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+
+    for (size_t i = 0; i < availableFields.get_size(); ++i) {
+        cout << "\t\t\t\t\t\t|                           " << i + 1 << ". " << availableFields[i] << "                           |" << endl;
+        cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    }
+    cout << "\t\t\t\t\t\t|                           0. GO BACK                         |" << endl;
+    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+}
+
 string FieldManager::selectTimeSlot() {
     Menu menu;
-    menu.displayTimeSlots();
+    displayTimeSlots();
     int timeSlotChoice;
     cin >> timeSlotChoice;
 
-    switch (timeSlotChoice) {
-        case 1: return "15h30-16h30";
-        case 2: return "16h30-17h30";
-        case 3: return "17h30-18h30";
-        case 4: return "18h30-19h30";
-        case 5: return "19h30-20h30";
-        case 6: return "20h30-21h30";
-        case 7: return "21h30-22h30";
-        case 8: return "22h30-23h30";
-        case 9: return "23h30-00h30";
-        case 0: 
-            system("cls");
-            return "";
-        default:
-            menu.displayError();
+    if (timeSlotChoice == 0) {
+        return "";
+    } else if (timeSlotChoice > 0 && timeSlotChoice <= availableTimeSlots.get_size()) {
+        return availableTimeSlots[timeSlotChoice - 1];
+    } else {
+        menu.displayError();
+        return selectTimeSlot();
     }
 }
 
-// chon san
 string FieldManager::selectField(const string& timeSlot) {
     Menu menu;
-    menu.displayFieldList();
+    displayFields();
     int fieldChoice;
     cin >> fieldChoice;
 
-    switch (fieldChoice) {
-        case 1: return "San_A";
-        case 2: return "San_B";
-        case 3: return "San_C";
-        case 4: return "San_D";
-        case 5: return "San_E";
-        case 0: 
-            system("cls");
-            return "";
-        default:
-            menu.displayError();
+    if (fieldChoice == 0) {
+        return "";
+    } else if (fieldChoice > 0 && fieldChoice <= availableFields.get_size()) {
+        return availableFields[fieldChoice - 1];
+    } else {
+        menu.displayError();
+        return selectField(timeSlot);
     }
 }
 
-// dat san
 void FieldManager::bookField(const string& username) {
     Menu menu;
     BookingManager booking;
@@ -58,14 +106,14 @@ void FieldManager::bookField(const string& username) {
         system("cls");
         menu.printDATSAN();
         string timeSlot = selectTimeSlot();
-        if (timeSlot.empty()) return; 
+        if (timeSlot.empty()) return;
 
         while (true) {
             system("cls");
             menu.printDATSAN();
             menu.printKHUNGGIO(timeSlot);
             string field = selectField(timeSlot);
-            if (field.empty()) break; 
+            if (field.empty()) break;
 
             if (booking.isBookField(timeSlot, field, username)) {
                 system("cls");
@@ -75,19 +123,18 @@ void FieldManager::bookField(const string& username) {
     }
 }
 
-// huy san
 void FieldManager::cancelBookField(const string& username) {
     Menu menu;
     BookingManager booking;
 
     while (true) {
-        system("cls");
+        system("cls"); 
         menu.printHUYSAN();
         string timeSlot = selectTimeSlot();
         if (timeSlot.empty()) return;
 
         while (true) {
-            system("cls");
+            system("cls"); 
             menu.printHUYSAN();
             menu.printKHUNGGIO(timeSlot);
             string field = selectField(timeSlot);
@@ -101,15 +148,13 @@ void FieldManager::cancelBookField(const string& username) {
     }
 }
 
-// xem san trong
 void FieldManager::viewAvailableFields() {
     Menu menu;
     BookingManager booking;
 
     while (true) {
-        system("cls");
+        system("cls"); 
         menu.printXEMSAN();
-
         string timeSlot = selectTimeSlot();
         if (timeSlot.empty()) {
             system("cls");

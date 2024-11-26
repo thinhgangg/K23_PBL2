@@ -18,8 +18,6 @@ public:
 
     void displayLogo();
     void displayGoodbye();
-    void displayTimeSlots();
-    void displayFieldList();
 
     void printDATSAN();
     void printHUYSAN();

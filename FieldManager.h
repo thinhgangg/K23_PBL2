@@ -10,7 +10,18 @@
 using namespace std;
 
 class FieldManager {
+private:
+    Vector availableTimeSlots;
+    Vector availableFields;
 public:
+    FieldManager();
+
+    void loadTimeSlotsFromFile(const string& filename);
+    void loadFieldsFromFile(const string& filename);
+
+    void displayTimeSlots();
+    void displayFields();
+
     string selectTimeSlot();
     string selectField(const string& timeSlot);
 

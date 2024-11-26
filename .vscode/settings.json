@@ -3,7 +3,8 @@
         "stdio.h": "c",
         "iostream": "cpp",
         "ostream": "cpp",
-        "*.tcc": "cpp"
+        "*.tcc": "cpp",
+        "vector": "cpp"
     },
     "emmet.includeLanguages": {
         "javascript": "javascriptreact",
