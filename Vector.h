@@ -5,9 +5,10 @@
 
 using namespace std;
 
+template <typename T>
 class Vector {
 private:
-    string* data;       // Con trỏ tới mảng dữ liệu
+    T* data;       // Con trỏ tới mảng dữ liệu
     size_t capacity;    // Dung lượng hiện tại của mảng
     size_t size;        // Số lượng phần tử trong mảng
 
@@ -17,14 +18,14 @@ public:
 
     // Destructor
     ~Vector() {
-        delete[] data;
+        delete[] data; // Giải phóng bộ nhớ
     }
 
-    // Thêm phần tử vào cuối
-    void push_back(const string& value) {
+    // Thêm phần tử vào cuối vector
+    void push_back(const T& value) {
         if (size >= capacity) {
-            size_t new_capacity = (capacity == 0) ? 1 : capacity * 2;
-            string* new_data = new string[new_capacity];
+            size_t new_capacity = (capacity == 0) ? 1 : capacity * 2; // Tăng dung lượng nếu hết chỗ
+            T* new_data = new T[new_capacity]; // Tạo mảng mới với dung lượng lớn hơn
 
             // Sao chép dữ liệu cũ sang mảng mới
             for (size_t i = 0; i < size; ++i) {
@@ -36,46 +37,51 @@ public:
             capacity = new_capacity;
         }
 
-        data[size++] = value;
+        data[size++] = value; // Thêm phần tử mới vào cuối vector
     }
 
-    // Truy cập phần tử bằng chỉ số (không thay đổi)
-    const string& operator[](size_t index) const {
+    // Truy cập phần tử (không thay đổi)
+    const T& operator[](size_t index) const {
         if (index >= size) {
             throw out_of_range("Index out of range");
         }
         return data[index];
     }
 
-    // Truy cập phần tử bằng chỉ số (có thể thay đổi)
-    string& operator[](size_t index) {
+    // Truy cập phần tử (có thể thay đổi)
+    T& operator[](size_t index) {
         if (index >= size) {
             throw out_of_range("Index out of range");
         }
         return data[index];
     }
 
-    // Xóa phần tử ở chỉ số index
+    // Xóa phần tử tại chỉ số index
     void erase(size_t index) {
         if (index >= size) {
             throw out_of_range("Index out of range");
         }
 
+        // Dịch chuyển các phần tử còn lại về phía trước
         for (size_t i = index; i < size - 1; ++i) {
             data[i] = data[i + 1];
         }
 
-        --size;
+        --size; // Giảm kích thước vector
     }
 
-    // Lấy số lượng phần tử
+    // Lấy số lượng phần tử trong vector
     size_t get_size() const {
         return size;
     }
 
-    // Kiểm tra vector rỗng
+    // Kiểm tra vector có rỗng không
     bool empty() const {
         return size == 0;
     }
-    
+
+    // Xóa tất cả phần tử trong vector
+    void clear() {
+        size = 0;
+    }
 };

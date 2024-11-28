@@ -1,5 +1,4 @@
 #include "FieldManager.h"
-#include "BookingManager.h"
 #include <iostream>
 
 using namespace std;
@@ -11,30 +10,21 @@ FieldManager::FieldManager() {
 }
 
 void FieldManager::loadTimeSlots(const string& filename) {
-    ifstream file(filename);
-    string timeSlot;
+    FileManager fileManager;
+    Vector<string> data = fileManager.loadData(filename);
 
-    if (file.is_open()) {
-        while (getline(file, timeSlot)) {
-            availableTimeSlots.push_back(timeSlot); 
-        }
-        file.close();
-    } else {
-        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filename << endl;
+    for (size_t i = 0; i < data.get_size(); ++i) {
+        const string& timeSlot = data[i];
+        availableTimeSlots.push_back(timeSlot);
     }
 }
 
 void FieldManager::loadFields(const string& filename) {
-    ifstream file(filename);
-    string field;
+    FileManager fileManager;
+    Vector<string> data = fileManager.loadData(filename);
 
-    if (file.is_open()) {
-        while (getline(file, field)) {
-            availableFields.push_back(field);
-        }
-        file.close();
-    } else {
-        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filename << endl;
+    for (size_t i = 0; i < data.get_size(); ++i) {
+        availableFields.push_back(data[i]);
     }
 }
 
@@ -162,7 +152,7 @@ void FieldManager::viewAvailableFields() {
         }
 
         system("cls");
-        if (!booking.displayFieldsForTimeSlot(timeSlot)) {
+        if (!booking.checkAvailableFields(timeSlot)) {
             cout << "\t\t\t\t\t                     NO AVAILABLE FIELDS IN THIS TIME SLOT!                   " << endl;
             menu.printRETURN();
         } else {

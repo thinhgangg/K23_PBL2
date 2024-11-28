@@ -69,17 +69,18 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
     menu.displayBookingForm();
 
     string phone, paymentStatus, note;
+    cout << "\033[4;56H" << field;
 
-    cout << "\033[4;55H" << customerName;
+    cout << "\033[5;55H" << customerName;
     cin.ignore();
     
-    cout << "\033[5;63H";
+    cout << "\033[6;63H";
     getline(cin, phone);
     
-    cout << "\033[6;82H";
+    cout << "\033[7;92H";
     getline(cin, paymentStatus);
     
-    cout << "\033[7;64H";
+    cout << "\033[8;64H";
     getline(cin, note);
 
     ofstream file(filePath, ios::trunc);
@@ -162,8 +163,8 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
 void BookingManager::viewBookingHistory(const string& username) {
     Menu menu;
     FileManager fileManager;
-    Vector timeSlots = fileManager.loadData("timeslots.txt");
-    Vector fields = fileManager.loadData("fields.txt");
+    Vector<string> timeSlots = fileManager.loadData("timeslots.txt");
+    Vector<string> fields = fileManager.loadData("fields.txt");
 
     bool hasHistory = false;
 
@@ -229,7 +230,7 @@ void BookingManager::viewBookingHistory(const string& username) {
 }
 
 // kiem tra neu con san trong thi in ra
-bool BookingManager::displayFieldsForTimeSlot(const string& timeSlot) { 
+bool BookingManager::checkAvailableFields(const string& timeSlot) { 
     Menu menu;
     FileManager fileManager;
 
@@ -244,7 +245,7 @@ bool BookingManager::displayFieldsForTimeSlot(const string& timeSlot) {
     }
     file.close();
     
-    Vector fields = fileManager.loadData("fields.txt");
+    Vector<string> fields = fileManager.loadData("fields.txt");
     bool hasAvailable = false;
 
     for (size_t i = 0; i < fields.get_size(); ++i) {

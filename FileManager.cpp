@@ -1,9 +1,9 @@
 #include "FileManager.h"
 
 // Them san vao file
-Vector FileManager::loadData(const string& filePath) {
+Vector<string> FileManager::loadData(const string& filePath) {
     Menu menu;
-    Vector data;
+    Vector<string> data;
     ifstream file(filePath);
 
     if (!file.is_open()) {
@@ -25,9 +25,9 @@ Vector FileManager::loadData(const string& filePath) {
 }
 
 // Doc tat ca cac dong tu file vao vector
-Vector FileManager::readAllLines(const string& filename) {
+Vector<string> FileManager::readAllLines(const string& filename) {
     ifstream file(filename);
-    Vector lines;
+    Vector<string> lines;
 
     string line;
     while (getline(file, line)) {
@@ -39,7 +39,7 @@ Vector FileManager::readAllLines(const string& filename) {
 }
 
 // Ghi tat ca cac dong tu vector vao file
-void FileManager::writeAllLines(const string& filename, const Vector& lines) {
+void FileManager::writeAllLines(const string& filename, const Vector<string>& lines) {
     ofstream file(filename, ios::trunc);
     for (size_t i = 0; i < lines.get_size(); i++) {
         file << lines[i] << endl;

@@ -16,6 +16,5 @@ public:
 
     void viewBookingHistory(const string& username);
 
-    bool displayFieldsForTimeSlot(const string& timeSlot);
-
+    bool checkAvailableFields(const string& timeSlot);
 };

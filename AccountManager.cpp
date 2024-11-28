@@ -133,29 +133,29 @@ void AccountManager::resetPassword(const string& filename) {
     Menu menu;
 
     while (true) {
-        string username, phone, newPassword, confirmPassword;
+        string username, phoneNum, newPassword, confirmPassword;
 
         menu.displayResetPass();
 
         cout << "\033[4;76H";
         cin >> username;
         cout << "\033[6;80H";
-        cin >> phone;
+        cin >> phoneNum;
 
         // doc danh sach tai khoan
-        Vector lines = fileManager.readAllLines(filename);
+        Vector<string> lines = fileManager.readAllLines(filename);
         bool accountFound = false;
 
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
-            string u, p, name, phoneNum;
+            string u, p, name, phone;
             getline(ss, u, ',');
             getline(ss, p, ',');
             getline(ss, name, ',');
-            getline(ss, phoneNum);
+            getline(ss, phone);
 
             // neu tim thay tai khoan
-            if (u == username && phoneNum == phone) {
+            if (u == username && phone == phoneNum) {
                 while (true) {
                     cout << "\033[8;00H";
                     cout << "\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
@@ -188,7 +188,7 @@ void AccountManager::resetPassword(const string& filename) {
                             return;
                         } else {
                             stringstream newLine;
-                            newLine << u << "," << newPassword << "," << name << "," << phoneNum;
+                            newLine << u << "," << newPassword << "," << name << "," << phone;
                             lines[i] = newLine.str();
                             accountFound = true;
                             break;
@@ -233,16 +233,16 @@ void AccountManager::changePassword(const string& filename, const string& userna
         cout << "\033[4;84H";
         currentPassword = userManager.inputPassword();
 
-        Vector lines = fileManager.readAllLines(filename);
+        Vector<string> lines = fileManager.readAllLines(filename);
         bool accountFound = false;
 
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
-            string u, p, name, phoneNum;
+            string u, p, name, phone;
             getline(ss, u, ',');
             getline(ss, p, ',');
             getline(ss, name, ',');
-            getline(ss, phoneNum, ',');
+            getline(ss, phone, ',');
 
             if (u == username && p == currentPassword) {
                 while (true) {
@@ -276,7 +276,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
                             return;
                         } else {
                             stringstream newLine;
-                            newLine << u << "," << newPassword << "," << name << "," << phoneNum;
+                            newLine << u << "," << newPassword << "," << name << "," << phone;
                             lines[i] = newLine.str();
                             accountFound = true;
                             break;
@@ -311,19 +311,19 @@ void AccountManager::changePassword(const string& filename, const string& userna
 // kiem tra xoa tai khoan thanh cong
 bool AccountManager::isdeleteAccount(const string& filename, const string& username) {
     FileManager fileManager;
-    Vector lines = fileManager.readAllLines(filename);
+    Vector<string> lines = fileManager.readAllLines(filename);
     bool accountFound = false;
 
     for (size_t i = 0; i < lines.get_size(); ++i) {
         stringstream ss(lines[i]);
-        string currentUsername, password, name, phone;
+        string u, p, name, phone;
 
-        getline(ss, currentUsername, ',');
-        getline(ss, password, ',');
+        getline(ss, u, ',');
+        getline(ss, p, ',');
         getline(ss, name, ',');
         getline(ss, phone, ',');
 
-        if (currentUsername == username) {
+        if (u == username) {
             lines.erase(i);
             accountFound = true;
             break;
@@ -368,7 +368,7 @@ void AccountManager::viewCustomerList() {
     ifstream file("tk_khachhang.txt");
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\t               ERROR: Unable to open customer data file!" << endl;
+        cout << "\t\t\t\t\t\tERROR: Unable to open file" << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -376,7 +376,7 @@ void AccountManager::viewCustomerList() {
     }
 
     string line, username, password, name, phone;
-    Vector customers;
+    Vector<string> customers;
 
     while (getline(file, line)) {
         customers.push_back(line);
@@ -443,7 +443,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
     while (true) {
         string newPhone, password;
 
-        Vector lines = fileManager.readAllLines(filename);
+        Vector<string> lines = fileManager.readAllLines(filename);
         bool accountFound = false;
 
         for (size_t i = 0; i < lines.get_size(); i++) {
@@ -550,7 +550,7 @@ void AccountManager::searchCustomer() {
     cout << "\033[4;80H" << phone;
     cin >> phone;
 
-    Vector lines = fileManager.readAllLines("tk_khachhang.txt");
+    Vector<string> lines = fileManager.readAllLines("tk_khachhang.txt");
 
     for (size_t i = 0; i < lines.get_size(); ++i) {
         stringstream ss(lines[i]);

@@ -3,6 +3,7 @@
 
 #include "Vector.h"
 #include "Menu.h"
+#include "FileManager.h"
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -11,8 +12,8 @@ using namespace std;
 
 class FieldManager {
 private:
-    Vector availableTimeSlots;
-    Vector availableFields;
+    Vector<string> availableTimeSlots;
+    Vector<string> availableFields;
 public:
     FieldManager();
 

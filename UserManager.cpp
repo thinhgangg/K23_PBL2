@@ -74,7 +74,7 @@ bool UserManager::isValidPhone(const string& phone) {
 bool UserManager::isPhoneNumberTaken(const string& phone) {
     FileManager fileManager;
 
-    Vector accounts = fileManager.readAllLines("tk_khachhang.txt");
+    Vector<string> accounts = fileManager.readAllLines("tk_khachhang.txt");
     for (size_t i = 0; i < accounts.get_size(); ++i) {
         stringstream ss(accounts[i]);
         string username, password, name, storedPhone;

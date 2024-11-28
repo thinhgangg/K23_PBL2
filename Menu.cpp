@@ -107,7 +107,7 @@ void Menu::displayError() {
 }
 
 void Menu::homeMenu() {
-    AccountManager manager;
+    AccountManager accountManager;
     int choice;
 
     while (true) {
@@ -125,13 +125,13 @@ void Menu::homeMenu() {
 
         switch (choice) {
             case 1:
-                manager.login();
+                accountManager.login();
                 break;
             case 2:
-                manager.registerAccount("tk_khachhang.txt", "Customer");
+                accountManager.registerAccount("tk_khachhang.txt", "Customer");
                 break;
             case 3:
-                manager.resetPassword("tk_khachhang.txt");
+                accountManager.resetPassword("tk_khachhang.txt");
                 break;
             case 0:
                 displayGoodbye();
@@ -143,7 +143,7 @@ void Menu::homeMenu() {
 }
 
 void Menu::managerMenu(const string& username, const string& name) {
-    AccountManager manager;
+    AccountManager accountManager;
     FieldManager fieldManager;
     int choice;
 
@@ -162,6 +162,7 @@ void Menu::managerMenu(const string& username, const string& name) {
         cout << "\t\t\t\t\t\t##                 6. VIEW AVAILABLE FIELDS                   ##" << endl;
         cout << "\t\t\t\t\t\t##                 7. VIEW CUSTOMER LIST                      ##" << endl;
         cout << "\t\t\t\t\t\t##                 8. SEARCH CUSTOMER                         ##" << endl;
+        cout << "\t\t\t\t\t\t##                 9. FIELD PRICE MANAGEMENT                  ##" << endl;
         cout << "\t\t\t\t\t\t##                 0. LOG OUT                                 ##" << endl;
         cout << "\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
@@ -187,10 +188,13 @@ void Menu::managerMenu(const string& username, const string& name) {
                 fieldManager.viewAvailableFields();
                 break;
             case 7:
-                manager.viewCustomerList();
+                accountManager.viewCustomerList();
                 break;
             case 8:
-                manager.searchCustomer();
+                accountManager.searchCustomer();
+                break;
+            case 9:
+                priceManagerMenu();
                 break;
             case 0:
                 return;
@@ -278,7 +282,7 @@ void Menu::registrationMenu() {
 
 void Menu::resetPassMenu() {
     system("cls"); 
-    AccountManager manager;
+    AccountManager accountManager;
     int resetChoice;
 
     cout << "\t\t\t\t\t\t################################################################" << endl;
@@ -293,10 +297,41 @@ void Menu::resetPassMenu() {
 
     switch (resetChoice) {
         case 1:
-            manager.resetPassword("tk_quanly.txt");
+            accountManager.resetPassword("tk_quanly.txt");
             break;
         case 2:
-            manager.resetPassword("tk_khachhang.txt");
+            accountManager.resetPassword("tk_khachhang.txt");
+            break;
+        case 0:
+            system("cls");
+            break;
+        default:
+            displayError();
+    }
+}
+
+void Menu::priceManagerMenu() {
+    system("cls"); 
+    PriceManager priceManager;
+    string filename = "price_list.txt";
+    int choice;
+
+    cout << "\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t##                   FIELD PRICE MANAGEMENT                   ##" << endl;
+    cout << "\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t##                  1. VIEW ALL FIELD PRICES                  ##" << endl;
+    cout << "\t\t\t\t\t\t##                  2. UPDATE FIELD PRICES                    ##" << endl;
+    cout << "\t\t\t\t\t\t##                  0. GO BACK                                ##" << endl;
+    cout << "\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            priceManager.displayPriceList(filename);
+            break;
+        case 2:
+            priceManager.editPriceList(filename);
             break;
         case 0:
             system("cls");
@@ -335,16 +370,17 @@ void Menu::displayBookingForm() {
     cout << "\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
     cout << "\t\t\t\t\t|                               BOOKING DETAILS                                |" << endl;
     cout << "\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t|       FIELD:                                                                 |" << endl;
     cout << "\t\t\t\t\t|       NAME:                                                                  |" << endl;
     cout << "\t\t\t\t\t|       PHONE NUMBER:                                                          |" << endl;
-    cout << "\t\t\t\t\t|       PAYMENT DETAILS (PAID/NOT PAID):                                       |" << endl;
+    cout << "\t\t\t\t\t|       PAYMENT DETAILS (BY CASH / BANK TRANSFER):                             |" << endl;
     cout << "\t\t\t\t\t|       NOTE (IF ANY):                                                         |" << endl;
     cout << "\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
 }
 
 void Menu::customerInfoMenu(const string& username, const string& name, const string& phone) {
     FieldManager fieldManager;
-    AccountManager manager;
+    AccountManager accountManager;
     BookingManager booking;
 
     int choice;
@@ -373,10 +409,10 @@ void Menu::customerInfoMenu(const string& username, const string& name, const st
                 booking.viewBookingHistory(username);
                 break;
             case 2:
-                manager.resetPassword("tk_khachhang.txt");
+                accountManager.resetPassword("tk_khachhang.txt");
                 break;
             case 3:
-                manager.deleteAccount(username);
+                accountManager.deleteAccount(username);
                 break;
             case 0:
                 system("cls");
@@ -388,7 +424,7 @@ void Menu::customerInfoMenu(const string& username, const string& name, const st
 }
 
 void Menu::accountSettingsMenu(const string& username) {
-    AccountManager manager;
+    AccountManager accountManager;
     UserManager userManager;
     FileManager fileManager;
 
@@ -408,10 +444,10 @@ void Menu::accountSettingsMenu(const string& username) {
 
         switch (choice) {
             case 1: 
-                manager.changePhoneNumber("tk_khachhang.txt", username);
+                accountManager.changePhoneNumber("tk_khachhang.txt", username);
                 break;
             case 2: 
-                manager.changePassword("tk_khachhang.txt", username);
+                accountManager.changePassword("tk_khachhang.txt", username);
                 break;
             case 3: {
                 while (true) {
@@ -430,7 +466,7 @@ void Menu::accountSettingsMenu(const string& username) {
                     cin >> confirmChoice;
 
                     if (confirmChoice == '1') {
-                        manager.deleteAccount(username);
+                        accountManager.deleteAccount(username);
                         displayGoodbye();
                         exit(0);
                     } else if (confirmChoice == '2') {
