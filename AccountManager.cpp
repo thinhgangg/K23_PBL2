@@ -397,6 +397,10 @@ void AccountManager::viewCustomerList() {
         cout << "\t\t\t\t\t\t##                       CUSTOMER LIST                        ##" << endl;
         cout << "\t\t\t\t\t\t################################################################" << endl;
 
+        cout << "\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t|   No    |          CUSTOMER           |     USERNAME      |       PHONE       |" << endl;
+        cout << "\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
+
         for (size_t i = 0; i < customers.get_size(); ++i) {
             stringstream ss(customers[i]);
             getline(ss, username, ',');
@@ -404,11 +408,12 @@ void AccountManager::viewCustomerList() {
             getline(ss, name, ',');
             getline(ss, phone, ',');
 
-            cout << "\t\t\t\t\t\t" << i + 1 << "---------------------------------------------------------------" << endl;
-            cout << "\t\t\t\t\t\t|   CUSTOMER: " << name << endl;
-            cout << "\t\t\t\t\t\t|   USERNAME: " << username << endl;
-            cout << "\t\t\t\t\t\t|   PHONE: " << phone << endl;
-            cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t|   " << setw(3) << left << i + 1 
+                 << "   |   " << setw(25) << left << name 
+                 << " |   " << setw(15) << left << username 
+                 << " |   " << setw(15) << phone 
+                 << " |" << endl;
+            cout << "\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
         }
 
         cout << "\t\t\t\t\t\t################################################################" << endl;
