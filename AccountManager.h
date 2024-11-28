@@ -28,4 +28,5 @@ public:
 
     void changePhoneNumber(const string& filename, const string& username);
     void changePassword(const string& filename, const string& username);
+    void searchCustomer();
 };

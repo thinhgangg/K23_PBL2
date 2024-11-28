@@ -131,7 +131,6 @@ void AccountManager::resetPassword(const string& filename) {
     UserManager userManager;
     FileManager fileManager;
     Menu menu;
-    resetPass:;
 
     while (true) {
         string username, phone, newPassword, confirmPassword;
@@ -171,8 +170,7 @@ void AccountManager::resetPassword(const string& filename) {
                         menu.printRETURN();
                         cin.ignore();
                         cin.get();
-                        // system("cls");
-                        goto resetPass;
+                        return;
                     } else {
                         cout << "\n";
                         cout << "\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
@@ -187,8 +185,7 @@ void AccountManager::resetPassword(const string& filename) {
                             menu.printRETURN();
                             cin.ignore();
                             cin.get();
-                            // system("cls");
-                            goto resetPass;
+                            return;
                         } else {
                             stringstream newLine;
                             newLine << u << "," << newPassword << "," << name << "," << phoneNum;
@@ -209,7 +206,6 @@ void AccountManager::resetPassword(const string& filename) {
             menu.printRETURN();
             cin.ignore();
             cin.get();
-            // system("cls");
             return;
         } else {
             system("cls");
@@ -217,7 +213,6 @@ void AccountManager::resetPassword(const string& filename) {
             menu.printRETURN();
             cin.ignore();
             cin.get();
-            // system("cls");
             return;
         }
     }
@@ -230,7 +225,6 @@ void AccountManager::changePassword(const string& filename, const string& userna
     UserManager userManager;
     FileManager fileManager;
     Menu menu;
-    changePass:;
 
     while (true) {
         string currentPassword, newPassword, confirmPassword;
@@ -264,8 +258,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
                         menu.printRETURN();
                         cin.ignore();
                         cin.get();
-                        // system("cls");
-                        goto changePass;
+                        return;
                     } else {
                         cout << "\n";
                         cout << "\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
@@ -280,8 +273,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
                             menu.printRETURN();
                             cin.ignore();
                             cin.get();
-                            // system("cls");
-                            goto changePass;
+                            return;
                         } else {
                             stringstream newLine;
                             newLine << u << "," << newPassword << "," << name << "," << phoneNum;
@@ -376,7 +368,7 @@ void AccountManager::viewCustomerList() {
     ifstream file("tk_khachhang.txt");
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to open customer data file!" << endl;
+        cout << "\t\t\t\t\t\t               ERROR: Unable to open customer data file!" << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -433,7 +425,7 @@ void AccountManager::viewCustomerList() {
             getline(ss, name, ',');
             getline(ss, phone, ',');
 
-            menu.customerDetailMenu(username, name, phone);
+            menu.customerInfoMenu(username, name, phone);
         } else {
             menu.displayError();
         }
@@ -466,7 +458,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                 while (true) {
                     system("cls");
                     menu.displayChangePhone();
-                    cout << "\033[4;88H" << phone;
+                    cout << "\033[4;80H" << phone;
                     cout << "\033[6;84H";
                     cin >> newPhone;
 
@@ -544,3 +536,42 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
     }
 }
 
+void AccountManager::searchCustomer() {
+    system("cls");
+
+    UserManager userManager;
+    FileManager fileManager;
+    Menu menu;
+
+    string phone;
+    bool customerFound = false;
+
+    menu.displaySearchCustomer();
+    cout << "\033[4;80H" << phone;
+    cin >> phone;
+
+    Vector lines = fileManager.readAllLines("tk_khachhang.txt");
+
+    for (size_t i = 0; i < lines.get_size(); ++i) {
+        stringstream ss(lines[i]);
+        string username, password, name, phoneNum;
+        getline(ss, username, ',');
+        getline(ss, password, ',');
+        getline(ss, name, ',');
+        getline(ss, phoneNum, ',');
+
+        if (phoneNum == phone) {
+            menu.customerInfoMenu(username, name, phone);
+            customerFound = true;
+            break;
+        }
+    }
+
+    if (!customerFound) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t              CUSTOMER NOT FOUND!               " << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+    }
+}

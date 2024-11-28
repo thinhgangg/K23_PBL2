@@ -75,9 +75,18 @@ void Menu::displayChangePhone() {
     cout << "\t\t\t\t\t\t\t################################################" << endl;
     cout << "\t\t\t\t\t\t\t##             CHANGE PHONE NUMBER            ##" << endl;
     cout << "\t\t\t\t\t\t\t################################################" << endl;
-    cout << "\t\t\t\t\t\t\t##       CURRENT PHONE NUMBER:                ##" << endl;
+    cout << "\t\t\t\t\t\t\t##       PHONE NUMBER:                        ##" << endl;
     cout << "\t\t\t\t\t\t\t################################################" << endl;
     cout << "\t\t\t\t\t\t\t##       NEW PHONE NUMBER:                    ##" << endl;
+    cout << "\t\t\t\t\t\t\t################################################" << endl;
+}
+
+void Menu::displaySearchCustomer() {
+    system("cls");
+    cout << "\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t##               SEARCH CUSTOMER              ##" << endl;
+    cout << "\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t##       PHONE NUMBER:                        ##" << endl;
     cout << "\t\t\t\t\t\t\t################################################" << endl;
 }
 
@@ -152,6 +161,7 @@ void Menu::managerMenu(const string& username, const string& name) {
         cout << "\t\t\t\t\t\t##                 5. PRINT BILL & FREE FIELD                 ##" << endl;
         cout << "\t\t\t\t\t\t##                 6. VIEW AVAILABLE FIELDS                   ##" << endl;
         cout << "\t\t\t\t\t\t##                 7. VIEW CUSTOMER LIST                      ##" << endl;
+        cout << "\t\t\t\t\t\t##                 8. SEARCH CUSTOMER                         ##" << endl;
         cout << "\t\t\t\t\t\t##                 0. LOG OUT                                 ##" << endl;
         cout << "\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
@@ -178,6 +188,9 @@ void Menu::managerMenu(const string& username, const string& name) {
                 break;
             case 7:
                 manager.viewCustomerList();
+                break;
+            case 8:
+                manager.searchCustomer();
                 break;
             case 0:
                 return;
@@ -329,7 +342,7 @@ void Menu::displayBookingForm() {
     cout << "\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
 }
 
-void Menu::customerDetailMenu(const string& username, const string& name, const string& phone) {
+void Menu::customerInfoMenu(const string& username, const string& name, const string& phone) {
     FieldManager fieldManager;
     AccountManager manager;
     BookingManager booking;
@@ -338,12 +351,13 @@ void Menu::customerDetailMenu(const string& username, const string& name, const 
     while (true) {
         system("cls");
         cout << "\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t##                      CUSTOMER DETAIL                       ##" << endl;
+        cout << "\t\t\t\t\t\t##                    CUSTOMER INFORMATION                    ##" << endl;
         cout << "\t\t\t\t\t\t################################################################" << endl;
+
         cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t\t   CUSTOMER: " << name << endl;
-        cout << "\t\t\t\t\t\t   USERNAME: " << username << endl;
-        cout << "\t\t\t\t\t\t   PHONE: " << phone << endl;
+        cout << "\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << name << " |" << endl;
+        cout << "\t\t\t\t\t\t|                    USERNAME: " << setw(31) << left << username << " |" << endl;
+        cout << "\t\t\t\t\t\t|                    PHONE: " << setw(34) << left << phone << " |" << endl;
         cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
         cout << "\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t##                   1. VIEW BOOKING HISTORY                  ##" << endl;

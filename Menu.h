@@ -32,7 +32,8 @@ public:
     void displayChangePhone();
     void displayError();
     void displayBookingForm();
+    void displaySearchCustomer();
 
-    void customerDetailMenu(const string& username, const string& name, const string& phone);
+    void customerInfoMenu(const string& username, const string& name, const string& phone);
     void accountSettingsMenu(const string& username);
 };
