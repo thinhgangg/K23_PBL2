@@ -4,7 +4,6 @@
 #include "AccountManager.h"
 #include "FieldManager.h"
 #include "BookingManager.h"
-#include "PriceManager.h"
 #include <string>
 using namespace std;
 
@@ -37,5 +36,4 @@ public:
 
     void customerInfoMenu(const string& username, const string& name, const string& phone);
     void accountSettingsMenu(const string& username);
-    void priceManagerMenu();
 };

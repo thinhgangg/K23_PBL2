@@ -55,6 +55,10 @@ bool BookingManager::isFieldBookedByUser(const string& filePath, const string& u
 // kiem tra dat san thanh cong
 bool BookingManager::isBookField(const string& timeSlot, const string& field, const string& username, const string& customerName) {
     Menu menu;
+    Account account;
+
+    bool isAdmin = account.isAdminUser(username, "tk_quanly.txt");
+    
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
 
     if (!isFieldAvailable(timeSlot, field)) {
@@ -68,12 +72,19 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
 
     menu.displayBookingForm();
 
-    string phone, paymentStatus, note;
+    string name, phone, paymentStatus, note;
     cout << "\033[4;56H" << field;
 
-    cout << "\033[5;55H" << customerName;
-    cin.ignore();
-    
+    if (isAdmin) {
+        cout << "\033[5;55H";
+        cin.ignore();
+        getline(cin, name);
+    }
+    else {
+        cout << "\033[5;55H" << customerName;
+        cin.ignore();
+    }
+
     cout << "\033[6;63H";
     getline(cin, phone);
     

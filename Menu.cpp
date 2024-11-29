@@ -194,7 +194,7 @@ void Menu::managerMenu(const string& username, const string& name) {
                 accountManager.searchCustomer();
                 break;
             case 9:
-                priceManagerMenu();
+                // priceManagerMenu();
                 break;
             case 0:
                 return;
@@ -310,36 +310,32 @@ void Menu::resetPassMenu() {
     }
 }
 
-void Menu::priceManagerMenu() {
-    system("cls"); 
-    PriceManager priceManager;
-    string filename = "price_list.txt";
-    int choice;
+// void Menu::priceManagerMenu() {
+//     system("cls"); 
+//     int choice;
 
-    cout << "\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t##                   FIELD PRICE MANAGEMENT                   ##" << endl;
-    cout << "\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t##                  1. VIEW ALL FIELD PRICES                  ##" << endl;
-    cout << "\t\t\t\t\t\t##                  2. UPDATE FIELD PRICES                    ##" << endl;
-    cout << "\t\t\t\t\t\t##                  0. GO BACK                                ##" << endl;
-    cout << "\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-    cin >> choice;
+//     cout << "\t\t\t\t\t\t################################################################" << endl;
+//     cout << "\t\t\t\t\t\t##                   FIELD PRICE MANAGEMENT                   ##" << endl;
+//     cout << "\t\t\t\t\t\t################################################################" << endl;
+//     cout << "\t\t\t\t\t\t##                  1. VIEW ALL FIELD PRICES                  ##" << endl;
+//     cout << "\t\t\t\t\t\t##                  2. UPDATE FIELD PRICES                    ##" << endl;
+//     cout << "\t\t\t\t\t\t##                  0. GO BACK                                ##" << endl;
+//     cout << "\t\t\t\t\t\t################################################################" << endl;
+//     cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+//     cin >> choice;
 
-    switch (choice) {
-        case 1:
-            priceManager.displayPriceList(filename);
-            break;
-        case 2:
-            priceManager.editPriceList(filename);
-            break;
-        case 0:
-            system("cls");
-            break;
-        default:
-            displayError();
-    }
-}
+//     switch (choice) {
+//         case 1:
+//             break;
+//         case 2:
+//             break;
+//         case 0:
+//             system("cls");
+//             break;
+//         default:
+//             displayError();
+//     }
+// }
 
 void Menu::printDATSAN() {
     cout << "\t\t\t\t\t\t################################################################" << endl;
