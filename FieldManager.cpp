@@ -33,12 +33,12 @@ void FieldManager::displayTimeSlots() {
     menu.printGIO();
 
     for (size_t i = 0; i < availableTimeSlots.get_size(); ++i) {
-        cout << "\t\t\t\t\t\t|                        " << i + 1 << ". " << availableTimeSlots[i] << "                        |" << endl;
-        cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t|                        " << i + 1 << ". " << availableTimeSlots[i] << "                        |" << endl;
+        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
     }
-    cout << "\t\t\t\t\t\t|                        0. GO BACK                            |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+    cout << "\t\t\t\t\t\t\t\t|                        0. GO BACK                            |" << endl;
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
 }
 
 void FieldManager::displayFields() {
@@ -46,12 +46,12 @@ void FieldManager::displayFields() {
     menu.printSAN();
 
     for (size_t i = 0; i < availableFields.get_size(); ++i) {
-        cout << "\t\t\t\t\t\t|                           " << i + 1 << ". " << availableFields[i] << "                           |" << endl;
-        cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t|                           " << i + 1 << ". " << availableFields[i] << "                           |" << endl;
+        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
     }
-    cout << "\t\t\t\t\t\t|                           0. GO BACK                         |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+    cout << "\t\t\t\t\t\t\t\t|                           0. GO BACK                         |" << endl;
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
 }
 
 string FieldManager::selectTimeSlot() {
@@ -155,7 +155,7 @@ void FieldManager::viewAvailableFields() {
 
         system("cls");
         if (!booking.checkAvailableFields(timeSlot)) {
-            cout << "\t\t\t\t\t                     NO AVAILABLE FIELDS IN THIS TIME SLOT!                   " << endl;
+            cout << "\t\t\t\t\t\t\t                     NO AVAILABLE FIELDS IN THIS TIME SLOT!                   " << endl;
             menu.printRETURN();
         } else {
             menu.printRETURN();
@@ -187,7 +187,7 @@ void FieldManager::viewFieldDetails() {
 
             if (!file.is_open()) {
                 system("cls");
-                cout << "\t\t\t\t\t\tERROR: Unable to open file" << endl;
+                cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
                 menu.printRETURN();
                 cin.ignore();
                 cin.get();
@@ -223,21 +223,21 @@ void FieldManager::viewFieldDetails() {
             menu.printTENSAN(field);
 
             if (status == "Available") {
-                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-                cout << "\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    STATUS: " << setw(33) << left << status << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
-                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    STATUS: " << setw(33) << left << status << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
             } else if (status == "Booked") {
-                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-                cout << "\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    STATUS: " << setw(33) << left << status << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << customer << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    PHONE NUMBER: " << setw(27) << left << phone << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    PAYMENT DETAILS: " << setw(24) << left << payment << " |" << endl;
-                cout << "\t\t\t\t\t\t|                    NOTE: " << setw(35) << left << note << " |" << endl;
-                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    STATUS: " << setw(33) << left << status << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << customer << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    PHONE NUMBER: " << setw(27) << left << phone << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    PAYMENT DETAILS: " << setw(24) << left << payment << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    NOTE: " << setw(35) << left << note << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
             }
             
             menu.printRETURN();

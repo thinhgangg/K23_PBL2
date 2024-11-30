@@ -9,7 +9,7 @@ bool BookingManager::isFieldAvailable(const string& timeSlot, const string& fiel
     ifstream file(filePath);
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
+        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -32,7 +32,7 @@ bool BookingManager::isFieldBookedByUser(const string& filePath, const string& u
 
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
+        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -63,7 +63,7 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
 
     if (!isFieldAvailable(timeSlot, field)) {
         system("cls");
-        cout << "\t\t\t\t\t       THIS FIELD HAS ALREADY BEEN BOOKED. PLEASE CHECK ANOTHER FIELD!        " << endl;
+        cout << "\t\t\t\t\t\t\t       THIS FIELD HAS ALREADY BEEN BOOKED. PLEASE CHECK ANOTHER FIELD!        " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -73,25 +73,25 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
     menu.displayBookingForm();
 
     string name, phone, paymentStatus, note;
-    cout << "\033[13;56H" << field;
+    cout << "\033[13;72H" << field;
 
     if (isAdmin) {
-        cout << "\033[14;55H";
+        cout << "\033[14;71H";
         cin.ignore();
         getline(cin, name);
     }
     else {
-        cout << "\033[14;55H" << customerName;
+        cout << "\033[14;71H" << customerName;
         cin.ignore();
     }
     
-    cout << "\033[15;63H";
+    cout << "\033[15;79H";
     getline(cin, phone);
     
-    cout << "\033[16;92H";
+    cout << "\033[16;108H";
     getline(cin, paymentStatus);
     
-    cout << "\033[17;64H";
+    cout << "\033[17;80H";
     getline(cin, note);
 
     ofstream file(filePath, ios::trunc);
@@ -107,13 +107,13 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
         file.close();
 
         system("cls");
-        cout << "\t\t\t\t\t                    THE FIELD HAS BEEN SUCCESSFULLY BOOKED!                   " << endl;
+        cout << "\t\t\t\t\t\t\t                    THE FIELD HAS BEEN SUCCESSFULLY BOOKED!                   " << endl;
         menu.printRETURN();
         cin.get();
         return true;
     } else {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to write to file " << filePath << endl;
+        cout << "\t\t\t\t\t\t\t\tERROR: Unable to write to file " << filePath << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -130,7 +130,7 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
 
     if (isFieldAvailable(timeSlot, field)) {
         system("cls");
-        cout << "\t\t\t\t\t                THIS FIELD HAS NOT BEEN BOOKED. CANNOT CANCEL!                " << endl;
+        cout << "\t\t\t\t\t\t\t                THIS FIELD HAS NOT BEEN BOOKED. CANNOT CANCEL!                " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -139,7 +139,7 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
 
     if (!isAdmin && !isFieldBookedByUser("TimeSlots/" + timeSlot + "/" + field + ".txt", username)) {
         system("cls");
-        cout << "\t\t\t\t\t                YOU DO NOT HAVE PERMISSION TO CANCEL THIS FIELD!              " << endl;
+        cout << "\t\t\t\t\t\t\t                YOU DO NOT HAVE PERMISSION TO CANCEL THIS FIELD!              " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -155,14 +155,14 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
         file.close();
 
         system("cls");
-        cout << "\t\t\t\t\t                   THE FIELD HAS BEEN SUCCESSFULLY CANCELED!                  " << endl;
+        cout << "\t\t\t\t\t\t\t                   THE FIELD HAS BEEN SUCCESSFULLY CANCELED!                  " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
         return true;
     } else {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to write to file " << filePath << endl;
+        cout << "\t\t\t\t\t\t\t\tERROR: Unable to write to file " << filePath << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -180,9 +180,9 @@ void BookingManager::viewBookingHistory(const string& username) {
     bool hasHistory = false;
 
     system("cls");
-    cout << "\t\t\t\t\t\t##############################################################" << endl;
-    cout << "\t\t\t\t\t\t#                      BOOKING HISTORY                       #" << endl;
-    cout << "\t\t\t\t\t\t##############################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##############################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t#                      BOOKING HISTORY                       #" << endl;
+    cout << "\t\t\t\t\t\t\t\t##############################################################" << endl;
 
     for (size_t i = 0; i < timeSlots.get_size(); ++i) {
         string timeSlot = timeSlots[i];
@@ -205,9 +205,9 @@ void BookingManager::viewBookingHistory(const string& username) {
                 if (matchFound) {
                     hasHistory = true;
                     cout << "\n";                                                                          
-                    cout << "\t\t\t\t\t\t--------------------------------------------------------------" << endl;
-                    cout << "\t\t\t\t\t\t|   Time Slot: "<< timeSlot <<"          |         Field: "<< field <<"   |" << endl;
-                    cout << "\t\t\t\t\t\t--------------------------------------------------------------" << endl;
+                    cout << "\t\t\t\t\t\t\t\t--------------------------------------------------------------" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|   Time Slot: "<< timeSlot <<"          |         Field: "<< field <<"   |" << endl;
+                    cout << "\t\t\t\t\t\t\t\t--------------------------------------------------------------" << endl;
 
                     file.clear();
                     file.seekg(0, ios::beg);
@@ -216,13 +216,13 @@ void BookingManager::viewBookingHistory(const string& username) {
                         if (colonPos != string::npos) {
                             string key = line.substr(0, colonPos);
                             string value = line.substr(colonPos + 1);
-                            cout << "\t\t\t\t\t\t   " << key << ": " << value << endl;
+                            cout << "\t\t\t\t\t\t\t\t\t\t   " << key << ": " << value << endl;
                         } else {
-                            cout << "\t\t\t\t\t\t   " << line << endl;
+                            cout << "\t\t\t\t\t\t\t\t\t\t   " << line << endl;
                         }
                     }
-                    cout << "\t\t\t\t\t\t--------------------------------------------------------------" << endl;
-                    cout << "\t\t\t\t\t______________________________________________________________________________" << endl;
+                    cout << "\t\t\t\t\t\t\t\t--------------------------------------------------------------" << endl;
+                    cout << "\t\t\t\t\t\t\t______________________________________________________________________________" << endl;
                 }
                 file.close();
             }
@@ -231,7 +231,7 @@ void BookingManager::viewBookingHistory(const string& username) {
 
     if (!hasHistory) {
         cout << "\n";
-        cout << "\t\t\t\t\t                           NO BOOKING HISTORY FOUND!                          " << endl;
+        cout << "\t\t\t\t\t\t\t                           NO BOOKING HISTORY FOUND!                          " << endl;
     }
 
     menu.printRETURN();
@@ -248,7 +248,7 @@ bool BookingManager::checkAvailableFields(const string& timeSlot) {
     ifstream file("fields.txt");
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to open fields data file!" << endl;
+        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open fields data file!" << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -265,9 +265,9 @@ bool BookingManager::checkAvailableFields(const string& timeSlot) {
                 menu.printXEMSANTRONG();
                 menu.printKHUNGGIO(timeSlot);
             }
-            cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-            cout << "\t\t\t\t\t\t|                            " << fields[i] << "                             |" << endl;
-            cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t\t\t\t|                            " << fields[i] << "                             |" << endl;
+            cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
             hasAvailable = true;
         }
     }

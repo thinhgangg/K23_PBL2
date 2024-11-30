@@ -9,6 +9,7 @@ using namespace std;
 
 class Menu {
 public:
+    void displayIntro();
     void displayLogo();
     void displayGoodbye();
     
@@ -39,7 +40,7 @@ public:
     void displaySearchCustomer();
 
     void customerInfoMenu(const string& username, const string& name, const string& phone);
-    void accountSettingsMenu(const string& username);
+    void accountSettingsMenu(const string& username, bool isAdmin);
 
     void customerDetailsMenu();
     void fieldDetailsMenu();

@@ -23,7 +23,7 @@ public:
     void resetPassword(const string& filename);
     
     bool isdeleteAccount(const string& filename, const string& username);
-    void deleteAccount(const string& username);
+    void deleteAccount(const string& filename, const string& username);
     void viewCustomerList();
 
     void changePhoneNumber(const string& filename, const string& username);

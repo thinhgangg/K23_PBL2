@@ -14,18 +14,18 @@ void AccountManager::registerAccount(const string& filename, const string& accou
 
     // Nhap username
     while (true) {
-        cout << "\033[4;76H";
+        cout << "\033[4;92H";
         cin >> user;
 
         if (!userManager.isValidUsername(user)) {
-            cout << "\033[12;37HUSERNAME MUST BE AT LEAST 6 CHARACTERS LONG, AND CONTAIN NO SPACES OR SPECIAL CHARACTERS!" << endl;
-            cout << "\033[4;76H                           " << endl;
+            cout << "\033[12;53HUSERNAME MUST BE AT LEAST 6 CHARACTERS LONG, AND CONTAIN NO SPACES OR SPECIAL CHARACTERS!" << endl;
+            cout << "\033[4;92H                           " << endl;
         } else if (userManager.isUsernameTaken(user)) {
-            cout << "\033[12;30H                                                                                                    " << endl;
-            cout << "\033[12;60HUSERNAME ALREADY EXISTS! TRY ANOTHER ONE!" << endl;
-            cout << "\033[4;76H                           " << endl;
+            cout << "\033[12;50H                                                                                                    " << endl;
+            cout << "\033[12;76HUSERNAME ALREADY EXISTS! TRY ANOTHER ONE!" << endl;
+            cout << "\033[4;92H                           " << endl;
         } else {
-            cout << "\033[12;30H                                                                                                    " << endl;
+            cout << "\033[12;50H                                                                                                    " << endl;
             break;
         }
     }
@@ -33,14 +33,14 @@ void AccountManager::registerAccount(const string& filename, const string& accou
 
     // Nhap password
     while (true) {
-        cout << "\033[6;76H";
+        cout << "\033[6;92H";
         pass = userManager.inputPassword();
 
         if (!userManager.isValidPassword(pass)) {
-            cout << "\033[12;59HPASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!" << endl;
-            cout << "\033[6;76H                           " << endl;
+            cout << "\033[12;75HPASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!" << endl;
+            cout << "\033[6;92H                           " << endl;
         } else {
-            cout << "\033[12;30H                                                                                                    " << endl;
+            cout << "\033[12;50H                                                                                                    " << endl;
             break;
         }
     }
@@ -48,33 +48,33 @@ void AccountManager::registerAccount(const string& filename, const string& accou
 
     // Nhap name
     while (true) {
-        cout << "\033[8;72H";
+        cout << "\033[8;88H";
         cin.ignore();
         getline(cin, name);
 
         if (!userManager.isValidName(name)) {
-            cout << "\033[12;66HINVALID NAME! PLEASE TRY AGAIN!" << endl;
-            cout << "\033[8;72H                               " << endl;
+            cout << "\033[12;82HINVALID NAME! PLEASE TRY AGAIN!" << endl;
+            cout << "\033[8;88H                               " << endl;
         } else {
-            cout << "\033[12;30H                                                                                                    " << endl;
+            cout << "\033[12;50H                                                                                                    " << endl;
             break;
         }
     }
 
     // Nhap phone number
     while (true) {
-        cout << "\033[10;80H";
+        cout << "\033[10;96H";
         cin >> phone;
 
         if (!userManager.isValidPhone(phone)) {
-            cout << "\033[12;62HINVALID PHONE NUMBER! PLEASE TRY AGAIN!" << endl;
-            cout << "\033[10;80H                       ";
+            cout << "\033[12;78HINVALID PHONE NUMBER! PLEASE TRY AGAIN!" << endl;
+            cout << "\033[10;96H                       ";
         } else if (userManager.isPhoneNumberTaken(phone)) {
-            cout << "\033[12;30H                                                                                                    " << endl;
-            cout << "\033[12;60HTHIS PHONE NUMBER ALREADY REGISTERED!" << endl;
-            cout << "\033[10;80H                       ";
+            cout << "\033[12;50H                                                                                                    " << endl;
+            cout << "\033[12;78HTHIS PHONE NUMBER ALREADY REGISTERED!" << endl;
+            cout << "\033[10;96H                       ";
         } else {
-            cout << "\033[12;30H                                                                                                    " << endl;
+            cout << "\033[12;50H                                                                                                    " << endl;
             break;
         }
     }
@@ -88,7 +88,7 @@ void AccountManager::registerAccount(const string& filename, const string& accou
     }
 
     system("cls");
-    cout << "\t\t\t\t\t\t\t            REGISTRATION SUCCESSFUL!            " << endl;
+    cout << "\t\t\t\t\t\t\t\t\t            REGISTRATION SUCCESSFUL!            " << endl;
     menu.printRETURN();
     cin.ignore();
     cin.get();
@@ -104,10 +104,10 @@ void AccountManager::login() {
     menu.displaySignIn();
 
     string user, pass, name;
-    cout << "\033[4;76H";
+    cout << "\033[4;92H";
     cin >> user;
 
-    cout << "\033[6;76H";
+    cout << "\033[6;92H";
     pass = userManager.inputPassword();
 
     if (account.getUserInfo("tk_quanly.txt", user, pass, name)) {
@@ -117,7 +117,7 @@ void AccountManager::login() {
         menu.customerMenu(user, name);
     } else {
         system("cls");
-        cout << "\t\t\t\t\t\t\t       USERNAME OR PASSWORD IS INCORRECT!       " << endl;
+        cout << "\t\t\t\t\t\t\t\t\t       USERNAME OR PASSWORD IS INCORRECT!       " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -137,9 +137,9 @@ void AccountManager::resetPassword(const string& filename) {
 
         menu.displayResetPass();
 
-        cout << "\033[4;76H";
+        cout << "\033[4;92H";
         cin >> username;
-        cout << "\033[6;80H";
+        cout << "\033[6;96H";
         cin >> phoneNum;
 
         // doc danh sach tai khoan
@@ -158,30 +158,30 @@ void AccountManager::resetPassword(const string& filename) {
             if (u == username && phone == phoneNum) {
                 while (true) {
                     cout << "\033[8;00H";
-                    cout << "\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
-                    cout << "\t\t\t\t\t\t\t################################################" << endl;
-                    cout << "\033[8;80H";
+                    cout << "\t\t\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
+                    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+                    cout << "\033[8;96H";
                     newPassword = userManager.inputPassword();
 
                     // kiem tra password hop le
                     if (!userManager.isValidPassword(newPassword)) {
                         system("cls");
-                        cout << "\t\t\t\t\t\t\t  PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!  " << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t  PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!  " << endl;
                         menu.printRETURN();
                         cin.ignore();
                         cin.get();
                         return;
                     } else {
                         cout << "\n";
-                        cout << "\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
-                        cout << "\t\t\t\t\t\t\t################################################" << endl;
-                        cout << "\033[10;88H";
+                        cout << "\t\t\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+                        cout << "\033[10;104H";
                         confirmPassword = userManager.inputPassword();
 
                         // confirm password
                         if (newPassword != confirmPassword) {
                             system("cls");
-                            cout << "\t\t\t\t\t\t\t            PASSWORDS DO NOT MATCH!             " << endl;
+                            cout << "\t\t\t\t\t\t\t\t\t            PASSWORDS DO NOT MATCH!             " << endl;
                             menu.printRETURN();
                             cin.ignore();
                             cin.get();
@@ -202,14 +202,14 @@ void AccountManager::resetPassword(const string& filename) {
         if (accountFound) {
             fileManager.writeAllLines(filename, lines);
             system("cls");
-            cout << "\t\t\t\t\t\t\t         PASSWORD UPDATED SUCCESSFULLY!         " << endl;
+            cout << "\t\t\t\t\t\t\t\t\t         PASSWORD UPDATED SUCCESSFULLY!         " << endl;
             menu.printRETURN();
             cin.ignore();
             cin.get();
             return;
         } else {
             system("cls");
-            cout << "\t\t\t\t\t\t\t          THE ACCOUNT DOES NOT EXIST!           " << endl;
+            cout << "\t\t\t\t\t\t\t\t\t          THE ACCOUNT DOES NOT EXIST!           " << endl;
             menu.printRETURN();
             cin.ignore();
             cin.get();
@@ -230,7 +230,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
         string currentPassword, newPassword, confirmPassword;
 
         menu.displayChangePass();
-        cout << "\033[4;84H";
+        cout << "\033[4;100H";
         currentPassword = userManager.inputPassword();
 
         Vector<string> lines = fileManager.readAllLines(filename);
@@ -247,29 +247,29 @@ void AccountManager::changePassword(const string& filename, const string& userna
             if (u == username && p == currentPassword) {
                 while (true) {
                     cout << "\033[6;00H";
-                    cout << "\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
-                    cout << "\t\t\t\t\t\t\t################################################" << endl;
-                    cout << "\033[6;80H";
+                    cout << "\t\t\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
+                    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+                    cout << "\033[6;96H";
                     newPassword = userManager.inputPassword();
 
                     if (!userManager.isValidPassword(newPassword)) {
                         system("cls");
-                        cout << "\t\t\t\t\t\t\t  PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!  " << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t  PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!  " << endl;
                         menu.printRETURN();
                         cin.ignore();
                         cin.get();
                         return;
                     } else {
                         cout << "\n";
-                        cout << "\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
-                        cout << "\t\t\t\t\t\t\t################################################" << endl;
-                        cout << "\033[8;88H";
+                        cout << "\t\t\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+                        cout << "\033[8;104H";
                         confirmPassword = userManager.inputPassword();
 
                         // confirm password
                         if (newPassword != confirmPassword) {
                             system("cls");
-                            cout << "\t\t\t\t\t\t\t            PASSWORDS DO NOT MATCH!             " << endl;
+                            cout << "\t\t\t\t\t\t\t\t\t            PASSWORDS DO NOT MATCH!             " << endl;
                             menu.printRETURN();
                             cin.ignore();
                             cin.get();
@@ -289,7 +289,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
         if (accountFound) {
             fileManager.writeAllLines(filename, lines);
             system("cls");
-            cout << "\t\t\t\t\t\t\t         PASSWORD UPDATED SUCCESSFULLY!         " << endl;
+            cout << "\t\t\t\t\t\t\t\t\t         PASSWORD UPDATED SUCCESSFULLY!         " << endl;
             menu.printRETURN();
             cin.ignore();
             cin.get();
@@ -297,7 +297,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
             return;
         } else {
             system("cls");
-            cout << "\t\t\t\t\t\t\t       CURRENT PASSWORD IS INCORRECT!            " << endl;
+            cout << "\t\t\t\t\t\t\t\t\t         CURRENT PASSWORD IS INCORRECT!         " << endl;
             menu.printRETURN();
             cin.ignore();
             cin.get();
@@ -339,21 +339,19 @@ bool AccountManager::isdeleteAccount(const string& filename, const string& usern
 }
 
 // xoa tai khoan
-void AccountManager::deleteAccount(const string& username) {
-    AccountManager manager;
+void AccountManager::deleteAccount(const string& filename, const string& username) {
     Menu menu;
 
-    string filename = "tk_khachhang.txt";
-
-    if (manager.isdeleteAccount(filename, username)) {
+    if (isdeleteAccount(filename, username)) {
         system("cls");
-        cout << "\t\t\t\t\t\t                 ACCOUNT DELETED SUCCESSFULLY!                " << endl;
+        cout << "\t\t\t\t\t\t\t\t                 ACCOUNT DELETED SUCCESSFULLY!                " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
+        return;
     } else {
         system("cls");
-        cout << "\t\t\t\t\t\t               ERROR: Unable to delete account!               " << endl;
+        cout << "\t\t\t\t\t\t\t\t                  UNABLE TO DELETE ACCOUNT!                   " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -368,7 +366,7 @@ void AccountManager::viewCustomerList() {
     ifstream file("tk_khachhang.txt");
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to open file" << endl;
+        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -385,13 +383,13 @@ void AccountManager::viewCustomerList() {
 
     while (true) {
         system("cls");
-        cout << "\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t##                       CUSTOMER LIST                        ##" << endl;
-        cout << "\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                       CUSTOMER LIST                        ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 
-        cout << "\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t|   No    |          CUSTOMER           |     USERNAME      |       PHONE       |" << endl;
-        cout << "\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t|   No    |          CUSTOMER           |     USERNAME      |       PHONE       |" << endl;
+        cout << "\t\t\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
 
         for (size_t i = 0; i < customers.get_size(); ++i) {
             stringstream ss(customers[i]);
@@ -400,18 +398,18 @@ void AccountManager::viewCustomerList() {
             getline(ss, name, ',');
             getline(ss, phone, ',');
 
-            cout << "\t\t\t\t\t|   " << setw(3) << left << i + 1 
+            cout << "\t\t\t\t\t\t\t|   " << setw(3) << left << i + 1 
                  << "   |   " << setw(25) << left << name 
                  << " |   " << setw(15) << left << username 
                  << " |   " << setw(15) << phone 
                  << " |" << endl;
-            cout << "\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
         }
 
-        cout << "\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t##\tCHOOSE A CUSTOMER BY INDEX (1-" << customers.get_size() << ") OR 0 TO GO BACK:    ##" << endl;
-        cout << "\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##\tCHOOSE A CUSTOMER BY INDEX (1-" << customers.get_size() << ") OR 0 TO GO BACK:    ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
         int choice;
         cin >> choice;
 
@@ -458,13 +456,13 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                 while (true) {
                     system("cls");
                     menu.displayChangePhone();
-                    cout << "\033[4;80H" << phone;
-                    cout << "\033[6;84H";
+                    cout << "\033[4;96H" << phone;
+                    cout << "\033[6;100H";
                     cin >> newPhone;
 
                     if (newPhone == phone) {
                         system("cls");
-                        cout << "\t\t\t\t\t\t\tNEW PHONE NUMBER CANNOT BE THE SAME AS THE OLD ONE!" << endl;
+                        cout << "\t\t\t\t\t\t\t\t\tNEW PHONE NUMBER CANNOT BE THE SAME AS THE OLD ONE!" << endl;
                         Menu menu;
                         menu.printRETURN();
                         cin.ignore();
@@ -474,7 +472,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
 
                     if (!userManager.isValidPhone(newPhone)) {
                         system("cls");
-                        cout << "\t\t\t\t\t\t\t     INVALID PHONE NUMBER! PLEASE TRY AGAIN!    " << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t     INVALID PHONE NUMBER! PLEASE TRY AGAIN!    " << endl;
                         Menu menu;
                         menu.printRETURN();
                         cin.ignore();
@@ -482,7 +480,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                         return;
                     } else if (userManager.isPhoneNumberTaken(newPhone)) {
                         system("cls");
-                        cout << "\t\t\t\t\t\t\t      THIS PHONE NUMBER ALREADY REGISTERED!     " << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t      THIS PHONE NUMBER ALREADY REGISTERED!     " << endl;
                         Menu menu;
                         menu.printRETURN();
                         cin.ignore();
@@ -491,9 +489,9 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                     }
 
                     cout << "\033[8;00H";
-                    cout << "\t\t\t\t\t\t\t##       VERIFY YOUR PASSWORD:                ##" << endl;
-                    cout << "\t\t\t\t\t\t\t################################################" << endl;
-                    cout << "\033[8;88H";
+                    cout << "\t\t\t\t\t\t\t\t\t##       VERIFY YOUR PASSWORD:                ##" << endl;
+                    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+                    cout << "\033[8;104H";
                     password = userManager.inputPassword();
 
                     if (password == p) {
@@ -505,7 +503,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                         fileManager.writeAllLines(filename, lines);
 
                         system("cls");
-                        cout << "\t\t\t\t\t\t\t       PHONE NUMBER UPDATED SUCCESSFULLY!       " << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t       PHONE NUMBER UPDATED SUCCESSFULLY!       " << endl;
                         Menu menu;
                         menu.printRETURN();
                         cin.ignore();
@@ -513,7 +511,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                         return;
                     } else {
                         system("cls");
-                        cout << "\t\t\t\t\t\t\t  INCORRECT PASSWORD! PHONE NUMBER NOT UPDATED! " << endl;
+                        cout << "\t\t\t\t\t\t\t\t\t  INCORRECT PASSWORD! PHONE NUMBER NOT UPDATED! " << endl;
                         Menu menu;
                         menu.printRETURN();
                         cin.ignore();
@@ -526,7 +524,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
 
         if (!accountFound) {
             system("cls");
-            cout << "\t\t\t\t\t\t\t          THE ACCOUNT DOES NOT EXIST!           " << endl;
+            cout << "\t\t\t\t\t\t\t\t\t          THE ACCOUNT DOES NOT EXIST!           " << endl;
             Menu menu;
             menu.printRETURN();
             cin.ignore();
@@ -547,7 +545,7 @@ void AccountManager::searchCustomer() {
     bool customerFound = false;
 
     menu.displaySearchCustomer();
-    cout << "\033[4;80H";
+    cout << "\033[4;96H";
     cin >> phone;
 
     Vector<string> lines = fileManager.readAllLines("tk_khachhang.txt");
@@ -569,7 +567,7 @@ void AccountManager::searchCustomer() {
 
     if (!customerFound) {
         system("cls");
-        cout << "\t\t\t\t\t\t\t              CUSTOMER NOT FOUND!               " << endl;
+        cout << "\t\t\t\t\t\t\t\t\t              CUSTOMER NOT FOUND!               " << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
