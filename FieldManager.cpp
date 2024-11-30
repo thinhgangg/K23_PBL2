@@ -203,6 +203,11 @@ void FieldManager::viewFieldDetails() {
                 getline(ss, label, ':');
                 getline(ss, value);
 
+                if (!value.empty()) {
+                    if (value.front() == ' ') value.erase(value.begin());
+                    if (value.back() == ' ') value.erase(value.end() - 1);
+                }
+
                 if (label == "STATUS") status = value;
                 else if (label == "PRICE") price = value;
                 else if (label == "USERNAME") username = value;
@@ -216,15 +221,25 @@ void FieldManager::viewFieldDetails() {
             menu.printXEMSAN();
             menu.printKHUNGGIO(timeSlot);
             menu.printTENSAN(field);
-            cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-            cout << "\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
-            cout << "\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
-            cout << "\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << customer << " |" << endl;
-            cout << "\t\t\t\t\t\t|                    PHONE NUMBER: " << setw(27) << left << phone << " |" << endl;
-            cout << "\t\t\t\t\t\t|                    PAYMENT DETAILS: " << setw(24) << left << payment << " |" << endl;
-            cout << "\t\t\t\t\t\t|                    NOTE: " << setw(35) << left << note << " |" << endl;
-            cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
 
+            if (status == "Available") {
+                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    STATUS: " << setw(33) << left << status << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
+                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            } else if (status == "Booked") {
+                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    STATUS: " << setw(33) << left << status << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << customer << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    PHONE NUMBER: " << setw(27) << left << phone << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    PAYMENT DETAILS: " << setw(24) << left << payment << " |" << endl;
+                cout << "\t\t\t\t\t\t|                    NOTE: " << setw(35) << left << note << " |" << endl;
+                cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            }
+            
             menu.printRETURN();
             cin.ignore();
             cin.get();
