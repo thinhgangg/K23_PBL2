@@ -1,2 +1,8 @@
 FIELD: San_E
-STATUS: Available
+STATUS: Booked
+PRICE: 
+USERNAME: t
+CUSTOMER: Mai Phuc Thinh
+PHONE NUMBER: q
+PAYMENT DETAILS: e
+NOTE: q

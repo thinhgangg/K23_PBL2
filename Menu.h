@@ -4,12 +4,14 @@
 #include "AccountManager.h"
 #include "FieldManager.h"
 #include "BookingManager.h"
-#include "PriceManager.h"
 #include <string>
 using namespace std;
 
 class Menu {
 public:
+    void displayLogo();
+    void displayGoodbye();
+    
     void homeMenu();
     void managerMenu(const string& username, const string& customerName);
     void customerMenu(const string& username, const string& customerName);
@@ -17,13 +19,14 @@ public:
     void resetPassMenu();
     void registrationMenu();
 
-    void displayLogo();
-    void displayGoodbye();
-
     void printDATSAN();
     void printHUYSAN();
-    void printKHUNGGIO(const string& timeSlot);
+    void printGIO();
+    void printSAN();
     void printXEMSAN();
+    void printXEMSANTRONG();
+    void printKHUNGGIO(const string& timeSlot);
+    void printTENSAN(const string& field);
     void printRETURN();
 
     void displaySignIn();
@@ -31,11 +34,13 @@ public:
     void displayResetPass();
     void displayChangePass();
     void displayChangePhone();
-    void displayError();
+    void printError();
     void displayBookingForm();
     void displaySearchCustomer();
 
     void customerInfoMenu(const string& username, const string& name, const string& phone);
     void accountSettingsMenu(const string& username);
-    void priceManagerMenu();
+
+    void customerDetailsMenu();
+    void fieldDetailsMenu();
 };

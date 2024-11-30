@@ -29,4 +29,5 @@ public:
     void bookField(const string& username, const string& customerName);
     void cancelBookField(const string& username);
     void viewAvailableFields();
+    void viewFieldDetails();
 };

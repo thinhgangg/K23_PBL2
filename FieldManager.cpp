@@ -29,9 +29,8 @@ void FieldManager::loadFields(const string& filename) {
 }
 
 void FieldManager::displayTimeSlots() {
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                     AVAILABLE TIME SLOTS                     |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    Menu menu;
+    menu.printGIO();
 
     for (size_t i = 0; i < availableTimeSlots.get_size(); ++i) {
         cout << "\t\t\t\t\t\t|                        " << i + 1 << ". " << availableTimeSlots[i] << "                        |" << endl;
@@ -43,9 +42,8 @@ void FieldManager::displayTimeSlots() {
 }
 
 void FieldManager::displayFields() {
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t|                       AVAILABLE FIELDS                       |" << endl;
-    cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    Menu menu;
+    menu.printSAN();
 
     for (size_t i = 0; i < availableFields.get_size(); ++i) {
         cout << "\t\t\t\t\t\t|                           " << i + 1 << ". " << availableFields[i] << "                           |" << endl;
@@ -67,7 +65,7 @@ string FieldManager::selectTimeSlot() {
     } else if (timeSlotChoice > 0 && timeSlotChoice <= availableTimeSlots.get_size()) {
         return availableTimeSlots[timeSlotChoice - 1];
     } else {
-        menu.displayError();
+        menu.printError();
         return selectTimeSlot();
     }
 }
@@ -83,7 +81,7 @@ string FieldManager::selectField(const string& timeSlot) {
     } else if (fieldChoice > 0 && fieldChoice <= availableFields.get_size()) {
         return availableFields[fieldChoice - 1];
     } else {
-        menu.displayError();
+        menu.printError();
         return selectField(timeSlot);
     }
 }
@@ -105,9 +103,16 @@ void FieldManager::bookField(const string& username, const string& customerName)
             string field = selectField(timeSlot);
             if (field.empty()) break;
 
-            if (booking.isBookField(timeSlot, field, username, customerName)) {
+            while (true) {
                 system("cls");
-                return;
+                menu.printDATSAN();
+                menu.printKHUNGGIO(timeSlot);
+                menu.printTENSAN(field);
+                if (booking.isBookField(timeSlot, field, username, customerName)) {
+                    system("cls");
+                    return;
+                }
+                else break;
             }
         }
     }
@@ -144,12 +149,9 @@ void FieldManager::viewAvailableFields() {
 
     while (true) {
         system("cls"); 
-        menu.printXEMSAN();
+        menu.printXEMSANTRONG();
         string timeSlot = selectTimeSlot();
-        if (timeSlot.empty()) {
-            system("cls");
-            return;
-        }
+        if (timeSlot.empty()) return;
 
         system("cls");
         if (!booking.checkAvailableFields(timeSlot)) {
@@ -162,3 +164,76 @@ void FieldManager::viewAvailableFields() {
         cin.get();
     }
 }
+
+void FieldManager::viewFieldDetails() {
+    Menu menu;
+    BookingManager booking;
+
+    while (true) {
+        system("cls");
+        menu.printXEMSAN();
+        string timeSlot = selectTimeSlot();
+        if (timeSlot.empty()) return;
+
+        while (true) {
+            system("cls");
+            menu.printXEMSAN();
+            menu.printKHUNGGIO(timeSlot);
+            string field = selectField(timeSlot);
+            if (field.empty()) break;
+
+            string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
+            ifstream file(filePath);
+
+            if (!file.is_open()) {
+                system("cls");
+                cout << "\t\t\t\t\t\tERROR: Unable to open file" << endl;
+                menu.printRETURN();
+                cin.ignore();
+                cin.get();
+                return;
+            }
+
+            string line;
+            string status, price, username, customer, phone, payment, note;
+
+            while (getline(file, line)) {
+                stringstream ss(line);
+                string label, value;
+                getline(ss, label, ':');
+                getline(ss, value);
+
+                if (label == "STATUS") status = value;
+                else if (label == "PRICE") price = value;
+                else if (label == "USERNAME") username = value;
+                else if (label == "CUSTOMER") customer = value;
+                else if (label == "PHONE NUMBER") phone = value;
+                else if (label == "PAYMENT DETAILS") payment = value;
+                else if (label == "NOTE") note = value;
+            }
+
+            system("cls");
+            menu.printXEMSAN();
+            menu.printKHUNGGIO(timeSlot);
+            menu.printTENSAN(field);
+            cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t\t|                    FIELD: " << setw(34) << left << field << " |" << endl;
+            cout << "\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
+            cout << "\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << customer << " |" << endl;
+            cout << "\t\t\t\t\t\t|                    PHONE NUMBER: " << setw(27) << left << phone << " |" << endl;
+            cout << "\t\t\t\t\t\t|                    PAYMENT DETAILS: " << setw(24) << left << payment << " |" << endl;
+            cout << "\t\t\t\t\t\t|                    NOTE: " << setw(35) << left << note << " |" << endl;
+            cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+
+            menu.printRETURN();
+            cin.ignore();
+            cin.get();
+            break;
+        }
+    }
+}
+
+
+
+
+

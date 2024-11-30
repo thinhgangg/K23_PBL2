@@ -55,6 +55,10 @@ bool BookingManager::isFieldBookedByUser(const string& filePath, const string& u
 // kiem tra dat san thanh cong
 bool BookingManager::isBookField(const string& timeSlot, const string& field, const string& username, const string& customerName) {
     Menu menu;
+    Account account;
+
+    bool isAdmin = account.isAdminUser(username, "tk_quanly.txt");
+    
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
 
     if (!isFieldAvailable(timeSlot, field)) {
@@ -68,19 +72,26 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
 
     menu.displayBookingForm();
 
-    string phone, paymentStatus, note;
-    cout << "\033[4;56H" << field;
+    string name, phone, paymentStatus, note;
+    cout << "\033[13;56H" << field;
 
-    cout << "\033[5;55H" << customerName;
-    cin.ignore();
+    if (isAdmin) {
+        cout << "\033[14;55H";
+        cin.ignore();
+        getline(cin, name);
+    }
+    else {
+        cout << "\033[14;55H" << customerName;
+        cin.ignore();
+    }
     
-    cout << "\033[6;63H";
+    cout << "\033[15;63H";
     getline(cin, phone);
     
-    cout << "\033[7;92H";
+    cout << "\033[16;92H";
     getline(cin, paymentStatus);
     
-    cout << "\033[8;64H";
+    cout << "\033[17;64H";
     getline(cin, note);
 
     ofstream file(filePath, ios::trunc);
@@ -251,7 +262,7 @@ bool BookingManager::checkAvailableFields(const string& timeSlot) {
     for (size_t i = 0; i < fields.get_size(); ++i) {
         if (isFieldAvailable(timeSlot, fields[i])) {
             if (!hasAvailable) {
-                menu.printXEMSAN();
+                menu.printXEMSANTRONG();
                 menu.printKHUNGGIO(timeSlot);
             }
             cout << "\t\t\t\t\t\t----------------------------------------------------------------" << endl;

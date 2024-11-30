@@ -427,7 +427,7 @@ void AccountManager::viewCustomerList() {
 
             menu.customerInfoMenu(username, name, phone);
         } else {
-            menu.displayError();
+            menu.printError();
         }
     }
 }
@@ -547,7 +547,7 @@ void AccountManager::searchCustomer() {
     bool customerFound = false;
 
     menu.displaySearchCustomer();
-    cout << "\033[4;80H" << phone;
+    cout << "\033[4;80H";
     cin >> phone;
 
     Vector<string> lines = fileManager.readAllLines("tk_khachhang.txt");
