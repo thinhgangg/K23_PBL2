@@ -28,6 +28,48 @@ void FieldManager::loadFields(const string& filename) {
     }
 }
 
+void FieldManager::loadFieldsFromFile(const string& filename) {
+    ifstream inputFile(filename);
+    string line;
+
+    if (!inputFile.is_open()) {
+        cerr << "Could not open the file!" << endl;
+        return;
+    }
+
+    fields.clear();
+
+    while (getline(inputFile, line)) {
+        size_t pos1 = line.find(',');
+        size_t pos2 = line.find(',', pos1 + 1);
+        
+        if (pos1 != string::npos && pos2 != string::npos) {
+            string timeSlot = line.substr(0, pos1);
+            string fieldName = line.substr(pos1 + 1, pos2 - pos1 - 1);
+            int price = stoi(line.substr(pos2 + 1));
+
+            fields.push_back({timeSlot, fieldName, price});
+        }
+    }
+
+    inputFile.close();
+}
+
+void FieldManager::saveFieldsToFile(const string& filename) {
+    ofstream outputFile(filename);
+
+    if (!outputFile.is_open()) {
+        cerr << "Could not open the file to save!" << endl;
+        return;
+    }
+
+    for (const auto& fieldData : fields) {
+        outputFile << fieldData.timeSlot << "," << fieldData.fieldName << "," << fieldData.price << endl;
+    }
+
+    outputFile.close();
+}
+
 void FieldManager::displayTimeSlots() {
     Menu menu;
     menu.printGIO();
@@ -44,9 +86,19 @@ void FieldManager::displayTimeSlots() {
 void FieldManager::displayFields() {
     Menu menu;
     menu.printSAN();
-
+    loadFieldsFromFile("fields_details.txt");
     for (size_t i = 0; i < availableFields.get_size(); ++i) {
-        cout << "\t\t\t\t\t\t\t\t|                           " << i + 1 << ". " << availableFields[i] << "                           |" << endl;
+        string field = availableFields[i];
+
+        int fieldPrice = 0;
+        for (const auto& fieldData : fields) {
+            if (fieldData.fieldName == field) {
+                fieldPrice = fieldData.price;
+                break;
+            }
+        }
+
+        cout << "\t\t\t\t\t\t\t\t|            " << i + 1 << ". " << field << "           |          " << fieldPrice << " VND          |" << endl;
         cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
     }
     cout << "\t\t\t\t\t\t\t\t|                           0. GO BACK                         |" << endl;
@@ -155,7 +207,7 @@ void FieldManager::viewAvailableFields() {
 
         system("cls");
         if (!booking.checkAvailableFields(timeSlot)) {
-            cout << "\t\t\t\t\t\t\t                     NO AVAILABLE FIELDS IN THIS TIME SLOT!                   " << endl;
+            cout << "\t\t\t\t\t\t\t                     NO AVAILABLE FIELDS IN THIS TIME SLOT!" << endl;
             menu.printRETURN();
         } else {
             menu.printRETURN();
@@ -248,115 +300,167 @@ void FieldManager::viewFieldDetails() {
     }
 }
 
-// mới
-void FieldManager::loadFieldsFromFile(const string& filename) {
-    ifstream inputFile(filename);
-    string line;
-
-    if (!inputFile.is_open()) {
-        cerr << "Could not open the file!" << endl;
-        return;
-    }
-
-    while (getline(inputFile, line)) {
-        size_t pos1 = line.find(',');
-        size_t pos2 = line.find(',', pos1 + 1);
-        
-        if (pos1 != string::npos && pos2 != string::npos) {
-            string timeSlot = line.substr(0, pos1);
-            string fieldName = line.substr(pos1 + 1, pos2 - pos1 - 1);
-            int price = stoi(line.substr(pos2 + 1));
-
-            fields.push_back({timeSlot, fieldName, price});
-        }
-    }
-
-    inputFile.close();
-}
-
-void FieldManager::saveFieldsToFile(const string& filename) {
-    ofstream outputFile(filename);
-
-    if (!outputFile.is_open()) {
-        cerr << "Could not open the file to save!" << endl;
-        return;
-    }
-
-    for (const auto& field : fields) {
-        outputFile << field.timeSlot << "," << field.fieldName << "," << field.price << endl;
-    }
-
-    outputFile.close();
-}
-
 void FieldManager::viewAllFieldsPrice() {
     system("cls");
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                  ALL FIELDS PRICE LIST                     ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    Menu menu;
+    menu.printGIASAN();
 
     string currentTimeSlot = "";
 
-    for (const auto& field : fields) {
-        if (field.timeSlot != currentTimeSlot) {
-            cout << "\nTime Slot: " << field.timeSlot << endl;
-            currentTimeSlot = field.timeSlot;
+    for (const auto& fieldData : fields) {
+        if (fieldData.timeSlot != currentTimeSlot) {
+            cout << "\n" << setw(11) << left << "\t\t\t\t\t\t\t\t\t\t     Time Slot: " << fieldData.timeSlot << endl;
+            cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            currentTimeSlot = fieldData.timeSlot;
         }
-        cout << "    Field: " << field.fieldName 
-             << " | Price: " << field.price << " VND" << endl;
-    }
 
-    cout << "\nPress any key to go back.";
-    cin.get();
+        cout << setw(7) << left << "\t\t\t\t\t\t\t\t\t\t  Field: " 
+             << setw(6) << left << fieldData.fieldName 
+             << "| " 
+             << setw(5) << left << "Price: "
+             << setw(6) << left << fieldData.price << " VND" << endl;
+    }
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+
+    menu.printRETURN();
     cin.ignore();
+    cin.get();
 }
 
 void FieldManager::changeFieldsPrice() {
-    system("cls");
+    Menu menu;
+    BookingManager booking;
 
-    string timeSlot;
-    cout << "Enter the time slot you want to change price (e.g., 15h30-16h30): ";
-    cin.ignore();
-    getline(cin, timeSlot);
+    while (true) {
+        system("cls");
+        menu.printDOIGIA();
+        string timeSlot = selectTimeSlot();
+        if (timeSlot.empty()) return;
 
-    Vector<Field> selectedFields;
-    for (const auto& field : fields) {
-        if (field.timeSlot == timeSlot) {
-            selectedFields.push_back(field);
+        while (true) {
+            system("cls");
+            menu.printDOIGIA();
+            menu.printKHUNGGIO(timeSlot);
+            string field = selectField(timeSlot);
+            if (field.empty()) break;
+
+            while (true) {
+                system("cls");
+                menu.printDATSAN();
+                menu.printKHUNGGIO(timeSlot);
+                menu.printTENSAN(field);
+
+                if (!booking.isFieldAvailable(timeSlot, field)) {
+                    system("cls");
+                    cout << "\t\t\t\t\t\t\t\t     THIS FIELD IS NOT AVAILABLE. CANNOT CHANGE THE PRICE!" << endl;
+                    menu.printRETURN();
+                    cin.ignore();
+                    cin.get();
+                    break;
+                }
+
+
+                int newPrice;
+                cout << "\t\t\t\t\t\t\t\t\t    ENTER THE NEW PRICE FOR " << field << ": ";
+                cin >> newPrice;
+
+                bool found = false;
+                for (auto& f : fields) {
+                    if (f.timeSlot == timeSlot && f.fieldName == field) {
+                        f.price = newPrice;
+                        found = true;
+                        break;
+                    }
+                }
+
+                if (found) {
+                    saveFieldsToFile("fields_details.txt");
+                    system("cls");
+                    cout << "\t\t\t\t\t\t\t\t\t           PRICE UPDATE SUCCESSFULLY!" << endl;
+                    menu.printRETURN();
+                } else {
+                    system("cls");
+                    cout << "\t\t\t\t\t\t\t\t\t                FIELD NOT FOUND!" << endl;
+                    menu.printRETURN();
+                }
+                cin.ignore();
+                cin.get();
+                return;
+            }
         }
     }
-
-    if (selectedFields.empty()) {
-        cout << "No fields found for the time slot: " << timeSlot << endl;
-        return;
-    }
-
-    cout << "Fields available in time slot " << timeSlot << ":\n";
-    for (int i = 0; i < selectedFields.get_size(); ++i) {
-        cout << i + 1 << ". " << selectedFields[i].fieldName 
-             << " | Current price: " << selectedFields[i].price << " VND" << endl;
-    }
-
-    int choice;
-    cout << "\nEnter the number of the field to change price: ";
-    cin >> choice;
-
-    if (choice < 1 || choice > selectedFields.get_size()) {
-        cout << "Invalid choice!" << endl;
-        return;
-    }
-
-    int newPrice;
-    cout << "Enter new price for " << selectedFields[choice - 1].fieldName << ": ";
-    cin >> newPrice;
-
-    for (auto& field : fields) {
-        if (field.timeSlot == timeSlot && field.fieldName == selectedFields[choice - 1].fieldName) {
-            field.price = newPrice;
-        }
-    }
-
-    saveFieldsToFile("fields_details.txt");
-
-    cout << "Price updated successfully!" << endl;
 }
+
+// void FieldManager::printBillAndFreeField(const string& timeSlot, const string& field, const string& username) {
+//     Menu menu;
+//     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
+//     ifstream file(filePath);
+
+//     if (!file.is_open()) {
+//         system("cls");
+//         cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
+//         menu.printRETURN();
+//         cin.ignore();
+//         cin.get();
+//         return;
+//     }
+
+//     string line;
+//     string customerName, phone, paymentStatus, note;
+//     int price = 0;
+
+//     while (getline(file, line)) {
+//         if (line.find("FIELD: ") != string::npos) {
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         } else if (line.find("STATUS: Booked") != string::npos) {
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         } else if (line.find("PRICE: ") != string::npos) {
+//             price = stoi(line.substr(7));
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         } else if (line.find("USERNAME: ") != string::npos) {
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         } else if (line.find("CUSTOMER: ") != string::npos) {
+//             customerName = line.substr(10);
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         } else if (line.find("PHONE NUMBER: ") != string::npos) {
+//             phone = line.substr(14);
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         } else if (line.find("PAYMENT DETAILS: ") != string::npos) {
+//             paymentStatus = line.substr(17);
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         } else if (line.find("NOTE: ") != string::npos) {
+//             note = line.substr(6);
+//             cout << "\t\t\t\t\t\t\t\t" << line << endl;
+//         }
+//     }
+//     file.close();
+
+//     cout << "\t\t\t\t\t\t\t\t--------------------------------------------" << endl;
+//     cout << "\t\t\t\t\t\t\t\tTOTAL: " << price << " VND" << endl;
+//     cout << "\t\t\t\t\t\t\t\t--------------------------------------------" << endl;
+
+//     ofstream outFile(filePath, ios::trunc);
+//     if (outFile.is_open()) {
+//         outFile << "FIELD: " << field << endl;
+//         outFile << "STATUS: Available" << endl;
+//         outFile << "PRICE: " << price << " VND" << endl;
+//         outFile << "USERNAME: " << username << endl;
+//         outFile << "CUSTOMER: " << customerName << endl;
+//         outFile << "PHONE NUMBER: " << phone << endl;
+//         outFile << "PAYMENT DETAILS: " << paymentStatus << endl;
+//         outFile << "NOTE: " << note << endl;
+//         outFile.close();
+
+//         system("cls");
+//         cout << "\t\t\t\t\t\t\t\tThe bill has been printed and field is now Free." << endl;
+//         menu.printRETURN();
+//         cin.ignore();
+//         cin.get();
+//     } else {
+//         system("cls");
+//         cout << "\t\t\t\t\t\t\t\tERROR: Unable to write to file " << filePath << endl;
+//         menu.printRETURN();
+//         cin.ignore();
+//         cin.get();
+//     }
+// }

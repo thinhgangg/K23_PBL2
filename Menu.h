@@ -26,6 +26,9 @@ public:
     void printSAN();
     void printXEMSAN();
     void printXEMSANTRONG();
+    void printGIASAN();
+    void printDOIGIA();
+    void printHOADON();
     void printKHUNGGIO(const string& timeSlot);
     void printTENSAN(const string& field);
     void printRETURN();

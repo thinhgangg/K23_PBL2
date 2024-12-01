@@ -56,9 +56,10 @@ bool BookingManager::isFieldBookedByUser(const string& filePath, const string& u
 bool BookingManager::isBookField(const string& timeSlot, const string& field, const string& username, const string& customerName) {
     Menu menu;
     Account account;
+    FieldManager fieldManager;
 
     bool isAdmin = account.isAdminUser(username, "tk_quanly.txt");
-    
+    fieldManager.loadFieldsFromFile("fields_details.txt");
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
 
     if (!isFieldAvailable(timeSlot, field)) {
@@ -94,11 +95,19 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
     cout << "\033[17;80H";
     getline(cin, note);
 
+    int fieldPrice = 0;
+    for (const auto& fieldData : fieldManager.fields) {
+        if (fieldData.timeSlot == timeSlot && fieldData.fieldName == field) {
+            fieldPrice = fieldData.price;
+            break;
+        }
+    }
+
     ofstream file(filePath, ios::trunc);
     if (file.is_open()) {
         file << "FIELD: " << field << endl;
         file << "STATUS: Booked" << endl;
-        file << "PRICE: " << endl;
+        file << "PRICE: " << fieldPrice << " VND" << endl;
         file << "USERNAME: " << username << endl;
         file << "CUSTOMER: " << customerName << endl;
         file << "PHONE NUMBER: " << phone << endl;
@@ -125,6 +134,7 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
 bool BookingManager::isCancelBookField(const string& timeSlot, const string& field, const string& username) {
     Menu menu;
     Account account;
+    FieldManager fieldManager;
 
     bool isAdmin = account.isAdminUser(username, "tk_quanly.txt");
 
@@ -147,11 +157,20 @@ bool BookingManager::isCancelBookField(const string& timeSlot, const string& fie
     }
 
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
+    fieldManager.loadFieldsFromFile("fields_details.txt");
+    int fieldPrice = 0;
+    for (const auto& fieldData : fieldManager.fields) {
+        if (fieldData.fieldName == field) {
+            fieldPrice = fieldData.price;
+            break;
+        }
+    }
 
     ofstream file(filePath, ios::trunc);
     if (file.is_open()) {
         file << "FIELD: " << field << endl;
         file << "STATUS: Available" << endl;
+        file << "PRICE: " << fieldPrice << " VND" << endl;
         file.close();
 
         system("cls");

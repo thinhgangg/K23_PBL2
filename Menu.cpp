@@ -127,7 +127,7 @@ void Menu::managerMenu(const string& username, const string& name) {
                 fieldManager.cancelBookField(username);
                 break;
             case 3:
-                // print bill
+                // fieldManager.printBillAndFreeField();
                 break;
             case 4:
                 customerDetailsMenu();
@@ -338,35 +338,6 @@ void Menu::resetPassMenu() {
     }
 }
 
-// void Menu::priceManagerMenu() {
-//     system("cls"); 
-//     int choice;
-//     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-//     cout << "\t\t\t\t\t\t\t\t##                   FIELD PRICE MANAGEMENT                   ##" << endl;
-//     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-//     cout << "\t\t\t\t\t\t\t\t##                  1. VIEW ALL FIELD PRICES                  ##" << endl;
-//     cout << "\t\t\t\t\t\t\t\t##                  2. UPDATE FIELD PRICES                    ##" << endl;
-//     cout << "\t\t\t\t\t\t\t\t##                  0. GO BACK                                ##" << endl;
-//     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-//     cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-//     cin >> choice;
-//     switch (choice) {
-//         case 1:
-//             cout << "ok" << endl;
-//             priceManager.displayPriceList(filename);
-//             break;
-//         case 2:
-//             cout << "ok" << endl;
-//             priceManager.editPriceList(filename);
-//             break;
-//         case 0:
-//             system("cls");
-//             break;
-//         default:
-//             printError();
-//     }
-// }
-
 void Menu::printDATSAN() {
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t##                        BOOK A FIELD                        ##" << endl;
@@ -386,8 +357,18 @@ void Menu::printKHUNGGIO(const string& timeSlot) {
 }
 
 void Menu::printTENSAN(const string& field) {
+    FieldManager fieldManager;
+    fieldManager.loadFieldsFromFile("fields_details.txt");
+    int fieldPrice = 0;
+    for (const auto& fieldData : fieldManager.fields) {
+        if (fieldData.fieldName == field) {
+            fieldPrice = fieldData.price;
+            break;
+        }
+    }
+
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                           "<<field<<"                            ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t##            " << field << "            ||         " << fieldPrice << " VND          ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 }
 
@@ -412,6 +393,24 @@ void Menu::printXEMSAN() {
 void Menu::printXEMSANTRONG() {
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t##                   VIEW AVAILABLE FIELDS                    ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printGIASAN() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                    ALL FIELDS PRICE LIST                   ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printDOIGIA() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                     CHANGE FIELDS PRICE                    ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printHOADON() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                   PRINT BILL & FREE FIELD                  ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 }
 
@@ -474,7 +473,6 @@ void Menu::customerInfoMenu(const string& username, const string& name, const st
 
 void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
     AccountManager accountManager;
-    UserManager userManager;
     FileManager fileManager;
 
     string fileName = isAdmin ? "tk_quanly.txt" : "tk_khachhang.txt";

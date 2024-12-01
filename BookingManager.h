@@ -7,6 +7,7 @@
 using namespace std;
 
 class BookingManager {
+
 public:
     bool isFieldAvailable(const string& timeSlot, const string& field);
     bool isFieldBookedByUser(const string& filePath, const string& username);
