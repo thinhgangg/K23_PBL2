@@ -366,7 +366,7 @@ void AccountManager::viewCustomerList() {
     ifstream file("tk_khachhang.txt");
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();

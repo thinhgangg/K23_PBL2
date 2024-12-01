@@ -248,7 +248,115 @@ void FieldManager::viewFieldDetails() {
     }
 }
 
+// mới
+void FieldManager::loadFieldsFromFile(const string& filename) {
+    ifstream inputFile(filename);
+    string line;
 
+    if (!inputFile.is_open()) {
+        cerr << "Could not open the file!" << endl;
+        return;
+    }
 
+    while (getline(inputFile, line)) {
+        size_t pos1 = line.find(',');
+        size_t pos2 = line.find(',', pos1 + 1);
+        
+        if (pos1 != string::npos && pos2 != string::npos) {
+            string timeSlot = line.substr(0, pos1);
+            string fieldName = line.substr(pos1 + 1, pos2 - pos1 - 1);
+            int price = stoi(line.substr(pos2 + 1));
 
+            fields.push_back({timeSlot, fieldName, price});
+        }
+    }
 
+    inputFile.close();
+}
+
+void FieldManager::saveFieldsToFile(const string& filename) {
+    ofstream outputFile(filename);
+
+    if (!outputFile.is_open()) {
+        cerr << "Could not open the file to save!" << endl;
+        return;
+    }
+
+    for (const auto& field : fields) {
+        outputFile << field.timeSlot << "," << field.fieldName << "," << field.price << endl;
+    }
+
+    outputFile.close();
+}
+
+void FieldManager::viewAllFieldsPrice() {
+    system("cls");
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                  ALL FIELDS PRICE LIST                     ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+
+    string currentTimeSlot = "";
+
+    for (const auto& field : fields) {
+        if (field.timeSlot != currentTimeSlot) {
+            cout << "\nTime Slot: " << field.timeSlot << endl;
+            currentTimeSlot = field.timeSlot;
+        }
+        cout << "    Field: " << field.fieldName 
+             << " | Price: " << field.price << " VND" << endl;
+    }
+
+    cout << "\nPress any key to go back.";
+    cin.get();
+    cin.ignore();
+}
+
+void FieldManager::changeFieldsPrice() {
+    system("cls");
+
+    string timeSlot;
+    cout << "Enter the time slot you want to change price (e.g., 15h30-16h30): ";
+    cin.ignore();
+    getline(cin, timeSlot);
+
+    Vector<Field> selectedFields;
+    for (const auto& field : fields) {
+        if (field.timeSlot == timeSlot) {
+            selectedFields.push_back(field);
+        }
+    }
+
+    if (selectedFields.empty()) {
+        cout << "No fields found for the time slot: " << timeSlot << endl;
+        return;
+    }
+
+    cout << "Fields available in time slot " << timeSlot << ":\n";
+    for (int i = 0; i < selectedFields.get_size(); ++i) {
+        cout << i + 1 << ". " << selectedFields[i].fieldName 
+             << " | Current price: " << selectedFields[i].price << " VND" << endl;
+    }
+
+    int choice;
+    cout << "\nEnter the number of the field to change price: ";
+    cin >> choice;
+
+    if (choice < 1 || choice > selectedFields.get_size()) {
+        cout << "Invalid choice!" << endl;
+        return;
+    }
+
+    int newPrice;
+    cout << "Enter new price for " << selectedFields[choice - 1].fieldName << ": ";
+    cin >> newPrice;
+
+    for (auto& field : fields) {
+        if (field.timeSlot == timeSlot && field.fieldName == selectedFields[choice - 1].fieldName) {
+            field.price = newPrice;
+        }
+    }
+
+    saveFieldsToFile("fields_details.txt");
+
+    cout << "Price updated successfully!" << endl;
+}

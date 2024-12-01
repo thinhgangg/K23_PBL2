@@ -568,12 +568,15 @@ void Menu::customerDetailsMenu() {
 void Menu::fieldDetailsMenu() {
     system("cls"); 
     FieldManager fieldManager;
+    fieldManager.loadFieldsFromFile("fields_details.txt");
     int choice;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t##                  FIELD DETAILS MANAGEMENT                  ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t##                    1. VIEW FIELD DETAILS                   ##" << endl;
     cout << "\t\t\t\t\t\t\t\t##                    2. VIEW AVAILABLE FIELDS                ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                    3. VIEW ALL FIELDS PRICE                ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                    4. CHANGE FIELDS PRICE                  ##" << endl;
     cout << "\t\t\t\t\t\t\t\t##                    0. GO BACK                              ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
@@ -584,6 +587,12 @@ void Menu::fieldDetailsMenu() {
             break;
         case 2:
             fieldManager.viewAvailableFields();
+            break;
+        case 3:
+            fieldManager.viewAllFieldsPrice();
+            break;
+        case 4:
+            fieldManager.changeFieldsPrice();
             break;
         case 0:
             system("cls");
