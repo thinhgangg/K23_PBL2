@@ -19,6 +19,7 @@ public:
 
     void resetPassMenu();
     void registrationMenu();
+    void accountManagementMenu();
 
     void printDATSAN();
     void printHUYSAN();
@@ -42,7 +43,7 @@ public:
     void displayBookingForm();
     void displaySearchCustomer();
 
-    void customerInfoMenu(const string& username, const string& name, const string& phone);
+    void customerInfoMenu(const string& username, const string& name, const string& phone, const string& address);
     void accountSettingsMenu(const string& username, bool isAdmin);
 
     void customerDetailsMenu();

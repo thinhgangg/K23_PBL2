@@ -6,5 +6,5 @@
 
 class Manager : public Account {
 public:
-    Manager(string user, string pass, string n, string phone);
+    Manager(string user, string pass, string n, string phone, string address);
 };

@@ -247,7 +247,7 @@ void FieldManager::viewFieldDetails() {
             }
 
             string line;
-            string status, price, username, customer, phone, payment, note;
+            string status, price, username, customer, phone, address, payment, note;
 
             while (getline(file, line)) {
                 stringstream ss(line);
@@ -265,6 +265,7 @@ void FieldManager::viewFieldDetails() {
                 else if (label == "USERNAME") username = value;
                 else if (label == "CUSTOMER") customer = value;
                 else if (label == "PHONE NUMBER") phone = value;
+                else if (label == "ADDRESS") address = value;
                 else if (label == "PAYMENT DETAILS") payment = value;
                 else if (label == "NOTE") note = value;
             }
@@ -287,6 +288,7 @@ void FieldManager::viewFieldDetails() {
                 cout << "\t\t\t\t\t\t\t\t|                    PRICE: " << setw(34) << left << price << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << customer << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|                    PHONE NUMBER: " << setw(27) << left << phone << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                    ADDRESS: " << setw(22) << left << address << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|                    PAYMENT DETAILS: " << setw(24) << left << payment << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|                    NOTE: " << setw(35) << left << note << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;

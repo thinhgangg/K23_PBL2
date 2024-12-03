@@ -10,7 +10,7 @@ void AccountManager::registerAccount(const string& filename, const string& accou
     Menu menu;
     menu.displaySignUp();
 
-    string user, pass, name, phone;
+    string user, pass, name, phone, addr;
 
     // Nhap username
     while (true) {
@@ -18,14 +18,14 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         cin >> user;
 
         if (!userManager.isValidUsername(user)) {
-            cout << "\033[12;53HUSERNAME MUST BE AT LEAST 6 CHARACTERS LONG, AND CONTAIN NO SPACES OR SPECIAL CHARACTERS!" << endl;
+            cout << "\033[14;53HUSERNAME MUST BE AT LEAST 6 CHARACTERS LONG, AND CONTAIN NO SPACES OR SPECIAL CHARACTERS!" << endl;
             cout << "\033[4;92H                           " << endl;
         } else if (userManager.isUsernameTaken(user)) {
-            cout << "\033[12;50H                                                                                                    " << endl;
-            cout << "\033[12;76HUSERNAME ALREADY EXISTS! TRY ANOTHER ONE!" << endl;
+            cout << "\033[14;50H                                                                                                    " << endl;
+            cout << "\033[14;76HUSERNAME ALREADY EXISTS! TRY ANOTHER ONE!" << endl;
             cout << "\033[4;92H                           " << endl;
         } else {
-            cout << "\033[12;50H                                                                                                    " << endl;
+            cout << "\033[14;50H                                                                                                    " << endl;
             break;
         }
     }
@@ -37,10 +37,10 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         pass = userManager.inputPassword();
 
         if (!userManager.isValidPassword(pass)) {
-            cout << "\033[12;75HPASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!" << endl;
+            cout << "\033[14;75HPASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!" << endl;
             cout << "\033[6;92H                           " << endl;
         } else {
-            cout << "\033[12;50H                                                                                                    " << endl;
+            cout << "\033[14;50H                                                                                                    " << endl;
             break;
         }
     }
@@ -53,10 +53,10 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         getline(cin, name);
 
         if (!userManager.isValidName(name)) {
-            cout << "\033[12;82HINVALID NAME! PLEASE TRY AGAIN!" << endl;
+            cout << "\033[14;82HINVALID NAME! PLEASE TRY AGAIN!" << endl;
             cout << "\033[8;88H                               " << endl;
         } else {
-            cout << "\033[12;50H                                                                                                    " << endl;
+            cout << "\033[14;50H                                                                                                    " << endl;
             break;
         }
     }
@@ -67,30 +67,35 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         cin >> phone;
 
         if (!userManager.isValidPhone(phone)) {
-            cout << "\033[12;78HINVALID PHONE NUMBER! PLEASE TRY AGAIN!" << endl;
+            cout << "\033[14;78HINVALID PHONE NUMBER! PLEASE TRY AGAIN!" << endl;
             cout << "\033[10;96H                       ";
         } else if (userManager.isPhoneNumberTaken(phone)) {
-            cout << "\033[12;50H                                                                                                    " << endl;
-            cout << "\033[12;78HTHIS PHONE NUMBER ALREADY REGISTERED!" << endl;
+            cout << "\033[14;50H                                                                                                    " << endl;
+            cout << "\033[14;78HTHIS PHONE NUMBER ALREADY REGISTERED!" << endl;
             cout << "\033[10;96H                       ";
         } else {
-            cout << "\033[12;50H                                                                                                    " << endl;
+            cout << "\033[14;50H                                                                                                    " << endl;
             break;
         }
     }
 
+    // Nhap dia chi
+    cout << "\033[12;91H";
+    cin.ignore();
+    getline(cin, addr);
+
     if (accountType == "Customer") {
-        Customer newCustomer(user, pass, name, phone);
+        Customer newCustomer(user, pass, name, phone, addr);
         newCustomer.saveAccount(filename);
     } else if (accountType == "Manager") {
-        Manager newManager(user, pass, name, phone);
+        Manager newManager(user, pass, name, phone, addr);
         newManager.saveAccount(filename);
     }
 
     system("cls");
     cout << "\t\t\t\t\t\t\t\t\t            REGISTRATION SUCCESSFUL!            " << endl;
     menu.printRETURN();
-    cin.ignore();
+    // cin.ignore();
     cin.get();
 }
 
@@ -148,11 +153,12 @@ void AccountManager::resetPassword(const string& filename) {
 
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
-            string u, p, name, phone;
+            string u, p, name, phone, addr;
             getline(ss, u, ',');
             getline(ss, p, ',');
             getline(ss, name, ',');
-            getline(ss, phone);
+            getline(ss, phone, ',');
+            getline(ss, addr, ',');
 
             // neu tim thay tai khoan
             if (u == username && phone == phoneNum) {
@@ -238,11 +244,12 @@ void AccountManager::changePassword(const string& filename, const string& userna
 
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
-            string u, p, name, phone;
+            string u, p, name, phone, addr;
             getline(ss, u, ',');
             getline(ss, p, ',');
             getline(ss, name, ',');
             getline(ss, phone, ',');
+            getline(ss, addr, ',');
 
             if (u == username && p == currentPassword) {
                 while (true) {
@@ -373,7 +380,7 @@ void AccountManager::viewCustomerList() {
         return;
     }
 
-    string line, username, password, name, phone;
+    string line, username, password, name, phone, address;
     Vector<string> customers;
 
     while (getline(file, line)) {
@@ -387,9 +394,9 @@ void AccountManager::viewCustomerList() {
         cout << "\t\t\t\t\t\t\t\t##                       CUSTOMER LIST                        ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 
-        cout << "\t\t\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t\t\t|   No    |          CUSTOMER           |     USERNAME      |       PHONE       |" << endl;
-        cout << "\t\t\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t|   No  |          CUSTOMER          |      USERNAME      |     PHONE      |              ADDRESS              |" << endl;
+        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
 
         for (size_t i = 0; i < customers.get_size(); ++i) {
             stringstream ss(customers[i]);
@@ -397,15 +404,16 @@ void AccountManager::viewCustomerList() {
             getline(ss, password, ',');
             getline(ss, name, ',');
             getline(ss, phone, ',');
+            getline(ss, address, ',');
 
-            cout << "\t\t\t\t\t\t\t|   " << setw(3) << left << i + 1 
-                 << "   |   " << setw(25) << left << name 
-                 << " |   " << setw(15) << left << username 
-                 << " |   " << setw(15) << phone 
+            cout << "\t\t\t\t\t|   " << setw(3) << left << i + 1 
+                 << " |   " << setw(24) << left << name 
+                 << " |   " << setw(16) << left << username 
+                 << " |   " << setw(12) << phone 
+                 << " |   " << setw(31) << address
                  << " |" << endl;
-            cout << "\t\t\t\t\t\t\t---------------------------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
         }
-
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##\tCHOOSE A CUSTOMER BY INDEX (1-" << customers.get_size() << ") OR 0 TO GO BACK:    ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -422,8 +430,9 @@ void AccountManager::viewCustomerList() {
             getline(ss, password, ',');
             getline(ss, name, ',');
             getline(ss, phone, ',');
+            getline(ss, address, ',');
 
-            menu.customerInfoMenu(username, name, phone);
+            menu.customerInfoMenu(username, name, phone, address);
         } else {
             menu.printError();
         }
@@ -446,11 +455,12 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
 
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
-            string u, p, name, phone;
+            string u, p, name, phone, addr;
             getline(ss, u, ',');
             getline(ss, p, ',');
             getline(ss, name, ',');
-            getline(ss, phone);
+            getline(ss, phone, ',');
+            getline(ss, addr, ',');
 
             if (u == username) {
                 while (true) {
@@ -552,14 +562,15 @@ void AccountManager::searchCustomer() {
 
     for (size_t i = 0; i < lines.get_size(); ++i) {
         stringstream ss(lines[i]);
-        string username, password, name, phoneNum;
+        string username, password, name, phoneNum, address;
         getline(ss, username, ',');
         getline(ss, password, ',');
         getline(ss, name, ',');
         getline(ss, phoneNum, ',');
+        getline(ss, address, ',');
 
         if (phoneNum == phone) {
-            menu.customerInfoMenu(username, name, phone);
+            menu.customerInfoMenu(username, name, phone, address);
             customerFound = true;
             break;
         }

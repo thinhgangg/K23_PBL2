@@ -13,16 +13,12 @@ protected:
     string phoneNumber;
     string username;
     string password;
+    string address;
 
 public:
     // Constructors
     Account();
-    Account(string user, string pass, string name, string phone);
-
-    // Getters
-    // string getUsername() const { return username; }
-    // string getName() const { return name; }  
-    // string getPhoneNumber() const { return phoneNumber; }
+    Account(string user, string pass, string name, string phone, string address);
 
     // Static methods
     static bool accountExists(const string& filename, const string& user);

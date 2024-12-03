@@ -73,7 +73,7 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
 
     menu.displayBookingForm();
 
-    string name, phone, paymentStatus, note;
+    string name, phone, address, paymentStatus, note;
     cout << "\033[13;72H" << field;
 
     if (isAdmin) {
@@ -88,11 +88,14 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
     
     cout << "\033[15;79H";
     getline(cin, phone);
+
+    cout << "\033[16;74H";
+    getline(cin, address);
     
-    cout << "\033[16;108H";
+    cout << "\033[17;108H";
     getline(cin, paymentStatus);
     
-    cout << "\033[17;80H";
+    cout << "\033[18;80H";
     getline(cin, note);
 
     int fieldPrice = 0;
@@ -111,6 +114,7 @@ bool BookingManager::isBookField(const string& timeSlot, const string& field, co
         file << "USERNAME: " << username << endl;
         file << "CUSTOMER: " << customerName << endl;
         file << "PHONE NUMBER: " << phone << endl;
+        file << "ADDRESS: " << address << endl;
         file << "PAYMENT DETAILS: " << paymentStatus << endl;
         file << "NOTE: " << note << endl;
         file.close();
@@ -199,9 +203,9 @@ void BookingManager::viewBookingHistory(const string& username) {
     bool hasHistory = false;
 
     system("cls");
-    cout << "\t\t\t\t\t\t\t\t##############################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t#                      BOOKING HISTORY                       #" << endl;
-    cout << "\t\t\t\t\t\t\t\t##############################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t#                        BOOKING HISTORY                       #" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 
     for (size_t i = 0; i < timeSlots.get_size(); ++i) {
         string timeSlot = timeSlots[i];
@@ -223,25 +227,42 @@ void BookingManager::viewBookingHistory(const string& username) {
 
                 if (matchFound) {
                     hasHistory = true;
-                    cout << "\n";                                                                          
-                    cout << "\t\t\t\t\t\t\t\t--------------------------------------------------------------" << endl;
-                    cout << "\t\t\t\t\t\t\t\t|   Time Slot: "<< timeSlot <<"          |         Field: "<< field <<"   |" << endl;
-                    cout << "\t\t\t\t\t\t\t\t--------------------------------------------------------------" << endl;
+                    cout << "\n";
+                    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|          " << setw(21) << left << timeSlot << " |            " << setw(17) << left << field << "|" << endl;
+                    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
 
                     file.clear();
                     file.seekg(0, ios::beg);
+                    string status, price, username, customer, phone, address, payment, note;
                     while (getline(file, line)) {
-                        size_t colonPos = line.find(":");
-                        if (colonPos != string::npos) {
-                            string key = line.substr(0, colonPos);
-                            string value = line.substr(colonPos + 1);
-                            cout << "\t\t\t\t\t\t\t\t\t\t   " << key << ": " << value << endl;
-                        } else {
-                            cout << "\t\t\t\t\t\t\t\t\t\t   " << line << endl;
+                        stringstream ss(line);
+                        string label, value;
+                        getline(ss, label, ':');
+                        getline(ss, value);
+
+                        if (!value.empty()) {
+                            if (value.front() == ' ') value.erase(value.begin());
+                            if (value.back() == ' ') value.erase(value.end() - 1);
                         }
+
+                        if (label == "STATUS") status = value;
+                        else if (label == "PRICE") price = value;
+                        else if (label == "USERNAME") username = value;
+                        else if (label == "CUSTOMER") customer = value;
+                        else if (label == "PHONE NUMBER") phone = value;
+                        else if (label == "ADDRESS") address = value;
+                        else if (label == "PAYMENT DETAILS") payment = value;
+                        else if (label == "NOTE") note = value;
                     }
-                    cout << "\t\t\t\t\t\t\t\t--------------------------------------------------------------" << endl;
-                    cout << "\t\t\t\t\t\t\t______________________________________________________________________________" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|   PRICE            :  " << setw(37) << left << price << "  |" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|   CUSTOMER         :  " << setw(37) << left << customer << "  |" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|   PHONE NUMBER     :  " << setw(37) << left << phone << "  |" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|   ADDRESS          :  " << setw(37) << left << address << "  |" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|   PAYMENT DETAILS  :  " << setw(37) << left << payment << "  |" << endl;
+                    cout << "\t\t\t\t\t\t\t\t|   NOTE             :  " << setw(37) << left << note << "  |" << endl;
+                    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                    cout << "\t\t\t\t\t\t\t________________________________________________________________________________" << endl;
                 }
                 file.close();
             }

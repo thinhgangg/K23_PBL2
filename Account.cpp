@@ -2,8 +2,8 @@
 
 Account::Account() {}
 
-Account::Account(string user, string pass, string name, string phone)
-    : username(user), password(pass), name(name), phoneNumber(phone) {}
+Account::Account(string user, string pass, string name, string phone, string addr)
+    : username(user), password(pass), name(name), phoneNumber(phone), address(addr) {}
 
 // kiem tra tai khoan ton tai
 bool Account::accountExists(const string& filename, const string& user) {
@@ -18,7 +18,7 @@ bool Account::accountExists(const string& filename, const string& user) {
 // luu tai khoan vao file
 void Account::saveAccount(const string& filename) const {
     ofstream file(filename, ios::app);
-    file << username << "," << password << "," << name << "," << phoneNumber << endl;
+    file << username << "," << password << "," << name << "," << phoneNumber << "," << address << endl;
 }
 
 // lay thong tin nguoi dung

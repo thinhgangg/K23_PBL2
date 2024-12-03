@@ -111,9 +111,8 @@ void Menu::managerMenu(const string& username, const string& name) {
         cout << "\t\t\t\t\t\t\t\t##                 3. PRINT BILL & FREE FIELD                 ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 4. CUSTOMER DETAILS MANAGEMENT             ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 5. FIELD DETAILS MANAGEMENT                ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                 6. REGISTER FOR AN ACCOUNT                 ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                 7. RESET PASSWORD                          ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                 8. ACCOUNT SETTINGS                        ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                 6. ACCOUNT MANAGEMENT                      ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                 7. ACCOUNT SETTINGS                        ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 0. LOG OUT                                 ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
@@ -136,12 +135,9 @@ void Menu::managerMenu(const string& username, const string& name) {
                 fieldDetailsMenu();
                 break;
             case 6:
-                registrationMenu();
+                accountManagementMenu();
                 break;
             case 7:
-                resetPassMenu();
-                break;
-            case 8:
                 accountSettingsMenu(username, true);
                 break;
             case 0:
@@ -219,6 +215,8 @@ void Menu::displaySignUp() {
     cout << "\t\t\t\t\t\t\t\t\t##       NAME:                                ##" << endl;
     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t\t##       PHONE NUMBER:                        ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t##       ADDRESS:                             ##" << endl;
     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
 }
 
@@ -301,8 +299,7 @@ void Menu::registrationMenu() {
             accountmanager.registerAccount("tk_khachhang.txt", "Customer");
             break;
         case 0:
-            system("cls");
-            break;
+            return;
         default:
             printError();
     }
@@ -331,10 +328,37 @@ void Menu::resetPassMenu() {
             accountManager.resetPassword("tk_khachhang.txt");
             break;
         case 0:
-            system("cls");
-            break;
+            return;
         default:
             printError();
+    }
+}
+
+void Menu::accountManagementMenu() {
+    int choice;
+    while (true) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                     ACCOUNT MANAGEMENT                     ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                  1. REGISTER FOR AN ACCOUNT                ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                  2. RESET PASSWORD                         ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                  0. GO BACK                                ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                registrationMenu();
+                break;
+            case 2:
+                resetPassMenu();
+                break;
+            case 0:
+                return;
+            default:
+                printError();
+        }
     }
 }
 
@@ -421,12 +445,13 @@ void Menu::displayBookingForm() {
     cout << "\t\t\t\t\t\t\t|       FIELD:                                                                 |" << endl;
     cout << "\t\t\t\t\t\t\t|       NAME:                                                                  |" << endl;
     cout << "\t\t\t\t\t\t\t|       PHONE NUMBER:                                                          |" << endl;
+    cout << "\t\t\t\t\t\t\t|       ADDRESS:                                                               |" << endl;
     cout << "\t\t\t\t\t\t\t|       PAYMENT DETAILS (BY CASH / BANK TRANSFER):                             |" << endl;
     cout << "\t\t\t\t\t\t\t|       NOTE (IF ANY):                                                         |" << endl;
     cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
 }
 
-void Menu::customerInfoMenu(const string& username, const string& name, const string& phone) {
+void Menu::customerInfoMenu(const string& username, const string& name, const string& phone, const string& address) {
     FieldManager fieldManager;
     AccountManager accountManager;
     BookingManager booking;
@@ -442,6 +467,7 @@ void Menu::customerInfoMenu(const string& username, const string& name, const st
         cout << "\t\t\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << name << " |" << endl;
         cout << "\t\t\t\t\t\t\t\t|                    USERNAME: " << setw(31) << left << username << " |" << endl;
         cout << "\t\t\t\t\t\t\t\t|                    PHONE: " << setw(34) << left << phone << " |" << endl;
+        cout << "\t\t\t\t\t\t\t\t|                    ADDRESS: " << setw(32) << left << address << " |" << endl;
         cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##                   1. VIEW BOOKING HISTORY                  ##" << endl;
@@ -463,7 +489,6 @@ void Menu::customerInfoMenu(const string& username, const string& name, const st
                 accountManager.deleteAccount("tk_khachhang.txt", username);
                 return;
             case 0:
-                system("cls");
                 return;
             default:
                 printError();
@@ -482,10 +507,10 @@ void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##                   ACCOUNT SETTINGS MENU                    ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                1. CHANGE PHONE NUMBER                      ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                2. CHANGE PASSWORD                          ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                3. DELETE ACCOUNT                           ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                0. GO BACK                                  ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   1. CHANGE PHONE NUMBER                   ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   2. CHANGE PASSWORD                       ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   3. DELETE ACCOUNT                        ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   0. GO BACK                               ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
         cin >> choice;
@@ -507,19 +532,19 @@ void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
                     cout << "\t\t\t\t\t\t\t\t##       ARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?        ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t##                  THIS CANNOT BE UNDONE!!!                  ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+                    cout << "\t\t\t\t\t\t\t\t##                           0. NO                            ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t##                           1. YES                           ##" << endl;
-                    cout << "\t\t\t\t\t\t\t\t##                           2. NO                            ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
                     cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
                     cin >> confirmChoice;
 
-                    if (confirmChoice == '1') {
+                    if (confirmChoice == '0') {
+                        system("cls");
+                        break;
+                    } else if (confirmChoice == '1') {
                         accountManager.deleteAccount(fileName, username);
                         displayGoodbye();
                         exit(0);
-                    } else if (confirmChoice == '2') {
-                        system("cls");
-                        break;
                     } else {
                         printError();
                     }
@@ -527,7 +552,6 @@ void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
                 break;
             }
             case 0:
-                system("cls");
                 return;
             default:
                 printError();
@@ -536,66 +560,68 @@ void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
 }
 
 void Menu::customerDetailsMenu() {
-    system("cls"); 
     AccountManager accountManager;
-    int choice;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                 CUSTOMER DETAILS MANAGEMENT                ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    1. SEARCH CUSTOMER                      ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    2. VIEW CUSTOMER LIST                   ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    0. GO BACK                              ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-    cin >> choice;
-    switch (choice) {
-        case 1:
-            accountManager.searchCustomer();
-            break;
-        case 2:
-            accountManager.viewCustomerList();
-            break;
-        case 0:
-            system("cls");
-            break;
-        default:
-            printError();
+    while (true) {
+        system("cls");
+        int choice;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                  CUSTOMER DETAILS MANAGEMENT               ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                     1. SEARCH CUSTOMER                     ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                     2. VIEW CUSTOMER LIST                  ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                     0. GO BACK                             ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                accountManager.searchCustomer();
+                break;
+            case 2:
+                accountManager.viewCustomerList();
+                break;
+            case 0:
+                return;
+            default:
+                printError();
+        }
     }
 }
 
 void Menu::fieldDetailsMenu() {
-    system("cls"); 
     FieldManager fieldManager;
     fieldManager.loadFieldsFromFile("fields_details.txt");
     int choice;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                  FIELD DETAILS MANAGEMENT                  ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    1. VIEW FIELD DETAILS                   ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    2. VIEW AVAILABLE FIELDS                ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    3. VIEW ALL FIELDS PRICE                ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    4. CHANGE FIELDS PRICE                  ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    0. GO BACK                              ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-    cin >> choice;
-    switch (choice) {
-        case 1:
-            fieldManager.viewFieldDetails();
-            break;
-        case 2:
-            fieldManager.viewAvailableFields();
-            break;
-        case 3:
-            fieldManager.viewAllFieldsPrice();
-            break;
-        case 4:
-            fieldManager.changeFieldsPrice();
-            break;
-        case 0:
-            system("cls");
-            break;
-        default:
-            printError();
+    while (true) {
+        system("cls"); 
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                  FIELD DETAILS MANAGEMENT                  ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   1. VIEW FIELD DETAILS                    ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   2. VIEW AVAILABLE FIELDS                 ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   3. VIEW ALL FIELDS PRICE                 ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   4. CHANGE FIELDS PRICE                   ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   0. GO BACK                               ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                fieldManager.viewFieldDetails();
+                break;
+            case 2:
+                fieldManager.viewAvailableFields();
+                break;
+            case 3:
+                fieldManager.viewAllFieldsPrice();
+                break;
+            case 4:
+                fieldManager.changeFieldsPrice();
+                break;
+            case 0:
+                return;
+            default:
+                printError();
+        }
     }
 }

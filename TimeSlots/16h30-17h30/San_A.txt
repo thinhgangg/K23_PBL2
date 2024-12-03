@@ -1,2 +1,9 @@
 FIELD: San_A
-STATUS: Available
+STATUS: Booked
+PRICE: 250000 VND
+USERNAME: duy123
+CUSTOMER: Nguyen Dinh Duy
+PHONE NUMBER: 00987654234
+ADDRESS: benh vien tam than
+PAYMENT DETAILS: deo tra
+NOTE: deo co note

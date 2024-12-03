@@ -7,5 +7,5 @@ using namespace std;
 
 class Customer : public Account {
 public:
-    Customer(string user, string pass, string n, string phone);
+    Customer(string user, string pass, string n, string phone, string addr);
 };
