@@ -1,2 +1,3 @@
 FIELD: San_D
 STATUS: Available
+PRICE: 200000 VND

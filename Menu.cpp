@@ -65,7 +65,7 @@ void Menu::homeMenu() {
     while (true) {
         displayLogo();
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##             FOOTBALL FIELD MANAGER APPLICATION             ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                            HOME                            ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##                        1. SIGN IN                          ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                        2. SIGN UP                          ##" << endl;
@@ -126,7 +126,7 @@ void Menu::managerMenu(const string& username, const string& name) {
                 fieldManager.cancelBookField(username);
                 break;
             case 3:
-                // fieldManager.printBillAndFreeField();
+                fieldManager.viewAndPrintBill();
                 break;
             case 4:
                 customerDetailsMenu();
@@ -151,7 +151,6 @@ void Menu::managerMenu(const string& username, const string& name) {
 void Menu::customerMenu(const string& username, const string& name) {
     int choice;
     FieldManager fieldManager;
-    BookingManager booking;
 
     while (true) {
         system("cls"); 
@@ -181,7 +180,7 @@ void Menu::customerMenu(const string& username, const string& name) {
                 fieldManager.viewAvailableFields();
                 break;
             case 4:
-                booking.viewBookingHistory(username);
+                fieldManager.viewBookingHistory(username);
                 break;
             case 5:
                 accountSettingsMenu(username, false);
@@ -392,7 +391,10 @@ void Menu::printTENSAN(const string& field) {
     }
 
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##            " << field << "            ||         " << fieldPrice << " VND          ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t##            " << setw(17) << left << field << "||         " 
+                                             << setw(7) << left << fieldPrice << "VND" 
+                                             << setw(10) << left << " " << "##" 
+                                             << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 }
 
@@ -434,7 +436,7 @@ void Menu::printDOIGIA() {
 
 void Menu::printHOADON() {
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                   PRINT BILL & FREE FIELD                  ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                         PRINT BILL                         ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 }
 
@@ -446,7 +448,7 @@ void Menu::displayBookingForm() {
     cout << "\t\t\t\t\t\t\t|       NAME:                                                                  |" << endl;
     cout << "\t\t\t\t\t\t\t|       PHONE NUMBER:                                                          |" << endl;
     cout << "\t\t\t\t\t\t\t|       ADDRESS:                                                               |" << endl;
-    cout << "\t\t\t\t\t\t\t|       PAYMENT DETAILS (BY CASH / BANK TRANSFER):                             |" << endl;
+    cout << "\t\t\t\t\t\t\t|       PAYMENT DETAILS (PAID / NOT PAID):                                     |" << endl;
     cout << "\t\t\t\t\t\t\t|       NOTE (IF ANY):                                                         |" << endl;
     cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
 }
@@ -454,7 +456,6 @@ void Menu::displayBookingForm() {
 void Menu::customerInfoMenu(const string& username, const string& name, const string& phone, const string& address) {
     FieldManager fieldManager;
     AccountManager accountManager;
-    BookingManager booking;
 
     int choice;
     while (true) {
@@ -480,7 +481,7 @@ void Menu::customerInfoMenu(const string& username, const string& name, const st
 
         switch (choice) {
             case 1:
-                booking.viewBookingHistory(username);
+                fieldManager.viewBookingHistory(username);
                 break;
             case 2:
                 accountManager.resetPassword("tk_khachhang.txt");
@@ -591,6 +592,8 @@ void Menu::customerDetailsMenu() {
 void Menu::fieldDetailsMenu() {
     FieldManager fieldManager;
     fieldManager.loadFieldsFromFile("fields_details.txt");
+    Account account;
+    string username = account.getUsername();
     int choice;
     while (true) {
         system("cls"); 

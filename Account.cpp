@@ -9,7 +9,7 @@ Account::Account(string user, string pass, string name, string phone, string add
 bool Account::accountExists(const string& filename, const string& user) {
     ifstream file(filename);
     string u, p, name, phone;
-    while (getline(file, u, ',') && getline(file, p, ',') && getline(file, name, ',') && getline(file, phone)) {
+    while (getline(file, u, ';') && getline(file, p, ';') && getline(file, name, ';') && getline(file, phone)) {
         if (u == user) return true;
     }
     return false;
@@ -18,7 +18,7 @@ bool Account::accountExists(const string& filename, const string& user) {
 // luu tai khoan vao file
 void Account::saveAccount(const string& filename) const {
     ofstream file(filename, ios::app);
-    file << username << "," << password << "," << name << "," << phoneNumber << "," << address << endl;
+    file << username << ";" << password << ";" << name << ";" << phoneNumber << ";" << address << endl;
 }
 
 // lay thong tin nguoi dung
@@ -29,7 +29,7 @@ bool Account::getUserInfo(const string &filename, const string &user, const stri
     }
 
     string u, p, n, phone;
-    while (getline(file, u, ',') && getline(file, p, ',') && getline(file, n, ',') && getline(file, phone)) {
+    while (getline(file, u, ';') && getline(file, p, ';') && getline(file, n, ';') && getline(file, phone)) {
         if (u == user && p == pass) {
             name = n;
             return true;
@@ -43,7 +43,7 @@ bool Account::isAdminUser(const string& username, const string& filename) {
     ifstream file(filename);
     string u, pass, name, phone;
 
-    while (getline(file, u, ',') && getline(file, pass, ',') && getline(file, name, ',') && getline(file, phone)) {
+    while (getline(file, u, ';') && getline(file, pass, ';') && getline(file, name, ';') && getline(file, phone)) {
         if (u == username) {
             return true;
         }

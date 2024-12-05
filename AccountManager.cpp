@@ -154,11 +154,11 @@ void AccountManager::resetPassword(const string& filename) {
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
             string u, p, name, phone, addr;
-            getline(ss, u, ',');
-            getline(ss, p, ',');
-            getline(ss, name, ',');
-            getline(ss, phone, ',');
-            getline(ss, addr, ',');
+            getline(ss, u, ';');
+            getline(ss, p, ';');
+            getline(ss, name, ';');
+            getline(ss, phone, ';');
+            getline(ss, addr, ';');
 
             // neu tim thay tai khoan
             if (u == username && phone == phoneNum) {
@@ -194,7 +194,7 @@ void AccountManager::resetPassword(const string& filename) {
                             return;
                         } else {
                             stringstream newLine;
-                            newLine << u << "," << newPassword << "," << name << "," << phone;
+                            newLine << u << ";" << newPassword << ";" << name << ";" << phone;
                             lines[i] = newLine.str();
                             accountFound = true;
                             break;
@@ -245,11 +245,11 @@ void AccountManager::changePassword(const string& filename, const string& userna
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
             string u, p, name, phone, addr;
-            getline(ss, u, ',');
-            getline(ss, p, ',');
-            getline(ss, name, ',');
-            getline(ss, phone, ',');
-            getline(ss, addr, ',');
+            getline(ss, u, ';');
+            getline(ss, p, ';');
+            getline(ss, name, ';');
+            getline(ss, phone, ';');
+            getline(ss, addr, ';');
 
             if (u == username && p == currentPassword) {
                 while (true) {
@@ -283,7 +283,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
                             return;
                         } else {
                             stringstream newLine;
-                            newLine << u << "," << newPassword << "," << name << "," << phone;
+                            newLine << u << ";" << newPassword << ";" << name << ";" << phone;
                             lines[i] = newLine.str();
                             accountFound = true;
                             break;
@@ -325,10 +325,10 @@ bool AccountManager::isdeleteAccount(const string& filename, const string& usern
         stringstream ss(lines[i]);
         string u, p, name, phone;
 
-        getline(ss, u, ',');
-        getline(ss, p, ',');
-        getline(ss, name, ',');
-        getline(ss, phone, ',');
+        getline(ss, u, ';');
+        getline(ss, p, ';');
+        getline(ss, name, ';');
+        getline(ss, phone, ';');
 
         if (u == username) {
             lines.erase(i);
@@ -400,11 +400,11 @@ void AccountManager::viewCustomerList() {
 
         for (size_t i = 0; i < customers.get_size(); ++i) {
             stringstream ss(customers[i]);
-            getline(ss, username, ',');
-            getline(ss, password, ',');
-            getline(ss, name, ',');
-            getline(ss, phone, ',');
-            getline(ss, address, ',');
+            getline(ss, username, ';');
+            getline(ss, password, ';');
+            getline(ss, name, ';');
+            getline(ss, phone, ';');
+            getline(ss, address, ';');
 
             cout << "\t\t\t\t\t|   " << setw(3) << left << i + 1 
                  << " |   " << setw(24) << left << name 
@@ -426,11 +426,11 @@ void AccountManager::viewCustomerList() {
             return;
         } else if (choice > 0 && choice <= customers.get_size()) {
             stringstream ss(customers[choice - 1]);
-            getline(ss, username, ',');
-            getline(ss, password, ',');
-            getline(ss, name, ',');
-            getline(ss, phone, ',');
-            getline(ss, address, ',');
+            getline(ss, username, ';');
+            getline(ss, password, ';');
+            getline(ss, name, ';');
+            getline(ss, phone, ';');
+            getline(ss, address, ';');
 
             menu.customerInfoMenu(username, name, phone, address);
         } else {
@@ -456,11 +456,11 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
         for (size_t i = 0; i < lines.get_size(); i++) {
             stringstream ss(lines[i]);
             string u, p, name, phone, addr;
-            getline(ss, u, ',');
-            getline(ss, p, ',');
-            getline(ss, name, ',');
-            getline(ss, phone, ',');
-            getline(ss, addr, ',');
+            getline(ss, u, ';');
+            getline(ss, p, ';');
+            getline(ss, name, ';');
+            getline(ss, phone, ';');
+            getline(ss, addr, ';');
 
             if (u == username) {
                 while (true) {
@@ -506,7 +506,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
 
                     if (password == p) {
                         stringstream newLine;
-                        newLine << u << "," << p << "," << name << "," << newPhone;
+                        newLine << u << ";" << p << ";" << name << ";" << newPhone;
                         lines[i] = newLine.str();
                         accountFound = true;
 
@@ -563,11 +563,11 @@ void AccountManager::searchCustomer() {
     for (size_t i = 0; i < lines.get_size(); ++i) {
         stringstream ss(lines[i]);
         string username, password, name, phoneNum, address;
-        getline(ss, username, ',');
-        getline(ss, password, ',');
-        getline(ss, name, ',');
-        getline(ss, phoneNum, ',');
-        getline(ss, address, ',');
+        getline(ss, username, ';');
+        getline(ss, password, ';');
+        getline(ss, name, ';');
+        getline(ss, phoneNum, ';');
+        getline(ss, address, ';');
 
         if (phoneNum == phone) {
             menu.customerInfoMenu(username, name, phone, address);

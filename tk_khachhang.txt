@@ -1,21 +1,21 @@
-username,password,name,phone,address
-mai123,mai123,Nguyen Mai,0912345677,123 Le Lai Street
-ngoc123,ngoc123,Tran Ngoc,0987654324,456 Tran Phu Street
-quyen123,quyen123,Pham Quyen,0123456798,789 Nguyen Thi Minh Khai
-minh123,minh123,Le Minh,0112233445,10 Hoang Hoa Tham
-son123,son123,Hoang Son,0321564789,20 Ba Trieu Street
-kieu123,kieu123,Van Kieu,0223344556,30 Le Quang Dieu
-lan123,lan123,Ngoc Lan,0976543210,50 Nguyen Hue Street
-tuan123,tuan123,Huong Tuan,0387654321,60 Bui Thi Xuan
-john123,john123,John Smith,0112233444,70 Yersin Road
-jane123,jane123,Jane Doe,0326548515,80 Tran Duy Hung
-mike123,mike123,Mike Johnson,0912345678,90 Hoan Kiem Lake
-emma123,emma123,Emma Brown,0987654323,100 Pham Ngoc Thach
-david123,david123,David Williams,0123456780,110 Kim Ma
-lucy123,lucy123,Lucy Davis,0112233457,120 Cong Hoa Street
-james123,james123,James Miller,0321564790,130 Quang Trung
-olivia123,olivia123,Olivia Wilson,0223344557,140 Hai Ba Trung
-charlie123,charlie123,Charlie Moore,0976543211,150 Le Duc Tho
-ava123,ava123,Ava Taylor,0387654322,160 Dinh Tien Hoang
-t,1,Nguyen Dinh Duy,0123456789,Au Co
-duy123,duy123,Nguyen Dinh Duy,0123123123
+username;password;name;phone;address
+mai123;mai123;Nguyen Mai;0912345677;123 Le Lai Street
+ngoc123;ngoc123;Tran Ngoc;0987654324;456 Tran Phu Street
+quyen123;quyen123;Pham Quyen;0123456798;789 Nguyen Thi Minh Khai
+minh123;minh123;Le Minh;0112233445;10 Hoang Hoa Tham
+son123;son123;Hoang Son;0321564789;20 Ba Trieu Street
+kieu123;kieu123;Van Kieu;0223344556;30 Le Quang Dieu
+lan123;lan123;Ngoc Lan;0976543210;50 Nguyen Hue Street
+tuan123;tuan123;Huong Tuan;0387654321;60 Bui Thi Xuan
+john123;john123;John Smith;0112233444;70 Yersin Road
+jane123;jane123;Jane Doe;0326548515;80 Tran Duy Hung
+mike123;mike123;Mike Johnson;0912345678;90 Hoan Kiem Lake
+emma123;emma123;Emma Brown;0987654323;100 Pham Ngoc Thach
+david123;david123;David Williams;0123456780;110 Kim Ma
+lucy123;lucy123;Lucy Davis;0112233457;120 Cong Hoa Street
+james123;james123;James Miller;0321564790;130 Quang Trung
+olivia123;olivia123;Olivia Wilson;0223344557;140 Hai Ba Trung
+charlie123;charlie123;Charlie Moore;0976543211;150 Le Duc Tho
+ava123;ava123;Ava Taylor;0387654322;160 Dinh Tien Hoang
+t;1;thinh dep trai;0123456789;Au Co
+duy123;duy123;Nguyen Dinh Duy;0123123123

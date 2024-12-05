@@ -1,9 +1,3 @@
 FIELD: San_A
-STATUS: Booked
-PRICE: 100000 VND
-USERNAME: duy123
-CUSTOMER: Nguyen Dinh Duy
-PHONE NUMBER: 0987654321
-ADDRESS: benh vien tam than hoa khanh
-PAYMENT DETAILS: deo tra
-NOTE: khong co
+STATUS: Available
+PRICE: 200000 VND

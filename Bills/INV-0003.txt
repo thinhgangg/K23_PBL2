@@ -1,0 +1,24 @@
+========================================
+SAN BONG BACH KHOA
+========================================
+Addr: 120 Nguyen Luong Bang, Q. Lien Chieu, Da Nang
+Tel: 09 6868 7777
+Service Hours: 15:30 - 23:30
+------------------------
+PAYMENT INVOICE
+------------------------
+Time: Wed Dec 04 19:32:01 2024
+Invoice No: INV-0003
+--------------------------------------
+Field: San_B
+Time Slot: 15h30-16h30
+Price: 123456 VND
+--------------------------------------
+Customer: mai phuc thin
+Phone: 098765456
+Address: nguyen luong bang
+Note: no
+--------------------------------------
+TOTAL: 123456 VND
+========================================
+Thank you for choosing our service!

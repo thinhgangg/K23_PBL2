@@ -1,2 +1,3 @@
 FIELD: San_C
 STATUS: Available
+PRICE: 200000 VND

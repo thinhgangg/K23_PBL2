@@ -78,10 +78,10 @@ bool UserManager::isPhoneNumberTaken(const string& phone) {
     for (size_t i = 0; i < accounts.get_size(); ++i) {
         stringstream ss(accounts[i]);
         string username, password, name, storedPhone;
-        getline(ss, username, ',');
-        getline(ss, password, ',');
-        getline(ss, name, ',');
-        getline(ss, storedPhone, ',');
+        getline(ss, username, ';');
+        getline(ss, password, ';');
+        getline(ss, name, ';');
+        getline(ss, storedPhone, ';');
 
         if (storedPhone == phone) {
             return true;
