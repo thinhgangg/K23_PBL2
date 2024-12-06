@@ -182,3 +182,7 @@ Username: admin1 | Action: Canceled | Field: San_D | TimeSlot: 20h30-21h30 | Tim
 
 Username: admin1 | Action: Canceled | Field: San_E | TimeSlot: 20h30-21h30 | Time: Thu Dec 05 19:36:05 2024
 
+Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Fri Dec 06 08:30:27 2024
+
+Username: admin1 | Action: Canceled | Field: San_A | TimeSlot: 15h30-16h30 | Time: Fri Dec 06 08:36:11 2024
+

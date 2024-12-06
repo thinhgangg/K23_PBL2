@@ -25,28 +25,6 @@ bool UserManager::isValidPassword(const string& password) {
     return password.length() >= 6;
 }
 
-// Nhap mat khau hien thi *
-string UserManager::inputPassword() {
-    string pass = "";
-    char ch;
-    while (true) {
-        ch = _getch();
-        if (ch == '\r') {
-            cout << endl;
-            break;
-        } else if (ch == '\b') {
-            if (!pass.empty()) {
-                pass.pop_back();
-                cout << "\b \b";
-            }
-        } else {
-            pass += ch;
-            cout << "*";
-        }
-    }
-    return pass;
-}
-
 // Kiem tra name hop le
 bool UserManager::isValidName(const string& name) {
     for (char c : name) {
@@ -88,4 +66,26 @@ bool UserManager::isPhoneNumberTaken(const string& phone) {
         }
     }
     return false;
+}
+
+// Nhap mat khau hien thi *
+string UserManager::inputPassword() {
+    string pass = "";
+    char ch;
+    while (true) {
+        ch = _getch();
+        if (ch == '\r') {
+            cout << endl;
+            break;
+        } else if (ch == '\b') {
+            if (!pass.empty()) {
+                pass.pop_back();
+                cout << "\b \b";
+            }
+        } else {
+            pass += ch;
+            cout << "*";
+        }
+    }
+    return pass;
 }

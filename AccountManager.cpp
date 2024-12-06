@@ -2,6 +2,36 @@
 
 using namespace std;
 
+// dang nhap
+void AccountManager::login() {
+    system("cls");
+
+    UserManager userManager;
+    Account account;
+    Menu menu;
+    menu.displaySignIn();
+
+    string user, pass, name;
+    cout << "\033[4;92H";
+    cin >> user;
+
+    cout << "\033[6;92H";
+    pass = userManager.inputPassword();
+
+    if (account.getUserInfo("tk_quanly.txt", user, pass, name)) {
+        menu.managerMenu(user, name);
+    } 
+    else if (account.getUserInfo("tk_khachhang.txt", user, pass, name)) {
+        menu.customerMenu(user, name);
+    } else {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\t\t       USERNAME OR PASSWORD IS INCORRECT!       " << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+    }
+}
+
 // dang ky tai khoan
 void AccountManager::registerAccount(const string& filename, const string& accountType) {
     system("cls");
@@ -97,36 +127,6 @@ void AccountManager::registerAccount(const string& filename, const string& accou
     menu.printRETURN();
     // cin.ignore();
     cin.get();
-}
-
-// dang nhap
-void AccountManager::login() {
-    system("cls");
-
-    UserManager userManager;
-    Account account;
-    Menu menu;
-    menu.displaySignIn();
-
-    string user, pass, name;
-    cout << "\033[4;92H";
-    cin >> user;
-
-    cout << "\033[6;92H";
-    pass = userManager.inputPassword();
-
-    if (account.getUserInfo("tk_quanly.txt", user, pass, name)) {
-        menu.managerMenu(user, name);
-    } 
-    else if (account.getUserInfo("tk_khachhang.txt", user, pass, name)) {
-        menu.customerMenu(user, name);
-    } else {
-        system("cls");
-        cout << "\t\t\t\t\t\t\t\t\t       USERNAME OR PASSWORD IS INCORRECT!       " << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-    }
 }
 
 // dat lai mat khau
@@ -314,131 +314,6 @@ void AccountManager::changePassword(const string& filename, const string& userna
     }
 }
 
-
-// kiem tra xoa tai khoan thanh cong
-bool AccountManager::isdeleteAccount(const string& filename, const string& username) {
-    FileManager fileManager;
-    Vector<string> lines = fileManager.readAllLines(filename);
-    bool accountFound = false;
-
-    for (size_t i = 0; i < lines.get_size(); ++i) {
-        stringstream ss(lines[i]);
-        string u, p, name, phone;
-
-        getline(ss, u, ';');
-        getline(ss, p, ';');
-        getline(ss, name, ';');
-        getline(ss, phone, ';');
-
-        if (u == username) {
-            lines.erase(i);
-            accountFound = true;
-            break;
-        }
-    }
-
-    if (accountFound) {
-        fileManager.writeAllLines(filename, lines);
-        return true;
-    }
-
-    return false;
-}
-
-// xoa tai khoan
-void AccountManager::deleteAccount(const string& filename, const string& username) {
-    Menu menu;
-
-    if (isdeleteAccount(filename, username)) {
-        system("cls");
-        cout << "\t\t\t\t\t\t\t\t                 ACCOUNT DELETED SUCCESSFULLY!                " << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-        return;
-    } else {
-        system("cls");
-        cout << "\t\t\t\t\t\t\t\t                  UNABLE TO DELETE ACCOUNT!                   " << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-    }
-}
-
-// xem danh sach khach hang
-void AccountManager::viewCustomerList() {
-    Menu menu;
-    system("cls");
-
-    ifstream file("tk_khachhang.txt");
-    if (!file.is_open()) {
-        system("cls");
-        cout << "\t\t\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-        return;
-    }
-
-    string line, username, password, name, phone, address;
-    Vector<string> customers;
-
-    while (getline(file, line)) {
-        customers.push_back(line);
-    }
-    file.close();
-
-    while (true) {
-        system("cls");
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                       CUSTOMER LIST                        ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-
-        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t|   No  |          CUSTOMER          |      USERNAME      |     PHONE      |              ADDRESS              |" << endl;
-        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
-
-        for (size_t i = 0; i < customers.get_size(); ++i) {
-            stringstream ss(customers[i]);
-            getline(ss, username, ';');
-            getline(ss, password, ';');
-            getline(ss, name, ';');
-            getline(ss, phone, ';');
-            getline(ss, address, ';');
-
-            cout << "\t\t\t\t\t|   " << setw(3) << left << i + 1 
-                 << " |   " << setw(24) << left << name 
-                 << " |   " << setw(16) << left << username 
-                 << " |   " << setw(12) << phone 
-                 << " |   " << setw(31) << address
-                 << " |" << endl;
-            cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
-        }
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##\tCHOOSE A CUSTOMER BY INDEX (1-" << customers.get_size() << ") OR 0 TO GO BACK:    ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-        int choice;
-        cin >> choice;
-
-        if (choice == 0) {
-            system("cls");
-            return;
-        } else if (choice > 0 && choice <= customers.get_size()) {
-            stringstream ss(customers[choice - 1]);
-            getline(ss, username, ';');
-            getline(ss, password, ';');
-            getline(ss, name, ';');
-            getline(ss, phone, ';');
-            getline(ss, address, ';');
-
-            menu.customerInfoMenu(username, name, phone, address);
-        } else {
-            menu.printError();
-        }
-    }
-}
-
 // thay doi so dien thoai
 void AccountManager::changePhoneNumber(const string& filename, const string& username) {
     system("cls");
@@ -544,6 +419,27 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
     }
 }
 
+// xoa tai khoan
+void AccountManager::deleteAccount(const string& filename, const string& username) {
+    Menu menu;
+
+    if (isdeleteAccount(filename, username)) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\t                 ACCOUNT DELETED SUCCESSFULLY!                " << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+        return;
+    } else {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\t                  UNABLE TO DELETE ACCOUNT!                   " << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+    }
+}
+
+// tim kiem khach hang
 void AccountManager::searchCustomer() {
     system("cls");
 
@@ -570,7 +466,7 @@ void AccountManager::searchCustomer() {
         getline(ss, address, ';');
 
         if (phoneNum == phone) {
-            menu.customerInfoMenu(username, name, phone, address);
+            menu.customerOptionMenu(username, name, phone, address);
             customerFound = true;
             break;
         }
@@ -583,4 +479,108 @@ void AccountManager::searchCustomer() {
         cin.ignore();
         cin.get();
     }
+}
+
+// xem danh sach khach hang
+void AccountManager::viewCustomerList() {
+    Menu menu;
+    system("cls");
+
+    ifstream file("tk_khachhang.txt");
+    if (!file.is_open()) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+        return;
+    }
+
+    string line, username, password, name, phone, address;
+    Vector<string> customers;
+
+    while (getline(file, line)) {
+        customers.push_back(line);
+    }
+    file.close();
+
+    while (true) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                       CUSTOMER LIST                        ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+
+        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t|   No  |          CUSTOMER          |      USERNAME      |     PHONE      |              ADDRESS              |" << endl;
+        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
+
+        for (size_t i = 0; i < customers.get_size(); ++i) {
+            stringstream ss(customers[i]);
+            getline(ss, username, ';');
+            getline(ss, password, ';');
+            getline(ss, name, ';');
+            getline(ss, phone, ';');
+            getline(ss, address, ';');
+
+            cout << "\t\t\t\t\t|   " << setw(3) << left << i + 1 
+                 << " |   " << setw(24) << left << name 
+                 << " |   " << setw(16) << left << username 
+                 << " |   " << setw(12) << phone 
+                 << " |   " << setw(31) << address
+                 << " |" << endl;
+            cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
+        }
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##\tCHOOSE A CUSTOMER BY INDEX (1-" << customers.get_size() << ") OR 0 TO GO BACK:    ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+        int choice;
+        cin >> choice;
+
+        if (choice == 0) {
+            system("cls");
+            return;
+        } else if (choice > 0 && choice <= customers.get_size()) {
+            stringstream ss(customers[choice - 1]);
+            getline(ss, username, ';');
+            getline(ss, password, ';');
+            getline(ss, name, ';');
+            getline(ss, phone, ';');
+            getline(ss, address, ';');
+
+            menu.customerOptionMenu(username, name, phone, address);
+        } else {
+            menu.printError();
+        }
+    }
+}
+
+// kiem tra xoa tai khoan thanh cong
+bool AccountManager::isdeleteAccount(const string& filename, const string& username) {
+    FileManager fileManager;
+    Vector<string> lines = fileManager.readAllLines(filename);
+    bool accountFound = false;
+
+    for (size_t i = 0; i < lines.get_size(); ++i) {
+        stringstream ss(lines[i]);
+        string u, p, name, phone;
+
+        getline(ss, u, ';');
+        getline(ss, p, ';');
+        getline(ss, name, ';');
+        getline(ss, phone, ';');
+
+        if (u == username) {
+            lines.erase(i);
+            accountFound = true;
+            break;
+        }
+    }
+
+    if (accountFound) {
+        fileManager.writeAllLines(filename, lines);
+        return true;
+    }
+
+    return false;
 }

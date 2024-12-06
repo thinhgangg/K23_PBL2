@@ -259,20 +259,17 @@ void Menu::displaySearchCustomer() {
     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
 }
 
-void Menu::printRETURN() {
-    cout << "\n";
-    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t\t##          PRESS ENTER TO RETURN...          ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
-}
-
-void Menu::printError() {
-    system("cls");
-    cout << "\t\t\t\t\t\t\t\t\t\t\tINVALID CHOICE!                 " << endl;
-    printRETURN();
-    cin.ignore();
-    cin.get();
-    system("cls");
+void Menu::displayBookingForm() {
+    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t|                               BOOKING DETAILS                                |" << endl;
+    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t|       FIELD:                                                                 |" << endl;
+    cout << "\t\t\t\t\t\t\t|       NAME:                                                                  |" << endl;
+    cout << "\t\t\t\t\t\t\t|       PHONE NUMBER:                                                          |" << endl;
+    cout << "\t\t\t\t\t\t\t|       ADDRESS:                                                               |" << endl;
+    cout << "\t\t\t\t\t\t\t|       PAYMENT DETAILS (PAID / NOT PAID):                                     |" << endl;
+    cout << "\t\t\t\t\t\t\t|       NOTE (IF ANY):                                                         |" << endl;
+    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
 }
 
 void Menu::registrationMenu() {
@@ -353,142 +350,6 @@ void Menu::accountManagementMenu() {
             case 2:
                 resetPassMenu();
                 break;
-            case 0:
-                return;
-            default:
-                printError();
-        }
-    }
-}
-
-void Menu::printDATSAN() {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                        BOOK A FIELD                        ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printHUYSAN() {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                       CANCEL A FIELD                       ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printKHUNGGIO(const string& timeSlot) {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                        "<<timeSlot<<"                         ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printTENSAN(const string& field) {
-    FieldManager fieldManager;
-    fieldManager.loadFieldsFromFile("fields_details.txt");
-    int fieldPrice = 0;
-    for (const auto& fieldData : fieldManager.fields) {
-        if (fieldData.fieldName == field) {
-            fieldPrice = fieldData.price;
-            break;
-        }
-    }
-
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##            " << setw(17) << left << field << "||         " 
-                                             << setw(7) << left << fieldPrice << "VND" 
-                                             << setw(10) << left << " " << "##" 
-                                             << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printGIO() {
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\t|                          TIME SLOTS                          |" << endl;
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-}
-
-void Menu::printSAN() {
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\t|                            FIELDS                            |" << endl;
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-}
-
-void Menu::printXEMSAN() {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                     VIEW FIELD DETAILS                     ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printXEMSANTRONG() {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                   VIEW AVAILABLE FIELDS                    ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printGIASAN() {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                    ALL FIELDS PRICE LIST                   ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printDOIGIA() {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                     CHANGE FIELDS PRICE                    ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::printHOADON() {
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                         PRINT BILL                         ##" << endl;
-    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-}
-
-void Menu::displayBookingForm() {
-    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t|                               BOOKING DETAILS                                |" << endl;
-    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t|       FIELD:                                                                 |" << endl;
-    cout << "\t\t\t\t\t\t\t|       NAME:                                                                  |" << endl;
-    cout << "\t\t\t\t\t\t\t|       PHONE NUMBER:                                                          |" << endl;
-    cout << "\t\t\t\t\t\t\t|       ADDRESS:                                                               |" << endl;
-    cout << "\t\t\t\t\t\t\t|       PAYMENT DETAILS (PAID / NOT PAID):                                     |" << endl;
-    cout << "\t\t\t\t\t\t\t|       NOTE (IF ANY):                                                         |" << endl;
-    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
-}
-
-void Menu::customerInfoMenu(const string& username, const string& name, const string& phone, const string& address) {
-    FieldManager fieldManager;
-    AccountManager accountManager;
-
-    int choice;
-    while (true) {
-        system("cls");
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                    CUSTOMER INFORMATION                    ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << name << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|                    USERNAME: " << setw(31) << left << username << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|                    PHONE: " << setw(34) << left << phone << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|                    ADDRESS: " << setw(32) << left << address << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                   1. VIEW BOOKING HISTORY                  ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                   2. RESET PASSWORD                        ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                   3. DELETE ACCOUNT                        ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                   0. GO BACK                               ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-        cin >> choice;
-
-        switch (choice) {
-            case 1:
-                fieldManager.viewBookingHistory(username);
-                break;
-            case 2:
-                accountManager.resetPassword("tk_khachhang.txt");
-                break;
-            case 3:
-                accountManager.deleteAccount("tk_khachhang.txt", username);
-                return;
             case 0:
                 return;
             default:
@@ -627,4 +488,143 @@ void Menu::fieldDetailsMenu() {
                 printError();
         }
     }
+}
+
+void Menu::customerOptionMenu(const string& username, const string& name, const string& phone, const string& address) {
+    FieldManager fieldManager;
+    AccountManager accountManager;
+
+    int choice;
+    while (true) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                    CUSTOMER INFORMATION                    ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+
+        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << name << " |" << endl;
+        cout << "\t\t\t\t\t\t\t\t|                    USERNAME: " << setw(31) << left << username << " |" << endl;
+        cout << "\t\t\t\t\t\t\t\t|                    PHONE: " << setw(34) << left << phone << " |" << endl;
+        cout << "\t\t\t\t\t\t\t\t|                    ADDRESS: " << setw(32) << left << address << " |" << endl;
+        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   1. VIEW BOOKING HISTORY                  ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   2. RESET PASSWORD                        ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   3. DELETE ACCOUNT                        ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                   0. GO BACK                               ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                fieldManager.viewBookingHistory(username);
+                break;
+            case 2:
+                accountManager.resetPassword("tk_khachhang.txt");
+                break;
+            case 3:
+                accountManager.deleteAccount("tk_khachhang.txt", username);
+                return;
+            case 0:
+                return;
+            default:
+                printError();
+        }
+    }
+}
+
+void Menu::printGIO() {
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t|                          TIME SLOTS                          |" << endl;
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+}
+
+void Menu::printSAN() {
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t|                            FIELDS                            |" << endl;
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+}
+
+void Menu::printKHUNGGIO(const string& timeSlot) {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                        "<<timeSlot<<"                         ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printTENSAN(const string& field) {
+    FieldManager fieldManager;
+    fieldManager.loadFieldsFromFile("fields_details.txt");
+    int fieldPrice = 0;
+    for (const auto& fieldData : fieldManager.fields) {
+        if (fieldData.fieldName == field) {
+            fieldPrice = fieldData.price;
+            break;
+        }
+    }
+
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##            " << setw(17) << left << field << "||         " 
+                                             << setw(7) << left << fieldPrice << "VND" 
+                                             << setw(10) << left << " " << "##" 
+                                             << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printDATSAN() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                        BOOK A FIELD                        ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printHUYSAN() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                       CANCEL A FIELD                       ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printXEMSAN() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                     VIEW FIELD DETAILS                     ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printXEMSANTRONG() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                   VIEW AVAILABLE FIELDS                    ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printGIASAN() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                    ALL FIELDS PRICE LIST                   ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printDOIGIA() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                     CHANGE FIELDS PRICE                    ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printHOADON() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                         PRINT BILL                         ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printRETURN() {
+    cout << "\n";
+    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t##          PRESS ENTER TO RETURN...          ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+}
+
+void Menu::printError() {
+    system("cls");
+    cout << "\t\t\t\t\t\t\t\t\t\t\tINVALID CHOICE!                 " << endl;
+    printRETURN();
+    cin.ignore();
+    cin.get();
+    system("cls");
 }
