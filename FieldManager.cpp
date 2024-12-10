@@ -8,23 +8,6 @@ FieldManager::FieldManager() {
     loadFieldsName("fields.txt");
 }
 
-void FieldManager::loadTimeSlots(const string& filename) {
-    Vector<string> data = readLinesFromFile(filename);
-
-    for (size_t i = 0; i < data.get_size(); ++i) {
-        const string& timeSlot = data[i];
-        availableTimeSlots.push_back(timeSlot);
-    }
-}
-
-void FieldManager::loadFieldsName(const string& filename) {
-    Vector<string> data = readLinesFromFile(filename);
-
-    for (size_t i = 0; i < data.get_size(); ++i) {
-        availableFields.push_back(data[i]);
-    }
-}
-
 Vector<string> FieldManager::readLinesFromFile(const string& filePath) {
     Menu menu;
     Vector<string> data;
@@ -32,11 +15,7 @@ Vector<string> FieldManager::readLinesFromFile(const string& filePath) {
 
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-        return data;
+        throw runtime_error("Unable to open file " + filePath);
     }
 
     string line;
@@ -46,6 +25,22 @@ Vector<string> FieldManager::readLinesFromFile(const string& filePath) {
 
     file.close();
     return data;
+}
+
+void FieldManager::loadTimeSlots(const string& filename) {
+    Vector<string> data = readLinesFromFile(filename);
+
+    for (const auto& timeSlot : data) {
+        availableTimeSlots.push_back(timeSlot);
+    }
+}
+
+void FieldManager::loadFieldsName(const string& filename) {
+    Vector<string> data = readLinesFromFile(filename);
+
+    for (const auto& field : data) {
+        availableFields.push_back(field);
+    }
 }
 
 void FieldManager::loadFieldsFromFile(const string& filename) {
@@ -79,12 +74,16 @@ void FieldManager::saveFieldsToFile(const string& filename) {
     ofstream outputFile(filename);
 
     if (!outputFile.is_open()) {
-        cerr << "Could not open the file to save!" << endl;
-        return;
+        system("cls");
+        throw runtime_error("Could not open the file to save: " + filename);
     }
 
     for (const auto& fieldData : fields) {
         outputFile << fieldData.timeSlot << ";" << fieldData.fieldName << ";" << fieldData.price << endl;
+        if (outputFile.fail()) {
+            system("cls");
+            throw runtime_error("Error writing to file: " + filename);
+        }
     }
 
     outputFile.close();
@@ -167,11 +166,7 @@ bool FieldManager::isFieldAvailable(const string& timeSlot, const string& field)
     ifstream file(filePath);
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-        return false;
+        throw runtime_error("Unable to open file " + filePath);
     }
 
     string line;
@@ -368,11 +363,8 @@ void FieldManager::viewBookingHistory(const string& username) {
     cout << "\t\t\t\t\t\t\t\t#                        BOOKING HISTORY                       #" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 
-    for (size_t i = 0; i < timeSlots.get_size(); ++i) {
-        string timeSlot = timeSlots[i];
-
-        for (size_t j = 0; j < fields.get_size(); ++j) {
-            string field = fields[j];
+    for (const auto& timeSlot : timeSlots) {
+        for (const auto& field : fields) {
             string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
 
             ifstream file(filePath);
@@ -455,6 +447,7 @@ void FieldManager::bookField(const string& username, const string& customerName)
             system("cls");
             menu.printDATSAN();
             menu.printKHUNGGIO(timeSlot);
+            loadFieldsFromFile("fields_details.txt");
             string field = selectField(timeSlot);
             if (field.empty()) break;
 
@@ -487,6 +480,7 @@ void FieldManager::cancelBookField(const string& username) {
             system("cls"); 
             menu.printHUYSAN();
             menu.printKHUNGGIO(timeSlot);
+            loadFieldsFromFile("fields_details.txt");
             string field = selectField(timeSlot);
             if (field.empty()) break;
 
@@ -505,25 +499,21 @@ bool FieldManager::checkAvailableFields(const string& timeSlot) {
     ifstream file("fields.txt");
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open fields data file!" << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-        return false;
+        throw runtime_error("Unable to open fields data file!");
     }
     file.close();
     
     Vector<string> fields = readLinesFromFile("fields.txt");
     bool hasAvailable = false;
 
-    for (size_t i = 0; i < fields.get_size(); ++i) {
-        if (isFieldAvailable(timeSlot, fields[i])) {
+    for (const auto& field : fields) {
+        if (isFieldAvailable(timeSlot, field)) {
             if (!hasAvailable) {
                 menu.printXEMSANTRONG();
                 menu.printKHUNGGIO(timeSlot);
             }
             cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-            cout << "\t\t\t\t\t\t\t\t|                            " << fields[i] << "                             |" << endl;
+            cout << "\t\t\t\t\t\t\t\t|                            " << field << "                             |" << endl;
             cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
             hasAvailable = true;
         }
@@ -567,6 +557,7 @@ void FieldManager::viewFieldDetails() {
             system("cls");
             menu.printXEMSAN();
             menu.printKHUNGGIO(timeSlot);
+            loadFieldsFromFile("fields_details.txt");
             string field = selectField(timeSlot);
             if (field.empty()) break;
 
@@ -574,11 +565,7 @@ void FieldManager::viewFieldDetails() {
             ifstream file(filePath);
             if (!file.is_open()) {
                 system("cls");
-                cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
-                menu.printRETURN();
-                cin.ignore();
-                cin.get();
-                return;
+                throw runtime_error("Unable to open file " + filePath); 
             }
             
             string line;
@@ -679,6 +666,7 @@ void FieldManager::changeFieldsPrice(const string& username) {
             system("cls");
             menu.printDOIGIA();
             menu.printKHUNGGIO(timeSlot);
+            loadFieldsFromFile("fields_details.txt");
             string field = selectField(timeSlot);
             if (field.empty()) break;
 
@@ -749,6 +737,7 @@ void FieldManager::viewAndPrintInvoice() {
             system("cls");
             menu.printINHOADON();
             menu.printKHUNGGIO(timeSlot);
+            loadFieldsFromFile("fields_details.txt");
             string field = selectField(timeSlot);
             if (field.empty()) break;
             printInvoice(timeSlot, field);
@@ -805,9 +794,7 @@ void FieldManager::printInvoice(const string& timeSlot, const string& field) {
 
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
-        menu.printRETURN();
-        return;
+        throw runtime_error("Unable to open file " + filePath);
     }
 
     string line;

@@ -2,8 +2,8 @@
 
 Account::Account() {}
 
-Account::Account(string user, string pass, string name, string phone, string addr)
-    : username(user), password(pass), name(name), phoneNumber(phone), address(addr) {}
+Account::Account(const string& user, const string& pass, const string& name, const string& phone, const string& address)    
+    : username(user), password(pass), name(name), phoneNumber(phone), address(address) {}
 
 // lay thong tin nguoi dung
 bool Account::getUserInfo(const string &filename, const string &user, const string &pass, string &name) {
@@ -22,11 +22,14 @@ bool Account::getUserInfo(const string &filename, const string &user, const stri
     return false;
 }
 
-// kiem tra co phai tai khoan admin
+// kiem tra co phai tai khoan quan ly
 bool Account::isAdminUser(const string& username, const string& filename) {
     ifstream file(filename);
-    string u, pass, name, phone;
+    if (!file.is_open()) {
+        return false;
+    }
 
+    string u, pass, name, phone;
     while (getline(file, u, ';') && getline(file, pass, ';') && getline(file, name, ';') && getline(file, phone)) {
         if (u == username) {
             return true;
@@ -39,6 +42,10 @@ bool Account::isAdminUser(const string& username, const string& filename) {
 // kiem tra tai khoan ton tai
 bool Account::accountExists(const string& filename, const string& user) {
     ifstream file(filename);
+    if (!file.is_open()) {
+        return false;
+    }
+
     string u, p, name, phone;
     while (getline(file, u, ';') && getline(file, p, ';') && getline(file, name, ';') && getline(file, phone)) {
         if (u == user) return true;

@@ -1,12 +1,10 @@
-#define CUSTOMER_H
+#pragma once
 
 #include "Account.h"
-
-#include <fstream>
 #include <string>
-using namespace std;
 
 class Customer : public Account {
 public:
-    Customer(string user, string pass, string n, string phone, string addr);
+    Customer(const string& user, const string& pass, const string& n, const string& phone, const string& addr);
+    void saveAccount(const string& filename) const override;
 };

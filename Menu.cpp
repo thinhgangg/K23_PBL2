@@ -3,7 +3,6 @@
 void Menu::displayIntro() {
     system("cls");
     char ch;
-
     cout << "\t\t\t\t\t _____________________________________________________________________________________________________________________ \n";
     cout << "\t\t\t\t\t|                                       |                                                                             |\n";
     cout << "\t\t\t\t\t|     D                                 |                       MINISTRY OF EDUCATION AND TRAINING                    |\n";
@@ -14,8 +13,8 @@ void Menu::displayIntro() {
     cout << "\t\t\t\t\t|        |            ....           |  |                                                                             |\n";
     cout << "\t\t\t\t\t|     A  |             ......        |  |                  PROJECT        : PBL2 - FOOTBALL FIELD MANAGEMENT          |\n";
     cout << "\t\t\t\t\t|        |              .......      |  |                                                                             |\n";
-    cout << "\t\t\t\t\t|     N  |              .........    |  |                  STUDENTS       : NGUYEN TRUNG KIEN                         |\n";
-    cout << "\t\t\t\t\t|        |             ...........   |  |                                   MAI PHUC THINH                            |\n";
+    cout << "\t\t\t\t\t|     N  |              .........    |  |                  STUDENTS       : MAI PHUC THINH                            |\n";
+    cout << "\t\t\t\t\t|        |             ...........   |  |                                                                             |\n";
     cout << "\t\t\t\t\t|     G  |            .............  |  |                                                                             |\n";
     cout << "\t\t\t\t\t|        |          ...............  |  |                  SECTION CLASS  : 23.99A                                    |\n";
     cout << "\t\t\t\t\t|        |       ..................  |  |                                                                             |\n";
@@ -41,7 +40,8 @@ void Menu::displayLogo() {
             cout << line << endl;
         }
     } else {
-        cout << "LOGO FILE NOT FOUND!" << endl;
+        system("cls");
+        throw runtime_error("LOGO FILE NOT FOUND!");
     }
 }
 
@@ -54,14 +54,15 @@ void Menu::displayGoodbye() {
             cout << line << endl;
         }
     } else {
-        cout << "GOOBYE FILE NOT FOUND!" << endl;
+        system("cls");
+        throw runtime_error("GOOBYE FILE NOT FOUND!");
     }
 }
 
 void Menu::homeMenu() {
     AccountManager accountManager;
-    int choice;
 
+    int choice;
     while (true) {
         displayLogo();
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -97,8 +98,8 @@ void Menu::homeMenu() {
 void Menu::managerMenu(const string& username, const string& name) {
     AccountManager accountManager;
     FieldManager fieldManager;
-    int choice;
 
+    int choice;
     while (true) {
         system("cls"); 
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -149,9 +150,9 @@ void Menu::managerMenu(const string& username, const string& name) {
 }
 
 void Menu::customerMenu(const string& username, const string& name) {
-    int choice;
     FieldManager fieldManager;
 
+    int choice;
     while (true) {
         system("cls"); 
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -284,8 +285,8 @@ void Menu::displayBookingForm() {
 void Menu::registrationMenu() {
     system("cls"); 
     AccountManager accountmanager;
-    int registrationChoice;
 
+    int registrationChoice;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t##                   REGISTER FOR AN ACCOUNT                  ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -313,8 +314,8 @@ void Menu::registrationMenu() {
 void Menu::resetPassMenu() {
     system("cls"); 
     AccountManager accountManager;
-    int resetChoice;
 
+    int resetChoice;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t##                       RESET PASSWORD                       ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -352,6 +353,7 @@ void Menu::accountManagementMenu() {
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
         cin >> choice;
+
         switch (choice) {
             case 1:
                 registrationMenu();
@@ -369,8 +371,8 @@ void Menu::accountManagementMenu() {
 
 void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
     AccountManager accountManager;
-
     string fileName = isAdmin ? "tk_quanly.txt" : "tk_khachhang.txt";
+
     int choice;
     while (true) {
         system("cls");
@@ -394,8 +396,8 @@ void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
                 break;
             case 3: {
                 while (true) {
-                    char confirmChoice;
                     system("cls");
+                    char confirmChoice;
                     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
                     cout << "\t\t\t\t\t\t\t\t##                       DELETE ACCOUNT                       ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -490,9 +492,9 @@ void Menu::customerDetailsMenu() {
 void Menu::fieldDetailsMenu(const string& username) {
     FieldManager fieldManager;
     fieldManager.loadFieldsFromFile("fields_details.txt");
-    int choice;
     while (true) {
         system("cls"); 
+        int choice;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##                  FIELD DETAILS MANAGEMENT                  ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -529,9 +531,9 @@ void Menu::customerOptionMenu(const string& username, const string& name, const 
     FieldManager fieldManager;
     AccountManager accountManager;
 
-    int choice;
     while (true) {
         system("cls");
+        int choice;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##                    CUSTOMER INFORMATION                    ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
@@ -590,6 +592,7 @@ void Menu::printKHUNGGIO(const string& timeSlot) {
 void Menu::printTENSAN(const string& field) {
     FieldManager fieldManager;
     fieldManager.loadFieldsFromFile("fields_details.txt");
+    
     int fieldPrice = 0;
     for (const auto& fieldData : fieldManager.fields) {
         if (fieldData.fieldName == field) {

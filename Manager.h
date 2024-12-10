@@ -1,10 +1,10 @@
-#define MANAGER_H
+#pragma once
 
 #include "Account.h"
-#include <fstream>
 #include <string>
 
 class Manager : public Account {
 public:
-    Manager(string user, string pass, string n, string phone, string address);
+    Manager(const string& user, const string& pass, const string& n, const string& phone, const string& addr);
+    void saveAccount(const string& filename) const override;
 };

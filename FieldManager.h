@@ -1,5 +1,4 @@
 #pragma once
-#define FIELDMANAGER_H
 
 #include "Vector.h"
 #include "Menu.h"
@@ -13,7 +12,6 @@ using namespace std;
 
 class FieldManager {
 private:
-    Vector<string> readLinesFromFile(const string& filePath);
     Vector<string> availableTimeSlots;
     Vector<string> availableFields;
     string timeSlot;
@@ -31,6 +29,7 @@ private:
         int price;
     };
 
+    Vector<string> readLinesFromFile(const string& filePath);
     void loadTimeSlots(const string& filename);
     void loadFieldsName(const string& filename);
     void displayTimeSlots();

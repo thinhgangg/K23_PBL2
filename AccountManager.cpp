@@ -5,22 +5,40 @@ using namespace std;
 // doc tat ca cac dong tu file vao vector
 Vector<string> AccountManager::readAllLines(const string& filename) {
     ifstream file(filename);
-    Vector<string> lines;
+    if (!file.is_open()) {
+        system("cls");
+        throw runtime_error("Unable to open file " + filename);
+    }
 
+    Vector<string> lines;
     string line;
     while (getline(file, line)) {
         lines.push_back(line);
     }
-    file.close();
 
+    if (file.bad()) {
+        system("cls");
+        throw runtime_error("Unable to read file: " + filename);
+    }
+
+    file.close();
     return lines;
 }
 
 // ghi tat ca cac dong tu vector vao file
 void AccountManager::writeAllLines(const string& filename, const Vector<string>& lines) {
     ofstream file(filename, ios::trunc);
+    if (!file.is_open()) {
+        system("cls");
+        throw runtime_error("Unable to open file " + filename);
+    }
+
     for (size_t i = 0; i < lines.get_size(); i++) {
         file << lines[i] << endl;
+        if (file.fail()) {
+            system("cls");
+            throw runtime_error("Error writing to file: " + filename);
+        }
     }
     file.close();
 }
@@ -69,11 +87,11 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         cin >> user;
 
         if (!isValidUsername(user)) {
-            cout << "\033[14;53HUSERNAME MUST BE AT LEAST 6 CHARACTERS LONG, AND CONTAIN NO SPACES OR SPECIAL CHARACTERS!" << endl;
+            cout << ERROR_INVALID_USERNAME << endl;
             cout << "\033[4;92H                           " << endl;
         } else if (isUsernameTaken(user)) {
             cout << "\033[14;50H                                                                                                    " << endl;
-            cout << "\033[14;76HUSERNAME ALREADY EXISTS! TRY ANOTHER ONE!" << endl;
+            cout << ERROR_EXISTS_USERNAME << endl;
             cout << "\033[4;92H                           " << endl;
         } else {
             cout << "\033[14;50H                                                                                                    " << endl;
@@ -88,7 +106,7 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         pass = inputPassword();
 
         if (!isValidPassword(pass)) {
-            cout << "\033[14;75HPASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!" << endl;
+            cout << ERROR_INVALID_PASSWORD << endl;
             cout << "\033[6;92H                           " << endl;
         } else {
             cout << "\033[14;50H                                                                                                    " << endl;
@@ -104,7 +122,7 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         getline(cin, name);
 
         if (!isValidName(name)) {
-            cout << "\033[14;82HINVALID NAME! PLEASE TRY AGAIN!" << endl;
+            cout << ERROR_INVALID_NAME << endl;
             cout << "\033[8;88H                               " << endl;
         } else {
             cout << "\033[14;50H                                                                                                    " << endl;
@@ -118,11 +136,11 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         cin >> phone;
 
         if (!isValidPhone(phone)) {
-            cout << "\033[14;78HINVALID PHONE NUMBER! PLEASE TRY AGAIN!" << endl;
+            cout << ERROR_INVALID_PHONENUMBER << endl;
             cout << "\033[10;96H                       ";
         } else if (isPhoneNumberTaken(phone)) {
             cout << "\033[14;50H                                                                                                    " << endl;
-            cout << "\033[14;78HTHIS PHONE NUMBER ALREADY REGISTERED!" << endl;
+            cout << ERROR_EXISTS_PHONENUMBER << endl;
             cout << "\033[10;96H                       ";
         } else {
             cout << "\033[14;50H                                                                                                    " << endl;
@@ -616,7 +634,6 @@ bool AccountManager::isValidPhone(const string& phone) {
 
 // kiem tra phone number da duoc su dung
 bool AccountManager::isPhoneNumberTaken(const string& phone) {
-
     Vector<string> accounts = readAllLines("tk_khachhang.txt");
     for (size_t i = 0; i < accounts.get_size(); ++i) {
         stringstream ss(accounts[i]);
