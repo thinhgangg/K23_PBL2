@@ -790,6 +790,14 @@ void FieldManager::searchAndDisplayInvoice() {
 void FieldManager::printInvoice(const string& timeSlot, const string& field) {
     Menu menu;
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
+    loadFieldsFromFile("fields_details.txt");
+    int fieldPrice = 0;
+    for (const auto& fieldData : fields) {
+        if (fieldData.fieldName == field) {
+            fieldPrice = fieldData.price;
+            break;
+        }
+    }
     ifstream file(filePath);
 
     if (!file.is_open()) {
@@ -888,14 +896,13 @@ void FieldManager::printInvoice(const string& timeSlot, const string& field) {
     outFile << "\t\tTOTAL: " << totalPrice << " VND" << endl;
     outFile << "     ========================================" << endl;
     outFile << "\tThank you for choosing our service!" << endl;
-
     outFile.close();
 
     ofstream outFileReset(filePath, ios::trunc);
     if (outFileReset.is_open()) {
         outFileReset << "FIELD: " << field << endl;
         outFileReset << "STATUS: Available" << endl;
-        outFileReset << "PRICE: " << price << endl;
+        outFileReset << "PRICE: " << fieldPrice << endl;
         outFileReset.close();
     }
 }

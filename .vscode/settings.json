@@ -107,5 +107,5 @@
     "editor.cursorBlinking": "expand",
     "[cpp]": {
         "editor.formatOnSave": false
-    }
+    } 
 }
