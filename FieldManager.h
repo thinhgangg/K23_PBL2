@@ -23,6 +23,7 @@ private:
     string address;
     string paymentStatus;
     string price;
+    static int invoiceCounter;
 
     struct Field {
         string timeSlot;
@@ -31,7 +32,7 @@ private:
     };
 
     void loadTimeSlots(const string& filename);
-    void loadFields(const string& filename);
+    void loadFieldsName(const string& filename);
     void displayTimeSlots();
     void displayFields(const string& timeSlot);
     string selectTimeSlot();
@@ -42,10 +43,9 @@ private:
     bool isBookField(const string& timeSlot, const string& field, const string& username, const string& customerName);
     bool isCancelBookField(const string& timeSlot, const string& field, const string& username);
     bool checkAvailableFields(const string& timeSlot);
-    void viewFieldInfo(const string& timeSlot, const string& field, bool bill);
-    void printBill(const string& timeSlot, const string& field);
+    void printInvoice(const string& timeSlot, const string& field);
     void logAction(const string& username, const string& action, const string& field, const string& timeSlot);
-    string generateInvoiceNumber();
+    string generateInvoiceID();
     
 public:
     FieldManager();
@@ -58,6 +58,7 @@ public:
     void viewAvailableFields();
     void viewFieldDetails();
     void viewAllFieldsPrice();
-    void changeFieldsPrice();
-    void viewAndPrintBill();
+    void changeFieldsPrice(const string& username);
+    void viewAndPrintInvoice();
+    void searchAndDisplayInvoice();
 };

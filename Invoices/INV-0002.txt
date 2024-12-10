@@ -7,18 +7,18 @@ Service Hours: 15:30 - 23:30
 ------------------------
 PAYMENT INVOICE
 ------------------------
-Time: Wed Dec 04 19:32:01 2024
-Invoice No: INV-0003
+Time: Tue Dec 10 10:50:33 2024
+Invoice No: INV-0002
 --------------------------------------
-Field: San_B
+Field: San_A
 Time Slot: 15h30-16h30
-Price: 123456 VND
+Price: 200000 VND
 --------------------------------------
-Customer: mai phuc thin
-Phone: 098765456
-Address: nguyen luong bang
-Note: no
+Customer: 
+Phone: 
+Address: 
+Note: 
 --------------------------------------
-TOTAL: 123456 VND
+TOTAL: 200000 VND
 ========================================
 Thank you for choosing our service!

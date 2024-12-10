@@ -5,7 +5,7 @@ using namespace std;
 FieldManager::FieldManager() {
     loadTimeSlots("timeslots.txt");
 
-    loadFields("fields.txt");
+    loadFieldsName("fields.txt");
 }
 
 void FieldManager::loadTimeSlots(const string& filename) {
@@ -18,7 +18,7 @@ void FieldManager::loadTimeSlots(const string& filename) {
     }
 }
 
-void FieldManager::loadFields(const string& filename) {
+void FieldManager::loadFieldsName(const string& filename) {
     FileManager fileManager;
     Vector<string> data = fileManager.loadData(filename);
 
@@ -193,10 +193,9 @@ bool FieldManager::isFieldBookedByUser(const string& filePath, const string& use
 bool FieldManager::isBookField(const string& timeSlot, const string& field, const string& username, const string& customerName) {
     Menu menu;
     Account account;
-    FieldManager fieldManager;
 
     bool isAdmin = account.isAdminUser(username, "tk_quanly.txt");
-    fieldManager.loadFieldsFromFile("fields_details.txt");
+    loadFieldsFromFile("fields_details.txt");
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
 
     if (!isFieldAvailable(timeSlot, field)) {
@@ -237,7 +236,7 @@ bool FieldManager::isBookField(const string& timeSlot, const string& field, cons
     getline(cin, note);
 
     int fieldPrice = 0;
-    for (const auto& fieldData : fieldManager.fields) {
+    for (const auto& fieldData : fields) {
         if (fieldData.timeSlot == timeSlot && fieldData.fieldName == field) {
             fieldPrice = fieldData.price;
             break;
@@ -257,7 +256,7 @@ bool FieldManager::isBookField(const string& timeSlot, const string& field, cons
         file << "NOTE: " << note << endl;
         file.close();
 
-        fieldManager.logAction(username, "Booked", field, timeSlot);
+        logAction(username, "Booked", field, timeSlot);
 
         system("cls");
         cout << "\t\t\t\t\t\t\t                    THE FIELD HAS BEEN SUCCESSFULLY BOOKED!                   " << endl;
@@ -301,9 +300,9 @@ bool FieldManager::isCancelBookField(const string& timeSlot, const string& field
     }
 
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
-    fieldManager.loadFieldsFromFile("fields_details.txt");
+    loadFieldsFromFile("fields_details.txt");
     int fieldPrice = 0;
-    for (const auto& fieldData : fieldManager.fields) {
+    for (const auto& fieldData : fields) {
         if (fieldData.fieldName == field) {
             fieldPrice = fieldData.price;
             break;
@@ -317,7 +316,7 @@ bool FieldManager::isCancelBookField(const string& timeSlot, const string& field
         file << "PRICE: " << fieldPrice << " VND" << endl;
         file.close();
 
-        fieldManager.logAction(username, "Canceled", field, timeSlot);
+        logAction(username, "Canceled", field, timeSlot);
 
         system("cls");
         cout << "\t\t\t\t\t\t\t                   THE FIELD HAS BEEN SUCCESSFULLY CANCELED!                  " << endl;
@@ -422,6 +421,63 @@ void FieldManager::viewBookingHistory(const string& username) {
     system("cls");
 }
 
+// dat san
+void FieldManager::bookField(const string& username, const string& customerName) {
+    Menu menu;
+
+    while (true) {
+        system("cls");
+        menu.printDATSAN();
+        string timeSlot = selectTimeSlot();
+        if (timeSlot.empty()) return;
+
+        while (true) {
+            system("cls");
+            menu.printDATSAN();
+            menu.printKHUNGGIO(timeSlot);
+            string field = selectField(timeSlot);
+            if (field.empty()) break;
+
+            while (true) {
+                system("cls");
+                menu.printDATSAN();
+                menu.printKHUNGGIO(timeSlot);
+                menu.printTENSAN(field);
+                if (isBookField(timeSlot, field, username, customerName)) {
+                    system("cls");
+                    return;
+                }
+                else break;
+            }
+        }
+    }
+}
+
+// huy san
+void FieldManager::cancelBookField(const string& username) {
+    Menu menu;
+
+    while (true) {
+        system("cls"); 
+        menu.printHUYSAN();
+        string timeSlot = selectTimeSlot();
+        if (timeSlot.empty()) return;
+
+        while (true) {
+            system("cls"); 
+            menu.printHUYSAN();
+            menu.printKHUNGGIO(timeSlot);
+            string field = selectField(timeSlot);
+            if (field.empty()) break;
+
+            if (isCancelBookField(timeSlot, field, username)) {
+                system("cls");
+                return;
+            }
+        }
+    }
+}
+
 // kiem tra neu con san trong thi in ra
 bool FieldManager::checkAvailableFields(const string& timeSlot) { 
     Menu menu;
@@ -457,147 +513,7 @@ bool FieldManager::checkAvailableFields(const string& timeSlot) {
     return hasAvailable;
 }
 
-void FieldManager::bookField(const string& username, const string& customerName) {
-    Menu menu;
-
-    while (true) {
-        system("cls");
-        menu.printDATSAN();
-        string timeSlot = selectTimeSlot();
-        if (timeSlot.empty()) return;
-
-        while (true) {
-            system("cls");
-            menu.printDATSAN();
-            menu.printKHUNGGIO(timeSlot);
-            string field = selectField(timeSlot);
-            if (field.empty()) break;
-
-            while (true) {
-                system("cls");
-                menu.printDATSAN();
-                menu.printKHUNGGIO(timeSlot);
-                menu.printTENSAN(field);
-                if (isBookField(timeSlot, field, username, customerName)) {
-                    system("cls");
-                    return;
-                }
-                else break;
-            }
-        }
-    }
-}
-
-void FieldManager::cancelBookField(const string& username) {
-    Menu menu;
-
-    while (true) {
-        system("cls"); 
-        menu.printHUYSAN();
-        string timeSlot = selectTimeSlot();
-        if (timeSlot.empty()) return;
-
-        while (true) {
-            system("cls"); 
-            menu.printHUYSAN();
-            menu.printKHUNGGIO(timeSlot);
-            string field = selectField(timeSlot);
-            if (field.empty()) break;
-
-            if (isCancelBookField(timeSlot, field, username)) {
-                system("cls");
-                return;
-            }
-        }
-    }
-}
-
-void FieldManager::viewFieldInfo(const string& timeSlot, const string& field, bool bill) {
-    Menu menu;
-
-    string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
-    ifstream file(filePath);
-
-    if (!file.is_open()) {
-        system("cls");
-        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
-        menu.printRETURN();
-        cin.ignore();
-        cin.get();
-        return;
-    }
-
-    string line;
-    string status, price, username, customer, phone, address, payment, note;
-
-    while (getline(file, line)) {
-        stringstream ss(line);
-        string label, value;
-        getline(ss, label, ':');
-        getline(ss, value);
-
-        if (!value.empty()) {
-            if (value.front() == ' ') value.erase(value.begin());
-            if (value.back() == ' ') value.erase(value.end() - 1);
-        }
-
-        if (label == "STATUS") status = value;
-        else if (label == "PRICE") price = value;
-        else if (label == "USERNAME") username = value;
-        else if (label == "CUSTOMER") customer = value;
-        else if (label == "PHONE NUMBER") phone = value;
-        else if (label == "ADDRESS") address = value;
-        else if (label == "PAYMENT DETAILS") payment = value;
-        else if (label == "NOTE") note = value;
-    }
-
-    system("cls");
-    menu.printXEMSAN();
-    menu.printKHUNGGIO(timeSlot);
-    menu.printTENSAN(field);
-
-    if (status == "Available") {
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t\t\t\t|                      FIELD   :   " << setw(27) << left << field << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|                      STATUS  :   " << setw(27) << left << status << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|                      PRICE   :   " << setw(27) << left << price << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    } else if (status == "Booked") {
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       FIELD            :   " << setw(33) << left << field << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       STATUS           :   " << setw(33) << left << status << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       PRICE            :   " << setw(33) << left << price << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       CUSTOMER         :   " << setw(33) << left << customer << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       PHONE NUMBER     :   " << setw(33) << left << phone << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       ADDRESS          :   " << setw(33) << left << address << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       PAYMENT DETAILS  :   " << setw(33) << left << payment << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t|       NOTE             :   " << setw(33) << left << note << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    }
-
-    if (bill && status == "Booked") {
-        int choice;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                      SELECT AN OPTION                      ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                        1. PRINT BILL                       ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                        0. GO BACK                          ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
-        cin >> choice;
-
-        if (choice == 1) {
-            printBill(timeSlot, field);
-        } else if (choice == 0) {
-            return;
-        }
-    }
-
-    menu.printRETURN();
-    cin.ignore();
-    cin.get();
-}
-
+// xem san trong
 void FieldManager::viewAvailableFields() {
     Menu menu;
 
@@ -619,9 +535,9 @@ void FieldManager::viewAvailableFields() {
     }
 }
 
+// xem thong tin san
 void FieldManager::viewFieldDetails() {
     Menu menu;
-
     while (true) {
         system("cls");
         menu.printXEMSAN();
@@ -635,12 +551,73 @@ void FieldManager::viewFieldDetails() {
             string field = selectField(timeSlot);
             if (field.empty()) break;
 
-            viewFieldInfo(timeSlot, field, false);
+            string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
+            ifstream file(filePath);
+            if (!file.is_open()) {
+                system("cls");
+                cout << "\t\t\t\t\t\t\t\tERROR: Unable to open file" << endl;
+                menu.printRETURN();
+                cin.ignore();
+                cin.get();
+                return;
+            }
+            
+            string line;
+            string status, price, username, customer, phone, address, payment, note;
+            while (getline(file, line)) {
+                stringstream ss(line);
+                string label, value;
+                getline(ss, label, ':');
+                getline(ss, value);
+
+                if (!value.empty()) {
+                    if (value.front() == ' ') value.erase(value.begin());
+                    if (value.back() == ' ') value.erase(value.end() - 1);
+                }
+
+                if (label == "STATUS") status = value;
+                else if (label == "PRICE") price = value;
+                else if (label == "USERNAME") username = value;
+                else if (label == "CUSTOMER") customer = value;
+                else if (label == "PHONE NUMBER") phone = value;
+                else if (label == "ADDRESS") address = value;
+                else if (label == "PAYMENT DETAILS") payment = value;
+                else if (label == "NOTE") note = value;
+            }
+            file.close();
+
+            system("cls");
+            menu.printXEMSAN();
+            menu.printKHUNGGIO(timeSlot);
+            menu.printTENSAN(field);
+
+            if (status == "Available") {
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                      FIELD   :   " << setw(27) << left << field << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                      STATUS  :   " << setw(27) << left << status << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|                      PRICE   :   " << setw(27) << left << price << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            } else if (status == "Booked") {
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       FIELD            :   " << setw(33) << left << field << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       STATUS           :   " << setw(33) << left << status << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       PRICE            :   " << setw(33) << left << price << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       CUSTOMER         :   " << setw(33) << left << customer << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       PHONE NUMBER     :   " << setw(33) << left << phone << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       ADDRESS          :   " << setw(33) << left << address << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       PAYMENT DETAILS  :   " << setw(33) << left << payment << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t|       NOTE             :   " << setw(33) << left << note << " |" << endl;
+                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            }
+            menu.printRETURN();
+            cin.ignore();
+            cin.get();
             break;
         }
     }
 }
 
+// xem tat ca gia san
 void FieldManager::viewAllFieldsPrice() {
     system("cls");
     Menu menu;
@@ -668,11 +645,10 @@ void FieldManager::viewAllFieldsPrice() {
     cin.get();
 }
 
-void FieldManager::changeFieldsPrice() {
+// thay doi gia san
+void FieldManager::changeFieldsPrice(const string& username) {
     Menu menu;
     FieldManager fieldManager;
-    Account account;
-    string username = account.getUsername();
 
     while (true) {
         system("cls");
@@ -720,9 +696,9 @@ void FieldManager::changeFieldsPrice() {
                     }
                 }
 
-                fieldManager.logAction(username, "Change Price", field, timeSlot);
 
                 if (found) {
+                    logAction(username, "Change Price", field, timeSlot);
                     saveFieldsToFile("fields_details.txt");
                     system("cls");
                     cout << "\t\t\t\t\t\t\t\t\t           PRICE UPDATE SUCCESSFULLY!" << endl;
@@ -740,31 +716,71 @@ void FieldManager::changeFieldsPrice() {
     }
 }
 
-void FieldManager::viewAndPrintBill() {
+// xem va in hoa don
+void FieldManager::viewAndPrintInvoice() {
     Menu menu;
 
     while (true) {
         system("cls");
-        menu.printHOADON();
+        menu.printINHOADON();
         string timeSlot = selectTimeSlot();
         if (timeSlot.empty()) return;
 
         while (true) {
             system("cls");
-            menu.printHOADON();
+            menu.printINHOADON();
             menu.printKHUNGGIO(timeSlot);
             string field = selectField(timeSlot);
             if (field.empty()) break;
-
-            viewFieldInfo(timeSlot, field, true);
-            break;
+            printInvoice(timeSlot, field);
+            menu.printRETURN();
+            cin.ignore();
+            cin.get();
         }
     }
 }
 
-void FieldManager::printBill(const string& timeSlot, const string& field) {
+// tim kiem hoa don
+void FieldManager::searchAndDisplayInvoice() {
     Menu menu;
-    FieldManager fieldManager;
+    string invoiceID;
+
+    system("cls");
+    menu.printTIMKIEMHOADON();
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t|   Enter invoice ID (e.g., INV-0001):                         |" << endl;
+    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\033[5;104H";
+    cin >> invoiceID;
+
+    string invoiceFilePath = "Invoices/" + invoiceID + ".txt";
+    ifstream file(invoiceFilePath);
+
+    if (!file.is_open()) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\tERROR: Invoice not found!" << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+        return;
+    }
+
+    system("cls");
+    cout << "\n\n";
+    string line;
+    while (getline(file, line)) {
+        cout << "\t\t\t\t\t\t\t\t\t" << line << endl;
+    }
+    file.close();
+
+    menu.printRETURN();
+    cin.ignore();
+    cin.get();
+}
+
+// hien thi hoa don ra man hinh va luu hoa don vao file
+void FieldManager::printInvoice(const string& timeSlot, const string& field) {
+    Menu menu;
 
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
     ifstream file(filePath);
@@ -804,12 +820,12 @@ void FieldManager::printBill(const string& timeSlot, const string& field) {
     time_t now = time(0);
     char* dt = ctime(&now);
 
-    string invoiceNumber = generateInvoiceNumber();
-    string billFilePath = "Bills/" + invoiceNumber + ".txt";
-    ofstream outFile(billFilePath);
+    string invoiceID = generateInvoiceID();
+    string invoiceFilePath = "Invoices/" + invoiceID + ".txt";
+    ofstream outFile(invoiceFilePath);
     
     if (!outFile.is_open()) {
-        cerr << "Unable to create bill file!" << endl;
+        cerr << "Unable to create invoice file!" << endl;
         return;
     }
 
@@ -826,7 +842,7 @@ void FieldManager::printBill(const string& timeSlot, const string& field) {
     cout << "\t\t\t\t\t\t\t\t\t\t\tPAYMENT INVOICE" << endl;
     cout << "\t\t\t\t\t\t\t\t\t\t    ------------------------" << endl;
     cout << "\t\t\t\t\t\t\t\t\t\tTime: " << dt;
-    cout << "\t\t\t\t\t\t\t\t\t\t\t Invoice No: " << invoiceNumber << endl;
+    cout << "\t\t\t\t\t\t\t\t\t\t      Invoice No: " << invoiceID << endl;
     cout << "\t\t\t\t\t\t\t\t\t    --------------------------------------" << endl;
     cout << "\t\t\t\t\t\t\t\t\t\tField: " << field << endl;
     cout << "\t\t\t\t\t\t\t\t\t\tTime Slot: " << timeSlot << endl;
@@ -843,34 +859,32 @@ void FieldManager::printBill(const string& timeSlot, const string& field) {
     cout << "\t\t\t\t\t\t\t\t\t\tThank you for choosing our service!" << endl;
 
     // ghi vao file
-    outFile << "========================================" << endl;
-    outFile << "SAN BONG BACH KHOA" << endl;
-    outFile << "========================================" << endl;
+    outFile << "    ========================================" << endl;
+    outFile << "\t       SAN BONG BACH KHOA" << endl;
+    outFile << "    ========================================" << endl;
     outFile << "Addr: 120 Nguyen Luong Bang, Q. Lien Chieu, Da Nang" << endl;
-    outFile << "Tel: 09 6868 7777" << endl;
-    outFile << "Service Hours: 15:30 - 23:30" << endl;
-    outFile << "------------------------" << endl;
-    outFile << "PAYMENT INVOICE" << endl;
-    outFile << "------------------------" << endl;
-    outFile << "Time: " << dt;
-    outFile << "Invoice No: " << invoiceNumber << endl;
-    outFile << "--------------------------------------" << endl;
-    outFile << "Field: " << field << endl;
-    outFile << "Time Slot: " << timeSlot << endl;
-    outFile << "Price: " << price << endl;
-    outFile << "--------------------------------------" << endl;
-    outFile << "Customer: " << customer << endl;
-    outFile << "Phone: " << phone << endl;
-    outFile << "Address: " << address << endl;
-    outFile << "Note: " << note << endl;
-    outFile << "--------------------------------------" << endl;
-    outFile << "TOTAL: " << totalPrice << " VND" << endl;
-    outFile << "========================================" << endl;
-    outFile << "Thank you for choosing our service!" << endl;
+    outFile << "\t\tTel: 09 6868 7777" << endl;
+    outFile << "\t  Service Hours: 15:30 - 23:30" << endl;
+    outFile << "\t    ------------------------" << endl;
+    outFile << "\t\tPAYMENT INVOICE" << endl;
+    outFile << "\t    ------------------------" << endl;
+    outFile << "\tTime: " << dt;
+    outFile << "\t      Invoice No: " << invoiceID << endl;
+    outFile << "     --------------------------------------" << endl;
+    outFile << "\tField: " << field << endl;
+    outFile << "\tTime Slot: " << timeSlot << endl;
+    outFile << "\tPrice: " << price << endl;
+    outFile << "     --------------------------------------" << endl;
+    outFile << "\tCustomer: " << customer << endl;
+    outFile << "\tPhone: " << phone << endl;
+    outFile << "\tAddress: " << address << endl;
+    outFile << "\tNote: " << note << endl;
+    outFile << "     --------------------------------------" << endl;
+    outFile << "\t\tTOTAL: " << totalPrice << " VND" << endl;
+    outFile << "     ========================================" << endl;
+    outFile << "\tThank you for choosing our service!" << endl;
 
     outFile.close();
-
-    fieldManager.logAction(username, "Print Bill", field, timeSlot);
 
     ofstream outFileReset(filePath, ios::trunc);
     if (outFileReset.is_open()) {
@@ -881,6 +895,16 @@ void FieldManager::printBill(const string& timeSlot, const string& field) {
     }
 }
 
+// tao ID hoa don
+int FieldManager::invoiceCounter = 1;
+string FieldManager::generateInvoiceID() {
+    ostringstream invoiceID;
+    invoiceID << "INV-" << setw(3) << setfill('0') << invoiceCounter++;
+
+    return invoiceID.str();
+}
+
+// ghi lai hanh dong vao file log
 void FieldManager::logAction(const string& username, const string& action, const string& field, const string& timeSlot) {
     time_t now = time(0);
     char* dt = ctime(&now);
@@ -892,13 +916,4 @@ void FieldManager::logAction(const string& username, const string& action, const
     } else {
         cerr << "Unable to open log file!" << endl;
     }
-}
-
-string FieldManager::generateInvoiceNumber() {
-    static int invoiceCounter = 1;
-
-    ostringstream invoiceNumber;
-    invoiceNumber << "INV-" << setw(4) << setfill('0') << invoiceCounter++;
-
-    return invoiceNumber.str();
 }

@@ -15,8 +15,9 @@ private:
     void resetPassMenu();
     void accountManagementMenu();
     void accountSettingsMenu(const string& username, bool isAdmin);
+    void invoiceMenu();
     void customerDetailsMenu();
-    void fieldDetailsMenu();
+    void fieldDetailsMenu(const string& username);
 
 public:
     void displayIntro();
@@ -29,6 +30,7 @@ public:
     void displayChangePass();
     void displayChangePhone();
     void displaySearchCustomer();
+    void displaySearchInvoice();
     void displayBookingForm();
     void printGIO();
     void printSAN();
@@ -40,7 +42,8 @@ public:
     void printXEMSANTRONG();
     void printGIASAN();
     void printDOIGIA();
-    void printHOADON();
+    void printINHOADON();
+    void printTIMKIEMHOADON();
     void printRETURN();
     void printError();
     void customerOptionMenu(const string& username, const string& name, const string& phone, const string& address);

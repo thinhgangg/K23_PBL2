@@ -7,17 +7,17 @@ Service Hours: 15:30 - 23:30
 ------------------------
 PAYMENT INVOICE
 ------------------------
-Time: Wed Dec 04 19:31:38 2024
-Invoice No: INV-0001
+Time: Sat Dec 07 11:06:54 2024
+Invoice No: INV-0007
 --------------------------------------
-Field: San_A
+Field: San_E
 Time Slot: 15h30-16h30
 Price: 200000 VND
 --------------------------------------
-Customer: Nguyen Dinh Duy
-Phone: 096545613
-Address: au co
-Note: 312
+Customer: 
+Phone: 
+Address: 
+Note: 
 --------------------------------------
 TOTAL: 200000 VND
 ========================================

@@ -108,7 +108,7 @@ void Menu::managerMenu(const string& username, const string& name) {
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 1. BOOK A FIELD                            ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 2. CANCEL A FIELD BOOKING                  ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t##                 3. PRINT BILL & FREE FIELD                 ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                 3. INVOICE MANAGEMENT                      ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 4. CUSTOMER DETAILS MANAGEMENT             ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 5. FIELD DETAILS MANAGEMENT                ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                 6. ACCOUNT MANAGEMENT                      ##" << endl;
@@ -126,13 +126,13 @@ void Menu::managerMenu(const string& username, const string& name) {
                 fieldManager.cancelBookField(username);
                 break;
             case 3:
-                fieldManager.viewAndPrintBill();
+                invoiceMenu();
                 break;
             case 4:
                 customerDetailsMenu();
                 break;
             case 5:
-                fieldDetailsMenu();
+                fieldDetailsMenu(username);
                 break;
             case 6:
                 accountManagementMenu();
@@ -256,6 +256,15 @@ void Menu::displaySearchCustomer() {
     cout << "\t\t\t\t\t\t\t\t\t##               SEARCH CUSTOMER              ##" << endl;
     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
     cout << "\t\t\t\t\t\t\t\t\t##       PHONE NUMBER:                        ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+}
+
+void Menu::displaySearchInvoice() {
+    system("cls");
+    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t##               SEARCH INVOICE               ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t\t##       INVOICE ID:                          ##" << endl;
     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
 }
 
@@ -421,6 +430,35 @@ void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
     }
 }
 
+void Menu::invoiceMenu() {
+    FieldManager fieldManager;
+    while (true) {
+        system("cls");
+        int choice;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                     INVOICE MANAGEMENT                     ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                      1. PRINT INVOICE                      ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                      2. SEARCH INVOICE                     ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t##                      0. GO BACK                            ##" << endl;
+        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                fieldManager.viewAndPrintInvoice();
+                break;
+            case 2:
+                fieldManager.searchAndDisplayInvoice();
+                break;
+            case 0:
+                return;
+            default:
+                printError();
+        }
+    }
+}
+
 void Menu::customerDetailsMenu() {
     AccountManager accountManager;
     while (true) {
@@ -450,11 +488,9 @@ void Menu::customerDetailsMenu() {
     }
 }
 
-void Menu::fieldDetailsMenu() {
+void Menu::fieldDetailsMenu(const string& username) {
     FieldManager fieldManager;
     fieldManager.loadFieldsFromFile("fields_details.txt");
-    Account account;
-    string username = account.getUsername();
     int choice;
     while (true) {
         system("cls"); 
@@ -480,7 +516,7 @@ void Menu::fieldDetailsMenu() {
                 fieldManager.viewAllFieldsPrice();
                 break;
             case 4:
-                fieldManager.changeFieldsPrice();
+                fieldManager.changeFieldsPrice(username);
                 break;
             case 0:
                 return;
@@ -607,9 +643,15 @@ void Menu::printDOIGIA() {
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 }
 
-void Menu::printHOADON() {
+void Menu::printINHOADON() {
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t##                         PRINT BILL                         ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                       PRINT INVOICE                        ##" << endl;
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+}
+
+void Menu::printTIMKIEMHOADON() {
+    cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+    cout << "\t\t\t\t\t\t\t\t##                       SEARCH INVOICE                       ##" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 }
 
