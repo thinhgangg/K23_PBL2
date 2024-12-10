@@ -2,11 +2,33 @@
 
 using namespace std;
 
+// doc tat ca cac dong tu file vao vector
+Vector<string> AccountManager::readAllLines(const string& filename) {
+    ifstream file(filename);
+    Vector<string> lines;
+
+    string line;
+    while (getline(file, line)) {
+        lines.push_back(line);
+    }
+    file.close();
+
+    return lines;
+}
+
+// ghi tat ca cac dong tu vector vao file
+void AccountManager::writeAllLines(const string& filename, const Vector<string>& lines) {
+    ofstream file(filename, ios::trunc);
+    for (size_t i = 0; i < lines.get_size(); i++) {
+        file << lines[i] << endl;
+    }
+    file.close();
+}
+
 // dang nhap
 void AccountManager::login() {
     system("cls");
 
-    UserManager userManager;
     Account account;
     Menu menu;
     menu.displaySignIn();
@@ -16,7 +38,7 @@ void AccountManager::login() {
     cin >> user;
 
     cout << "\033[6;92H";
-    pass = userManager.inputPassword();
+    pass = inputPassword();
 
     if (account.getUserInfo("tk_quanly.txt", user, pass, name)) {
         menu.managerMenu(user, name);
@@ -36,21 +58,20 @@ void AccountManager::login() {
 void AccountManager::registerAccount(const string& filename, const string& accountType) {
     system("cls");
 
-    UserManager userManager;
     Menu menu;
     menu.displaySignUp();
 
     string user, pass, name, phone, addr;
 
-    // Nhap username
+    // nhap username
     while (true) {
         cout << "\033[4;92H";
         cin >> user;
 
-        if (!userManager.isValidUsername(user)) {
+        if (!isValidUsername(user)) {
             cout << "\033[14;53HUSERNAME MUST BE AT LEAST 6 CHARACTERS LONG, AND CONTAIN NO SPACES OR SPECIAL CHARACTERS!" << endl;
             cout << "\033[4;92H                           " << endl;
-        } else if (userManager.isUsernameTaken(user)) {
+        } else if (isUsernameTaken(user)) {
             cout << "\033[14;50H                                                                                                    " << endl;
             cout << "\033[14;76HUSERNAME ALREADY EXISTS! TRY ANOTHER ONE!" << endl;
             cout << "\033[4;92H                           " << endl;
@@ -61,12 +82,12 @@ void AccountManager::registerAccount(const string& filename, const string& accou
     }
 
 
-    // Nhap password
+    // nhap password
     while (true) {
         cout << "\033[6;92H";
-        pass = userManager.inputPassword();
+        pass = inputPassword();
 
-        if (!userManager.isValidPassword(pass)) {
+        if (!isValidPassword(pass)) {
             cout << "\033[14;75HPASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!" << endl;
             cout << "\033[6;92H                           " << endl;
         } else {
@@ -76,13 +97,13 @@ void AccountManager::registerAccount(const string& filename, const string& accou
     }
 
 
-    // Nhap name
+    // nhap name
     while (true) {
         cout << "\033[8;88H";
         cin.ignore();
         getline(cin, name);
 
-        if (!userManager.isValidName(name)) {
+        if (!isValidName(name)) {
             cout << "\033[14;82HINVALID NAME! PLEASE TRY AGAIN!" << endl;
             cout << "\033[8;88H                               " << endl;
         } else {
@@ -91,15 +112,15 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         }
     }
 
-    // Nhap phone number
+    // nhap phone number
     while (true) {
         cout << "\033[10;96H";
         cin >> phone;
 
-        if (!userManager.isValidPhone(phone)) {
+        if (!isValidPhone(phone)) {
             cout << "\033[14;78HINVALID PHONE NUMBER! PLEASE TRY AGAIN!" << endl;
             cout << "\033[10;96H                       ";
-        } else if (userManager.isPhoneNumberTaken(phone)) {
+        } else if (isPhoneNumberTaken(phone)) {
             cout << "\033[14;50H                                                                                                    " << endl;
             cout << "\033[14;78HTHIS PHONE NUMBER ALREADY REGISTERED!" << endl;
             cout << "\033[10;96H                       ";
@@ -109,7 +130,7 @@ void AccountManager::registerAccount(const string& filename, const string& accou
         }
     }
 
-    // Nhap dia chi
+    // nhap dia chi
     cout << "\033[12;91H";
     cin.ignore();
     getline(cin, addr);
@@ -125,7 +146,6 @@ void AccountManager::registerAccount(const string& filename, const string& accou
     system("cls");
     cout << "\t\t\t\t\t\t\t\t\t            REGISTRATION SUCCESSFUL!            " << endl;
     menu.printRETURN();
-    // cin.ignore();
     cin.get();
 }
 
@@ -133,8 +153,6 @@ void AccountManager::registerAccount(const string& filename, const string& accou
 void AccountManager::resetPassword(const string& filename) {
     system("cls");
 
-    UserManager userManager;
-    FileManager fileManager;
     Menu menu;
 
     while (true) {
@@ -148,7 +166,7 @@ void AccountManager::resetPassword(const string& filename) {
         cin >> phoneNum;
 
         // doc danh sach tai khoan
-        Vector<string> lines = fileManager.readAllLines(filename);
+        Vector<string> lines = readAllLines(filename);
         bool accountFound = false;
 
         for (size_t i = 0; i < lines.get_size(); i++) {
@@ -167,10 +185,10 @@ void AccountManager::resetPassword(const string& filename) {
                     cout << "\t\t\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
                     cout << "\033[8;96H";
-                    newPassword = userManager.inputPassword();
+                    newPassword = inputPassword();
 
                     // kiem tra password hop le
-                    if (!userManager.isValidPassword(newPassword)) {
+                    if (!isValidPassword(newPassword)) {
                         system("cls");
                         cout << "\t\t\t\t\t\t\t\t\t  PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!  " << endl;
                         menu.printRETURN();
@@ -182,7 +200,7 @@ void AccountManager::resetPassword(const string& filename) {
                         cout << "\t\t\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
                         cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
                         cout << "\033[10;104H";
-                        confirmPassword = userManager.inputPassword();
+                        confirmPassword = inputPassword();
 
                         // confirm password
                         if (newPassword != confirmPassword) {
@@ -206,7 +224,7 @@ void AccountManager::resetPassword(const string& filename) {
         }
 
         if (accountFound) {
-            fileManager.writeAllLines(filename, lines);
+            writeAllLines(filename, lines);
             system("cls");
             cout << "\t\t\t\t\t\t\t\t\t         PASSWORD UPDATED SUCCESSFULLY!         " << endl;
             menu.printRETURN();
@@ -228,8 +246,6 @@ void AccountManager::resetPassword(const string& filename) {
 void AccountManager::changePassword(const string& filename, const string& username) {
     system("cls");
 
-    UserManager userManager;
-    FileManager fileManager;
     Menu menu;
 
     while (true) {
@@ -237,9 +253,9 @@ void AccountManager::changePassword(const string& filename, const string& userna
 
         menu.displayChangePass();
         cout << "\033[4;100H";
-        currentPassword = userManager.inputPassword();
+        currentPassword = inputPassword();
 
-        Vector<string> lines = fileManager.readAllLines(filename);
+        Vector<string> lines = readAllLines(filename);
         bool accountFound = false;
 
         for (size_t i = 0; i < lines.get_size(); i++) {
@@ -257,9 +273,9 @@ void AccountManager::changePassword(const string& filename, const string& userna
                     cout << "\t\t\t\t\t\t\t\t\t##       NEW PASSWORD:                        ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
                     cout << "\033[6;96H";
-                    newPassword = userManager.inputPassword();
+                    newPassword = inputPassword();
 
-                    if (!userManager.isValidPassword(newPassword)) {
+                    if (!isValidPassword(newPassword)) {
                         system("cls");
                         cout << "\t\t\t\t\t\t\t\t\t  PASSWORD MUST BE AT LEAST 6 CHARACTERS LONG!  " << endl;
                         menu.printRETURN();
@@ -271,7 +287,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
                         cout << "\t\t\t\t\t\t\t\t\t##       CONFIRM NEW PASSWORD:                ##" << endl;
                         cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
                         cout << "\033[8;104H";
-                        confirmPassword = userManager.inputPassword();
+                        confirmPassword = inputPassword();
 
                         // confirm password
                         if (newPassword != confirmPassword) {
@@ -294,7 +310,7 @@ void AccountManager::changePassword(const string& filename, const string& userna
             }
         }
         if (accountFound) {
-            fileManager.writeAllLines(filename, lines);
+            writeAllLines(filename, lines);
             system("cls");
             cout << "\t\t\t\t\t\t\t\t\t         PASSWORD UPDATED SUCCESSFULLY!         " << endl;
             menu.printRETURN();
@@ -318,14 +334,12 @@ void AccountManager::changePassword(const string& filename, const string& userna
 void AccountManager::changePhoneNumber(const string& filename, const string& username) {
     system("cls");
 
-    UserManager userManager;
-    FileManager fileManager;
     Menu menu;
 
     while (true) {
         string newPhone, password;
 
-        Vector<string> lines = fileManager.readAllLines(filename);
+        Vector<string> lines = readAllLines(filename);
         bool accountFound = false;
 
         for (size_t i = 0; i < lines.get_size(); i++) {
@@ -355,7 +369,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                         return;
                     }
 
-                    if (!userManager.isValidPhone(newPhone)) {
+                    if (!isValidPhone(newPhone)) {
                         system("cls");
                         cout << "\t\t\t\t\t\t\t\t\t     INVALID PHONE NUMBER! PLEASE TRY AGAIN!    " << endl;
                         Menu menu;
@@ -363,7 +377,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                         cin.ignore();
                         cin.get();
                         return;
-                    } else if (userManager.isPhoneNumberTaken(newPhone)) {
+                    } else if (isPhoneNumberTaken(newPhone)) {
                         system("cls");
                         cout << "\t\t\t\t\t\t\t\t\t      THIS PHONE NUMBER ALREADY REGISTERED!     " << endl;
                         Menu menu;
@@ -377,7 +391,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                     cout << "\t\t\t\t\t\t\t\t\t##       VERIFY YOUR PASSWORD:                ##" << endl;
                     cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
                     cout << "\033[8;104H";
-                    password = userManager.inputPassword();
+                    password = inputPassword();
 
                     if (password == p) {
                         stringstream newLine;
@@ -385,7 +399,7 @@ void AccountManager::changePhoneNumber(const string& filename, const string& use
                         lines[i] = newLine.str();
                         accountFound = true;
 
-                        fileManager.writeAllLines(filename, lines);
+                        writeAllLines(filename, lines);
 
                         system("cls");
                         cout << "\t\t\t\t\t\t\t\t\t       PHONE NUMBER UPDATED SUCCESSFULLY!       " << endl;
@@ -443,8 +457,6 @@ void AccountManager::deleteAccount(const string& filename, const string& usernam
 void AccountManager::searchCustomer() {
     system("cls");
 
-    UserManager userManager;
-    FileManager fileManager;
     Menu menu;
 
     string phone;
@@ -454,7 +466,7 @@ void AccountManager::searchCustomer() {
     cout << "\033[4;96H";
     cin >> phone;
 
-    Vector<string> lines = fileManager.readAllLines("tk_khachhang.txt");
+    Vector<string> lines = readAllLines("tk_khachhang.txt");
 
     for (size_t i = 0; i < lines.get_size(); ++i) {
         stringstream ss(lines[i]);
@@ -555,10 +567,97 @@ void AccountManager::viewCustomerList() {
     }
 }
 
+
+// kiem tra username hop le
+bool AccountManager::isValidUsername(const string& username) {
+    if (username.length() < 5) {
+        return false;
+    }
+    for (char ch : username) {
+        if (!islower(ch) && !isdigit(ch) && ch != '_') {
+            return false;
+        }
+    }
+    return true;
+}
+
+// kiem tra username da ton tai
+bool AccountManager::isUsernameTaken(const string& user) {
+    return Account::accountExists("tk_khachhang.txt", user) || Account::accountExists("tk_quanly.txt", user);
+}
+
+// kiem tra password hop le
+bool AccountManager::isValidPassword(const string& password) {
+    return password.length() >= 6;
+}
+
+// kiem tra name hop le
+bool AccountManager::isValidName(const string& name) {
+    for (char c : name) {
+        if (!isalpha(c) && c != ' ') {
+            return false;
+        }
+    }
+    return !name.empty();
+}
+
+// kiem tra phone number hop le
+bool AccountManager::isValidPhone(const string& phone) {
+    if (phone.length() < 10 || phone.length() > 15) {
+        return false;
+    }
+    for (char c : phone) {
+        if (!isdigit(c)) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// kiem tra phone number da duoc su dung
+bool AccountManager::isPhoneNumberTaken(const string& phone) {
+
+    Vector<string> accounts = readAllLines("tk_khachhang.txt");
+    for (size_t i = 0; i < accounts.get_size(); ++i) {
+        stringstream ss(accounts[i]);
+        string username, password, name, storedPhone;
+        getline(ss, username, ';');
+        getline(ss, password, ';');
+        getline(ss, name, ';');
+        getline(ss, storedPhone, ';');
+
+        if (storedPhone == phone) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// nhap mat khau hien thi *
+string AccountManager::inputPassword() {
+    string pass = "";
+    char ch;
+    while (true) {
+        ch = _getch();
+        if (ch == '\r') {
+            cout << endl;
+            break;
+        } else if (ch == '\b') {
+            if (!pass.empty()) {
+                pass.pop_back();
+                cout << "\b \b";
+            }
+        } else {
+            pass += ch;
+            cout << "*";
+        }
+    }
+    return pass;
+}
+
 // kiem tra xoa tai khoan thanh cong
 bool AccountManager::isdeleteAccount(const string& filename, const string& username) {
-    FileManager fileManager;
-    Vector<string> lines = fileManager.readAllLines(filename);
+    Vector<string> lines = readAllLines(filename);
     bool accountFound = false;
 
     for (size_t i = 0; i < lines.get_size(); ++i) {
@@ -578,7 +677,7 @@ bool AccountManager::isdeleteAccount(const string& filename, const string& usern
     }
 
     if (accountFound) {
-        fileManager.writeAllLines(filename, lines);
+        writeAllLines(filename, lines);
         return true;
     }
 

@@ -3,7 +3,6 @@
 
 #include "Vector.h"
 #include "Menu.h"
-#include "FileManager.h"
 
 #include <string>
 #include <sstream>
@@ -14,6 +13,7 @@ using namespace std;
 
 class FieldManager {
 private:
+    Vector<string> readLinesFromFile(const string& filePath);
     Vector<string> availableTimeSlots;
     Vector<string> availableFields;
     string timeSlot;

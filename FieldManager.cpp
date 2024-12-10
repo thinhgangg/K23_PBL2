@@ -9,8 +9,7 @@ FieldManager::FieldManager() {
 }
 
 void FieldManager::loadTimeSlots(const string& filename) {
-    FileManager fileManager;
-    Vector<string> data = fileManager.loadData(filename);
+    Vector<string> data = readLinesFromFile(filename);
 
     for (size_t i = 0; i < data.get_size(); ++i) {
         const string& timeSlot = data[i];
@@ -19,12 +18,34 @@ void FieldManager::loadTimeSlots(const string& filename) {
 }
 
 void FieldManager::loadFieldsName(const string& filename) {
-    FileManager fileManager;
-    Vector<string> data = fileManager.loadData(filename);
+    Vector<string> data = readLinesFromFile(filename);
 
     for (size_t i = 0; i < data.get_size(); ++i) {
         availableFields.push_back(data[i]);
     }
+}
+
+Vector<string> FieldManager::readLinesFromFile(const string& filePath) {
+    Menu menu;
+    Vector<string> data;
+    ifstream file(filePath);
+
+    if (!file.is_open()) {
+        system("cls");
+        cout << "\t\t\t\t\t\tERROR: Unable to open file " << filePath << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+        return data;
+    }
+
+    string line;
+    while (getline(file, line)) {
+        data.push_back(line);
+    }
+
+    file.close();
+    return data;
 }
 
 void FieldManager::loadFieldsFromFile(const string& filename) {
@@ -337,9 +358,8 @@ bool FieldManager::isCancelBookField(const string& timeSlot, const string& field
 // xem lich su dat san
 void FieldManager::viewBookingHistory(const string& username) {
     Menu menu;
-    FileManager fileManager;
-    Vector<string> timeSlots = fileManager.loadData("timeslots.txt");
-    Vector<string> fields = fileManager.loadData("fields.txt");
+    Vector<string> timeSlots = readLinesFromFile("timeslots.txt");
+    Vector<string> fields = readLinesFromFile("fields.txt");
 
     bool hasHistory = false;
 
@@ -481,7 +501,6 @@ void FieldManager::cancelBookField(const string& username) {
 // kiem tra neu con san trong thi in ra
 bool FieldManager::checkAvailableFields(const string& timeSlot) { 
     Menu menu;
-    FileManager fileManager;
 
     ifstream file("fields.txt");
     if (!file.is_open()) {
@@ -494,7 +513,7 @@ bool FieldManager::checkAvailableFields(const string& timeSlot) {
     }
     file.close();
     
-    Vector<string> fields = fileManager.loadData("fields.txt");
+    Vector<string> fields = readLinesFromFile("fields.txt");
     bool hasAvailable = false;
 
     for (size_t i = 0; i < fields.get_size(); ++i) {
@@ -748,9 +767,9 @@ void FieldManager::searchAndDisplayInvoice() {
     system("cls");
     menu.printTIMKIEMHOADON();
     cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\t\t\t\t\t\t\t\t|   Enter invoice ID (e.g., INV-0001):                         |" << endl;
+    cout << "\t\t\t\t\t\t\t\t|   ENTER INVOICE ID (e.g., INV-001):                          |" << endl;
     cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-    cout << "\033[5;104H";
+    cout << "\033[5;103H";
     cin >> invoiceID;
 
     string invoiceFilePath = "Invoices/" + invoiceID + ".txt";
@@ -758,7 +777,7 @@ void FieldManager::searchAndDisplayInvoice() {
 
     if (!file.is_open()) {
         system("cls");
-        cout << "\t\t\t\t\t\t\t\tERROR: Invoice not found!" << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t\tINVOICE NOT FOUND!" << endl;
         menu.printRETURN();
         cin.ignore();
         cin.get();
@@ -781,7 +800,6 @@ void FieldManager::searchAndDisplayInvoice() {
 // hien thi hoa don ra man hinh va luu hoa don vao file
 void FieldManager::printInvoice(const string& timeSlot, const string& field) {
     Menu menu;
-
     string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
     ifstream file(filePath);
 

@@ -369,7 +369,6 @@ void Menu::accountManagementMenu() {
 
 void Menu::accountSettingsMenu(const string& username, bool isAdmin) {
     AccountManager accountManager;
-    FileManager fileManager;
 
     string fileName = isAdmin ? "tk_quanly.txt" : "tk_khachhang.txt";
     int choice;

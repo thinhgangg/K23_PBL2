@@ -6,8 +6,6 @@
 #include "Customer.h"
 #include "Menu.h"
 #include "Vector.h"
-#include "FileManager.h"
-#include "UserManager.h"
 
 #include <iostream>
 #include <string>
@@ -18,6 +16,15 @@
 
 class AccountManager {
 private:
+    Vector<string> readAllLines(const string& filename);
+    void writeAllLines(const string& filename, const Vector<string>& lines);
+    bool isValidUsername(const string& username);
+    bool isUsernameTaken(const string& user);
+    bool isValidPassword(const string& password);
+    bool isValidName(const string& name);
+    bool isValidPhone(const string& phone);
+    bool isPhoneNumberTaken(const string& phone);
+    string inputPassword();
     bool isdeleteAccount(const string& filename, const string& username);
 
 public:

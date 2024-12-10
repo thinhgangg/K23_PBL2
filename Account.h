@@ -7,7 +7,7 @@ using namespace std;
 
 class Account {
 private:
-    string currentUsername;
+
 protected:
     string name;
     string phoneNumber;
@@ -18,7 +18,6 @@ protected:
 public:
     Account();
     Account(string user, string pass, string name, string phone, string address);
-    string getCurrentUsername() const { return currentUsername; }
     bool getUserInfo(const string &filename, const string &user, const string &pass, string &name);
     bool isAdminUser(const string& username, const string& filename);
     static bool accountExists(const string& filename, const string& user);

@@ -25,9 +25,6 @@ Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time:
 Username: admin1 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:12:56 2024
 
 Username: admin1 | Action: Booked | Field: San_C | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:14:21 2024
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 10:50:26 2024
 
-Username: admin1 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 10:52:13 2024
-
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 11:17:36 2024
+Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 12:43:36 2024
 
