@@ -1,0 +1,3 @@
+FIELD: FIELD_E
+STATUS: Available
+PRICE: 300000

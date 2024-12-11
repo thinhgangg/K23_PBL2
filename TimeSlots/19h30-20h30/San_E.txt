@@ -1,3 +1,0 @@
-FIELD: San_E
-STATUS: Available
-PRICE: 300000

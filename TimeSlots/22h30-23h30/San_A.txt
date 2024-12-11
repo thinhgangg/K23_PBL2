@@ -1,7 +1,0 @@
-FIELD: San_A
-STATUS: Booked
-USERNAME: giang
-CUSTOMER: giang
-PHONE NUMBER: 01122334455
-PAYMENT DETAILS: not paid
-NOTE: khong co
