@@ -95,10 +95,10 @@ void FieldManager::displayTimeSlots() {
 
     for (size_t i = 0; i < availableTimeSlots.get_size(); ++i) {
         cout << "\t\t\t\t\t\t\t\t|                        " << i + 1 << ". " << availableTimeSlots[i] << "                        |" << endl;
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     }
     cout << "\t\t\t\t\t\t\t\t|                        0. GO BACK                            |" << endl;
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
 }
 
@@ -118,11 +118,11 @@ void FieldManager::displayFields(const string& timeSlot) {
             }
         }
 
-        cout << "\t\t\t\t\t\t\t\t|            " << i + 1 << ". " << field << "           |          " << fieldPrice << " VND          |" << endl;
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t|           " << i + 1 << ". " << field << "          |          " << fieldPrice << " VND          |" << endl;
+        cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     }
     cout << "\t\t\t\t\t\t\t\t|                           0. GO BACK                         |" << endl;
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
 }
 
@@ -353,78 +353,66 @@ bool FieldManager::isCancelBookField(const string& timeSlot, const string& field
 // xem lich su dat san
 void FieldManager::viewBookingHistory(const string& username) {
     Menu menu;
-    Vector<string> timeSlots = readLinesFromFile("timeslots.txt");
-    Vector<string> fields = readLinesFromFile("fields.txt");
+    ifstream logFile("log.txt");
 
-    bool hasHistory = false;
+    if (!logFile.is_open()) {
+        system("cls");
+        cout << "\t\t\t\t\t\t\t\tERROR: Unable to open log file!" << endl;
+        menu.printRETURN();
+        cin.ignore();
+        cin.get();
+        return;
+    }
 
     system("cls");
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-    cout << "\t\t\t\t\t\t\t\t#                        BOOKING HISTORY                       #" << endl;
+    cout << "\t\t\t\t\t\t\t\t#                       BOOKING HISTORY                        #" << endl;
     cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 
-    for (const auto& timeSlot : timeSlots) {
-        for (const auto& field : fields) {
-            string filePath = "TimeSlots/" + timeSlot + "/" + field + ".txt";
+    string line;
+    bool hasHistory = false;
 
-            ifstream file(filePath);
-            if (file.is_open()) {
-                string line;
-                bool matchFound = false;
-                while (getline(file, line)) {
-                    if (line.find("USERNAME: " + username) != string::npos) {
-                        matchFound = true;
-                        break;
+    while (getline(logFile, line)) {
+        if (line.find("Username: " + username) != string::npos) {
+            string action, field, timeSlot, time;
+            stringstream ss(line);
+            string temp;
+
+            while (getline(ss, temp, '|')) {
+                size_t pos = temp.find(':');
+                if (pos != string::npos) {
+                    string key = temp.substr(0, pos);
+                    string value = temp.substr(pos + 2); 
+
+                    if (key.find("Action") != string::npos) {
+                        action = value;
+                    } else if (key.find("Field") != string::npos) {
+                        field = value;
+                    } else if (key.find("TimeSlot") != string::npos) {
+                        timeSlot = value;
+                    } else if (key.find("Time") != string::npos && key.length() <=5) {
+                        time = value;
+                        time.erase(time.length()-1);
                     }
                 }
+            }
 
-                if (matchFound) {
-                    hasHistory = true;
-                    cout << "\n";
-                    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-                    cout << "\t\t\t\t\t\t\t\t|          " << setw(21) << left << timeSlot << " |            " << setw(17) << left << field << "|" << endl;
-                    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-
-                    file.clear();
-                    file.seekg(0, ios::beg);
-                    string status, price, username, customer, phone, address, payment, note;
-                    while (getline(file, line)) {
-                        stringstream ss(line);
-                        string label, value;
-                        getline(ss, label, ':');
-                        getline(ss, value);
-
-                        if (!value.empty()) {
-                            if (value.front() == ' ') value.erase(value.begin());
-                            if (value.back() == ' ') value.erase(value.end() - 1);
-                        }
-
-                        if (label == "STATUS") status = value;
-                        else if (label == "PRICE") price = value;
-                        else if (label == "USERNAME") username = value;
-                        else if (label == "CUSTOMER") customer = value;
-                        else if (label == "PHONE NUMBER") phone = value;
-                        else if (label == "ADDRESS") address = value;
-                        else if (label == "PAYMENT DETAILS") payment = value;
-                        else if (label == "NOTE") note = value;
-                    }
-                    cout << "\t\t\t\t\t\t\t\t|   PRICE            :  " << setw(37) << left << price << "  |" << endl;
-                    cout << "\t\t\t\t\t\t\t\t|   CUSTOMER         :  " << setw(37) << left << customer << "  |" << endl;
-                    cout << "\t\t\t\t\t\t\t\t|   PHONE NUMBER     :  " << setw(37) << left << phone << "  |" << endl;
-                    cout << "\t\t\t\t\t\t\t\t|   ADDRESS          :  " << setw(37) << left << address << "  |" << endl;
-                    cout << "\t\t\t\t\t\t\t\t|   PAYMENT DETAILS  :  " << setw(37) << left << payment << "  |" << endl;
-                    cout << "\t\t\t\t\t\t\t\t|   NOTE             :  " << setw(37) << left << note << "  |" << endl;
-                    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-                    cout << "\t\t\t\t\t\t\t________________________________________________________________________________" << endl;
-                }
-                file.close();
+            if (action == "Booked " || action == "Canceled ") {
+                hasHistory = true;
+                cout << "\n";
+                cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
+                cout << "\t\t\t\t\t\t\t\t|  " << setw(23) << left << time << " | " << setw(9) << left << action
+                     << "| " << setw(8) << left << field << " | " << setw(12) << left << timeSlot << "|" << endl;
+                cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
             }
         }
     }
 
+    logFile.close();
+
     if (!hasHistory) {
         cout << "\n";
-        cout << "\t\t\t\t\t\t\t                           NO BOOKING HISTORY FOUND!                          " << endl;
+        cout << "\t\t\t\t\t\t\t\t\t\t   NO BOOKING HISTORY FOUND!" << endl;
     }
 
     menu.printRETURN();
@@ -512,9 +500,9 @@ bool FieldManager::checkAvailableFields(const string& timeSlot) {
                 menu.printXEMSANTRONG();
                 menu.printKHUNGGIO(timeSlot);
             }
-            cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
-            cout << "\t\t\t\t\t\t\t\t|                            " << field << "                             |" << endl;
-            cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t\t\t\t\t================================================" << endl;
+            cout << "\t\t\t\t\t\t\t\t\t|                   " << field << "                    |" << endl;
+            cout << "\t\t\t\t\t\t\t\t\t================================================" << endl;
             hasAvailable = true;
         }
     }
@@ -598,13 +586,13 @@ void FieldManager::viewFieldDetails() {
             menu.printTENSAN(field);
 
             if (status == "Available") {
-                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
                 cout << "\t\t\t\t\t\t\t\t|                      FIELD   :   " << setw(27) << left << field << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|                      STATUS  :   " << setw(27) << left << status << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|                      PRICE   :   " << setw(27) << left << price << " |" << endl;
-                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
             } else if (status == "Booked") {
-                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
                 cout << "\t\t\t\t\t\t\t\t|       FIELD            :   " << setw(33) << left << field << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|       STATUS           :   " << setw(33) << left << status << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|       PRICE            :   " << setw(33) << left << price << " |" << endl;
@@ -613,7 +601,7 @@ void FieldManager::viewFieldDetails() {
                 cout << "\t\t\t\t\t\t\t\t|       ADDRESS          :   " << setw(33) << left << address << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|       PAYMENT DETAILS  :   " << setw(33) << left << payment << " |" << endl;
                 cout << "\t\t\t\t\t\t\t\t|       NOTE             :   " << setw(33) << left << note << " |" << endl;
-                cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+                cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
             }
             menu.printRETURN();
             cin.ignore();
@@ -634,17 +622,17 @@ void FieldManager::viewAllFieldsPrice() {
     for (const auto& fieldData : fields) {
         if (fieldData.timeSlot != currentTimeSlot) {
             cout << "\n" << setw(11) << left << "\t\t\t\t\t\t\t\t\t\t     Time Slot: " << fieldData.timeSlot << endl;
-            cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
             currentTimeSlot = fieldData.timeSlot;
         }
 
         cout << setw(7) << left << "\t\t\t\t\t\t\t\t\t\t  Field: " 
-             << setw(6) << left << fieldData.fieldName 
-             << "| " 
+             << setw(9) << left << fieldData.fieldName 
+             << "|  " 
              << setw(5) << left << "Price: "
              << setw(6) << left << fieldData.price << " VND" << endl;
     }
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
 
     menu.printRETURN();
     cin.ignore();
@@ -687,10 +675,10 @@ void FieldManager::changeFieldsPrice(const string& username) {
 
 
                 int newPrice;
-                cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
-                cout << "\t\t\t\t\t\t\t\t\t#     ENTER THE NEW PRICE FOR " << field << ":           #" << endl;
-                cout << "\t\t\t\t\t\t\t\t\t################################################" << endl;
-                cout << "\033[11;110H";
+                cout << "\t\t\t\t\t\t\t\t\t================================================" << endl;
+                cout << "\t\t\t\t\t\t\t\t\t|     ENTER THE NEW PRICE FOR " << field << ":         |" << endl;
+                cout << "\t\t\t\t\t\t\t\t\t================================================" << endl;
+                cout << "\033[11;112H";
 
                 cin >> newPrice;
 
@@ -755,9 +743,9 @@ void FieldManager::searchAndDisplayInvoice() {
 
     system("cls");
     menu.printTIMKIEMHOADON();
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     cout << "\t\t\t\t\t\t\t\t|   ENTER INVOICE ID (e.g., INV-001):                          |" << endl;
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     cout << "\033[5;103H";
     cin >> invoiceID;
 

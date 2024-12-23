@@ -21,8 +21,8 @@ private:
 public:
     void displayIntro();
     void homeMenu();
-    void managerMenu(const string& username, const string& customerName);
-    void customerMenu(const string& username, const string& customerName);
+    void managerMenu(const string& username, const string& name);
+    void customerMenu(const string& username, const string& name);
     void displaySignIn();
     void displaySignUp();
     void displayResetPass();

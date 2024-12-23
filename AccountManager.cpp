@@ -540,9 +540,9 @@ void AccountManager::viewCustomerList() {
         cout << "\t\t\t\t\t\t\t\t##                       CUSTOMER LIST                        ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 
-        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t================================================================================================================" << endl;
         cout << "\t\t\t\t\t|   No  |          CUSTOMER          |      USERNAME      |     PHONE      |              ADDRESS              |" << endl;
-        cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t================================================================================================================" << endl;
 
         for (size_t i = 0; i < customers.get_size(); ++i) {
             stringstream ss(customers[i]);
@@ -558,11 +558,11 @@ void AccountManager::viewCustomerList() {
                  << " |   " << setw(12) << phone 
                  << " |   " << setw(31) << address
                  << " |" << endl;
-            cout << "\t\t\t\t\t----------------------------------------------------------------------------------------------------------------" << endl;
+            cout << "\t\t\t\t\t================================================================================================================" << endl;
         }
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
-        cout << "\t\t\t\t\t\t\t\t##\tCHOOSE A CUSTOMER BY INDEX (1-" << customers.get_size() << ") OR 0 TO GO BACK:    ##" << endl;
-        cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
+        cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
+        cout << "\t\t\t\t\t\t\t\t|      CHOOSE A CUSTOMER BY INDEX (1-" << customers.get_size() << ") OR 0 TO GO BACK:      |" << endl;
+        cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
         cout << "\t\t\t\t\t\t\t\t\t\t\tYOUR CHOICE: ";
         int choice;
         cin >> choice;
@@ -584,7 +584,6 @@ void AccountManager::viewCustomerList() {
         }
     }
 }
-
 
 // kiem tra username hop le
 bool AccountManager::isValidUsername(const string& username) {
@@ -621,7 +620,7 @@ bool AccountManager::isValidName(const string& name) {
 
 // kiem tra phone number hop le
 bool AccountManager::isValidPhone(const string& phone) {
-    if (phone.length() < 10 || phone.length() > 15) {
+    if (phone.length() != 10) {
         return false;
     }
     for (char c : phone) {

@@ -1,36 +1,60 @@
-Username: duy123 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Tue Dec 03 22:40:35 2024
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:48:09 2024
 
-Username: duy123 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:09:57 2024
+Username: duy123 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 14:34:35 2024
 
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:48:09 2024
+Username: duy123 | Action: Canceled | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 14:40:26 2024
 
-Username: admin1 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:48:28 2024
+Username: admin2 | Action: Change Price | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 11:35:11 2024
 
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:57:28 2024
 
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:28 2024
 
-Username: admin1 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:33 2024
+Username: duy123 | Action: Booked | Field: FIELD_B | TimeSlot: 15h30-16h30 | Time: Tue Dec 03 22:40:35 2024
 
-Username: admin1 | Action: Booked | Field: San_C | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:39 2024
+Username: duy123 | Action: Booked | Field: FIELD_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:09:57 2024
 
-Username: admin1 | Action: Booked | Field: San_D | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:47 2024
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:48:09 2024
 
-Username: admin1 | Action: Booked | Field: San_E | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:53 2024
+Username: admin1 | Action: Booked | Field: FIELD_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:48:28 2024
 
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:56:41 2024
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 11:57:28 2024
 
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:12:36 2024
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:28 2024
 
-Username: admin1 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:12:56 2024
+Username: admin1 | Action: Booked | Field: FIELD_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:33 2024
 
-Username: admin1 | Action: Booked | Field: San_C | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:14:21 2024
+Username: admin1 | Action: Booked | Field: FIELD_C | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:39 2024
 
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 12:43:36 2024
+Username: admin1 | Action: Booked | Field: FIELD_D | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:47 2024
 
-Username: admin1 | Action: Booked | Field: San_B | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 14:52:32 2024
+Username: admin1 | Action: Booked | Field: FIELD_E | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:10:53 2024
 
-Username: admin1 | Action: Booked | Field: San_A | TimeSlot: 21h30-22h30 | Time: Tue Dec 10 16:04:29 2024
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 17:56:41 2024
 
-Username: admin1 | Action: Booked | Field: San_E | TimeSlot: 21h30-22h30 | Time: Tue Dec 10 16:04:53 2024
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:12:36 2024
+
+Username: admin1 | Action: Booked | Field: FIELD_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:12:56 2024
+
+Username: admin1 | Action: Booked | Field: FIELD_C | TimeSlot: 15h30-16h30 | Time: Wed Dec 04 19:14:21 2024
+
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 12:43:36 2024
+
+Username: admin1 | Action: Booked | Field: FIELD_B | TimeSlot: 15h30-16h30 | Time: Tue Dec 10 14:52:32 2024
+
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 21h30-22h30 | Time: Tue Dec 10 16:04:29 2024
+
+Username: admin1 | Action: Booked | Field: FIELD_E | TimeSlot: 21h30-22h30 | Time: Tue Dec 10 16:04:53 2024
+
+Username: admin1 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 11:30:52 2024
+
+Username: admin2 | Action: Change Price | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 11:35:11 2024
+
+
+
+Username: thinh123 | Action: Booked | Field: FIELD_B | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 14:34:57 2024
+
+Username: duy123 | Action: Canceled | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 14:40:26 2024
+
+Username: duy123 | Action: Canceled | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 14:52:59 2024
+
+Username: duy123 | Action: Booked | Field: FIELD_A | TimeSlot: 15h30-16h30 | Time: Wed Dec 11 14:53:04 2024
 

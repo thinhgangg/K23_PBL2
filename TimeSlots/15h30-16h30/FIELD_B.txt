@@ -1,9 +1,9 @@
 FIELD: FIELD_B
 STATUS: Booked
 PRICE: 300000 VND
-USERNAME: thinh123
-CUSTOMER: thinh dep trai
-PHONE NUMBER: 034567
-ADDRESS: nguyen luong bang
-PAYMENT DETAILS: no
-NOTE: no
+USERNAME: kien123
+CUSTOMER: Nguyen Trung Kien
+PHONE NUMBER: 0796680907
+ADDRESS: 05 Lac Long Quan, Hoa Khanh Bac, Lien Chieu
+PAYMENT DETAILS: not
+NOTE: not

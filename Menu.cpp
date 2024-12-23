@@ -270,16 +270,16 @@ void Menu::displaySearchInvoice() {
 }
 
 void Menu::displayBookingForm() {
-    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t================================================================================" << endl;
     cout << "\t\t\t\t\t\t\t|                               BOOKING DETAILS                                |" << endl;
-    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t================================================================================" << endl;
     cout << "\t\t\t\t\t\t\t|       FIELD:                                                                 |" << endl;
     cout << "\t\t\t\t\t\t\t|       NAME:                                                                  |" << endl;
     cout << "\t\t\t\t\t\t\t|       PHONE NUMBER:                                                          |" << endl;
     cout << "\t\t\t\t\t\t\t|       ADDRESS:                                                               |" << endl;
     cout << "\t\t\t\t\t\t\t|       PAYMENT DETAILS (PAID / NOT PAID):                                     |" << endl;
     cout << "\t\t\t\t\t\t\t|       NOTE (IF ANY):                                                         |" << endl;
-    cout << "\t\t\t\t\t\t\t--------------------------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t================================================================================" << endl;
 }
 
 void Menu::registrationMenu() {
@@ -538,12 +538,12 @@ void Menu::customerOptionMenu(const string& username, const string& name, const 
         cout << "\t\t\t\t\t\t\t\t##                    CUSTOMER INFORMATION                    ##" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
 
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
         cout << "\t\t\t\t\t\t\t\t|                    CUSTOMER: " << setw(31) << left << name << " |" << endl;
         cout << "\t\t\t\t\t\t\t\t|                    USERNAME: " << setw(31) << left << username << " |" << endl;
         cout << "\t\t\t\t\t\t\t\t|                    PHONE: " << setw(34) << left << phone << " |" << endl;
         cout << "\t\t\t\t\t\t\t\t|                    ADDRESS: " << setw(32) << left << address << " |" << endl;
-        cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+        cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
         cout << "\t\t\t\t\t\t\t\t################################################################" << endl;
         cout << "\t\t\t\t\t\t\t\t##                   1. VIEW BOOKING HISTORY                  ##" << endl;
         cout << "\t\t\t\t\t\t\t\t##                   2. RESET PASSWORD                        ##" << endl;
@@ -572,15 +572,15 @@ void Menu::customerOptionMenu(const string& username, const string& name, const 
 }
 
 void Menu::printGIO() {
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     cout << "\t\t\t\t\t\t\t\t|                          TIME SLOTS                          |" << endl;
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
 }
 
 void Menu::printSAN() {
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
     cout << "\t\t\t\t\t\t\t\t|                            FIELDS                            |" << endl;
-    cout << "\t\t\t\t\t\t\t\t----------------------------------------------------------------" << endl;
+    cout << "\t\t\t\t\t\t\t\t================================================================" << endl;
 }
 
 void Menu::printKHUNGGIO(const string& timeSlot) {

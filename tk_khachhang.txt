@@ -19,3 +19,4 @@ charlie123;charlie123;Charlie Moore;0976543211;150 Le Duc Tho
 ava123;ava123;Ava Taylor;0387654322;160 Dinh Tien Hoang
 thinh123;thinh123;thinh dep trai;0123456789;Au Co
 duy123;duy123;Nguyen Dinh Duy;0123123123;au co
+kien;kien123;Nguyen Trung Kien;0954567889;da nang
