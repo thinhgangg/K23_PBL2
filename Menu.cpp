@@ -13,8 +13,8 @@ void Menu::displayIntro() {
     cout << "\t\t\t\t\t|        |            ....           |  |                                                                             |\n";
     cout << "\t\t\t\t\t|     A  |             ......        |  |                  PROJECT        : PBL2 - FOOTBALL FIELD MANAGEMENT          |\n";
     cout << "\t\t\t\t\t|        |              .......      |  |                                                                             |\n";
-    cout << "\t\t\t\t\t|     N  |              .........    |  |                  STUDENTS       : MAI PHUC THINH                            |\n";
-    cout << "\t\t\t\t\t|        |             ...........   |  |                                                                             |\n";
+    cout << "\t\t\t\t\t|     N  |              .........    |  |                  STUDENTS       : NGUYEN TRUNG KIEN                         |\n";
+    cout << "\t\t\t\t\t|        |             ...........   |  |                                   MAI PHUC THINH                            |\n";
     cout << "\t\t\t\t\t|     G  |            .............  |  |                                                                             |\n";
     cout << "\t\t\t\t\t|        |          ...............  |  |                  SECTION CLASS  : 23.99A                                    |\n";
     cout << "\t\t\t\t\t|        |       ..................  |  |                                                                             |\n";
