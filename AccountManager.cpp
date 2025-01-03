@@ -587,7 +587,7 @@ void AccountManager::viewCustomerList() {
 
 // kiem tra username hop le
 bool AccountManager::isValidUsername(const string& username) {
-    if (username.length() < 5) {
+    if (username.length() < 6) {
         return false;
     }
     for (char ch : username) {
