@@ -7,17 +7,17 @@ Addr: 120 Nguyen Luong Bang, Q. Lien Chieu, Da Nang
 	    ------------------------
 		PAYMENT INVOICE
 	    ------------------------
-	Time: Wed Dec 11 11:31:03 2024
-	      Invoice No: INV-001
+	Time: Tue Dec 10 16:06:56 2024
+	      Invoice No: INV-002
      --------------------------------------
-	Field: FIELD_A
-	Time Slot: 15h30-16h30
-	Price: 300000 VND
+	Field: FIELD_B
+	Time Slot: 21h30-22h30
+	Price: 300000
      --------------------------------------
-	Customer: thinh
-	Phone: 123
-	Address: 1213
-	Note: 3113
+	Customer: 
+	Phone: 
+	Address: 
+	Note: 
      --------------------------------------
 		TOTAL: 300000 VND
      ========================================

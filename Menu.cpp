@@ -11,7 +11,7 @@ void Menu::displayIntro() {
     cout << "\t\t\t\t\t|         ___________________________   |                                                                             |\n";
     cout << "\t\t\t\t\t|     N  |          ...              |  |                  LECTURER       : TRAN HO THUY TIEN                         |\n";
     cout << "\t\t\t\t\t|        |            ....           |  |                                                                             |\n";
-    cout << "\t\t\t\t\t|     A  |             ......        |  |                  PROJECT        : PBL2 - FOOTBALL FIELD MANAGEMENT          |\n";
+    cout << "\t\t\t\t\t|     A  |             ......        |  |                  PROJECT        : PBL2 - QUAN LY SAN BONG                   |\n";
     cout << "\t\t\t\t\t|        |              .......      |  |                                                                             |\n";
     cout << "\t\t\t\t\t|     N  |              .........    |  |                  STUDENTS       : NGUYEN TRUNG KIEN                         |\n";
     cout << "\t\t\t\t\t|        |             ...........   |  |                                   MAI PHUC THINH                            |\n";
